@@ -558,7 +558,7 @@ const CONFIG = {
   direccion: "Juan Jacobo Rousseau 4483",
   ciudad: "Montevideo, Uruguay",
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay",
-  horarios: { semana: "Lun a Vie 8 a 19", sabado: "Sáb 9 a 14", domingo: "Cerrado" } };
+  horarios: { semana: "Lun a Sab 8 a 18", : "", domingo: "Cerrado" } };
 document.addEventListener("DOMContentLoaded", function () {
 document.querySelectorAll('[data-wpp]').forEach(el => {
     el.setAttribute('href', `https://wa.me/${CONFIG.telefono}?text=${el.dataset.wpp}`);
