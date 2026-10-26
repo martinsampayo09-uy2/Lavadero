@@ -1,1374 +1,914 @@
-<html lang="es"><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pablo Alesandre</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <script>  
-    // ❌ Bloqueos de seguridad estrictos (sin alertas)
-    document.addEventListener("contextmenu", e => e.preventDefault());  
-    document.addEventListener("keydown", e => {  
-        if (e.key === "F12" || e.key === "F8" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "u")) {  
-            e.preventDefault(); }  });  
-// 📅 Validación de Agenda Estricta
-    document.addEventListener("DOMContentLoaded", () => {
-        const fechaInput = document.getElementById("fecha");
-        const horaInput = document.getElementById("hora");
-        function obtenerFechaHoy() {
-            const hoy = new Date();
-            const yyyy = hoy.getFullYear();
-            const mm = String(hoy.getMonth() + 1).padStart(2, '0');
-            const dd = String(hoy.getDate()).padStart(2, '0');
-            return `${yyyy}-${mm}-${dd}`;  }
-        function obtenerHoraMinimaHoy() {
-            const ahora = new Date();
-            let horaActual = ahora.getHours();
-            const minutoActual = ahora.getMinutes();
-            if (minutoActual > 0) {
-                horaActual += 1;  }
-            if (horaActual < 9) {
-                 horaActual = 9;  }
-       return `${String(horaActual).padStart(2, '0')}:00`; }
-         const fechaHoy = obtenerFechaHoy();
-        fechaInput.min = fechaHoy; 
-        horaInput.min = "09:00";
-        horaInput.max = "18:00";
-        
-        fechaInput.addEventListener("change", () => {
-            if (!fechaInput.value) return;
-            const fechaHoyActualizada = obtenerFechaHoy();
-            if (fechaInput.value < fechaHoyActualizada){
-                fechaInput.value = "";
-                horaInput.value = "";
-                return; 
-            }
-            const fechaSeleccionada = new Date(fechaInput.value + 'T00:00:00');
-            const dia = fechaSeleccionada.getDay();
-            if (dia === 0) {
-                fechaInput.value = "";
-                horaInput.value = "";
-                return; 
-            }
-            if (fechaInput.value == fechaHoyActualizada) {
-                const horaMinima = obtenerHoraMinimaHoy();
-                if (parseInt(horaMinima.split(':')[0]) > 18) {
-                    fechaInput.value = "";
-                    horaInput.value = "";
-                    return; 
-                }
-                horaInput.min = horaMinima; 
-            } else {
-                horaInput.min = "09:00"; 
-            }
-            if (horaInput.value && horaInput.value < horaInput.min) {
-                horaInput.value = ""; 
-            }  
-        });
-        
-        horaInput.addEventListener("change", () => {
-            if (!horaInput.value) return;
-            const fechaHoyActualizada = obtenerFechaHoy();
-            if (fechaInput.value == fechaHoyActualizada) {
-                const horaMinima = obtenerHoraMinimaHoy();
-                if (horaInput.value < horaMinima) {
-                    horaInput.value = ""; } }  }); });
-    </script>  
-    <style>  
-    :root { 
-        --primario: #0f1c3f;
-        --secundario: #c5a059; 
-        --oscuro: #222222;
-        --claro: #f8f9fa;
-        --bot-color: #27ae60; }  
-    * { 
-        box-sizing: border-box; 
-        margin: 0;
-        padding: 0;
-    }   
-    body { 
-        font-family: 'Inter', sans-serif; 
-        background-color: #ffffff; 
-        color: var(--oscuro); 
-        user-select: none; 
-        scroll-behavior: smooth; 
-        line-height: 1.6;
-    }  
-   header {
-        background-color: var(--primario);
-        padding: 1rem 1.5rem;
-        position: fixed; 
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 10000; 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 3px solid var(--secundario);
-    }
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px; }
-    .site-logo {
-        height: 38px;
-        width: auto;
-        object-fit: contain;
-    }
-
-    .logo {
-        color: #ffffff;
-        font-size: 1.1rem;
-        font-weight: bold;
-        letter-spacing: 1px;
-        white-space: nowrap; 
-    }
-    .logo span {
-        color: var(--secundario);
-    }
-    .menu-toggle { 
-        font-size: 24px; 
-        cursor: pointer; 
-        color: #ffffff; 
-        display: block;  
-    }  
-    .nav-menu { 
-        position: fixed; 
-        top: 59px; 
-        left: 0; 
-        width: 100%; 
-        background: var(--primario); 
-        display: none; 
-        flex-direction: column; 
-        border-bottom: 3px solid var(--secundario); 
-        z-index: 9999; 
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-    }
-    .nav-menu.active {
-        display: flex !important;
-    }
-    nav a {
-        color: #ffffff;
-        text-decoration: none;
-        padding: 15px 20px;
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        font-weight: 600;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        transition: color 0.3s; 
-    }
-    nav a:hover {
-        color: var(--secundario); 
-    }
-    
-.hero {
-        background: linear-gradient(rgba(15, 28, 63, 0.88), rgba(15, 28, 63, 0.88)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80') no-repeat center center/cover;
-        min-height: 55vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        color: #ffffff;
-        padding: 7rem 1rem 2rem 1rem; }
-   .hero-border-box {
-        border: 1px solid rgba(197, 160, 89, 0.4);
-        padding: 1.5rem;
-        width: 100%;
-        max-width: 700px;
-        border-radius: 4px; 
-    }
-    .hero h1{
-        font-size: 1.2rem;
-        font-weight: 400;
-        color:#fff;
-        letter-spacing:1px;
-        text-transform:uppercase;
-        margin-bottom:10px;
-    }
-    .divisor-oro { 
-        width: 60px; 
-        height: 2px; 
-        background: var(--secundario); 
-        margin: 12px auto; 
-    }  
-    .hero h2 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 15px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        line-height: 1.3; 
-    }
-    .hero p {
-        font-size: 0.95rem;
-        color: #e0e0e0;
-        margin-bottom: 1.8rem;
-        font-style: italic;
-    }
-    .btn {
-        background-color: var(--secundario);
-        color: var(--primario);
-        padding: 0.8rem 2rem;
-        text-decoration: none;
-        font-weight: bold;
-        border-radius: 4px;
-        font-size: 0.85rem;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        transition: background 0.3s, transform 0.2s;
-        display: inline-block;
-        border: none;
-        cursor: pointer;
-    }
-    .btn:hover {
-        background-color: #b38f4b;
-        transform: translateY(-2px);
-    }
-    .cinta-legal { 
-        width: 100%; 
-        overflow: hidden; 
-        background: #111a33; 
-        padding: 12px 0; 
-        white-space: nowrap; 
-        border-bottom: 2px solid var(--secundario); 
-    }  
-    .contenido-cinta { 
-        display: inline-flex; 
-        animation: scroll-chico 20s linear infinite;
-    }  
-    .item-noticia { 
-        color: #fff; 
-        font-size: 0.8rem; 
-        padding: 0 25px; 
-        text-transform: uppercase; 
-        font-weight: bold; 
-        letter-spacing: 1px; 
-    }  
-    @keyframes scroll-chico { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }  
-    
-    section, .container { 
-        padding: 3.5rem 1rem; 
-        max-width: 1200px; 
-        margin: 0 auto; 
-    }  
-    .titulo-seccion { 
-        text-align: center;
-        font-size: 1.6rem;
-        color: var(--primario);
-        margin-bottom: 2.5rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        position: relative;
-    }  
-    .titulo-seccion::after {
-        content: '';
-        display: block;
-        width: 50px;
-        height: 3px;
-        background-color: var(--secundario);
-        margin: 0.6rem auto 0;
-    }
-    .grid-detalles { 
-        display: grid; 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 0.8rem;  
-    }  
-    .tarjeta-detalle { 
-        background: var(--claro); 
-        padding: 1.2rem 0.6rem; 
-        border-radius: 6px; 
-        text-align: center; 
-        border-top: 4px solid var(--primario); 
-        box-shadow: 0 4px 6px rgba(0,0,0,0.04);
-        cursor: pointer; 
-        transition: transform 0.3s, border-top-color 0.3s, background 0.3s; 
-    }  
-    .tarjeta-detalle:hover {
-        transform: translateY(-4px);
-        border-top-color: var(--secundario);
-    }
-    .tarjeta-detalle h3 {
-        color: var(--primario);
-        font-size: 0.85rem; 
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-    .contenido-oculto { 
-        max-height: 0; 
-        overflow: hidden; 
-        transition: max-height 0.4s ease, margin-top 0.4s ease; 
-        font-size: 0.8rem; 
-        color: #555; 
-        text-align: center; 
-        line-height: 1.4;
-    }  
-    .tarjeta-detalle.activo { 
-        background: #ffffff; 
-        box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
-        border-top-color: var(--secundario);
-    }  
-    .tarjeta-detalle.activo .contenido-oculto { 
-        max-height: 250px; 
-        margin-top: 10px; 
-    }  
-    .sobre-mi {
-        background-color: var(--claro);
-        max-width: 100%;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
-    }
-    .sobre-mi-contenido {
-        max-width: 850px;
-        margin: 0 auto;
-        text-align: center;  
-    }
-    .sobre-mi-contenido p {
-        font-size: 1rem;
-        color: #444;
-        line-height: 1.7;  
-    }
-    .contacto-contenedor {
-        display: grid;
-        grid-template-columns: 1fr; 
-        gap: 2rem; 
-        background: #ffffff; 
-    }
-    .info-contacto h3 {
-        color: var(--primario);
-        margin-bottom: 0.8rem;
-        font-size: 1.15rem; 
-    }
-    .info-contacto p {
-        margin-bottom: 0.6rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.85rem; 
-        line-height: 1.4;  
-    }
-    .info-contacto strong {
-        color: var(--primario);  
-    }
-    .seccion-agenda { 
-        background: var(--claro); 
-        padding: 1.2rem; 
-        border-radius: 8px; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        border-top: 4px solid var(--secundario);
-    }  
-    .form-agenda { 
-        display: flex; 
-        flex-direction: column; 
-        gap: 0.8rem; 
-    }  
-    .form-agenda input, .form-agenda select, .form-agenda textarea { 
-        width: 100%;
-        padding: 0.75rem; 
-        border: 1px solid #cccccc; 
-        border-radius: 4px; 
-        font-size: 0.9rem; 
-        outline: none; 
-        background-color: #ffffff; 
-    }  
-    .form-agenda input:focus, .form-agenda select:focus { 
-        border: 2px solid var(--primario);  
-    }  
-    .btn-enviar-agenda { 
-        background: var(--primario); 
-        color: white; 
-        border: none; 
-        padding: 0.85rem; 
-        border-radius: 4px; 
-        font-weight: bold; 
-        font-size: 0.9rem;
-        cursor: pointer; 
-        text-transform: uppercase;
-        transition: background 0.3s;  
-    }  
-    .btn-enviar-agenda:hover {
-        background: #172b5c; 
-    }
-    .bg-testimonios {
-        background-color: var(--claro);
-        max-width: 100%;   
-    }
-    .track-testimonios { display: flex; gap: 15px; width: max-content; animation: scrollTestimonios 25s linear infinite; }  
-    .testimonio { min-width: 210px; background: #ffffff; border-radius: 8px; padding: 1rem 0.8rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.04); border-bottom: 4px solid var(--primario); }  
-    .testimonio img { width: 45px; height: 45px; border-radius: 50%; margin-bottom: 8px; border: 2px solid var(--secundario); object-fit: cover; }  
-    .testimonio p { font-style: italic; font-size: 0.8rem; color: #555; margin-bottom: 6px; line-height: 1.35; }
-    .testimonio h4 { font-size: 0.75rem; color: var(--primario); font-weight: bold; text-transform: uppercase; }
-    @keyframes scrollTestimonios { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }  
-    
-    #chat-circle { position: fixed; bottom: 15px; right: 15px; width: 55px; height: 55px; border-radius: 50%; background: var(--bot-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 3000; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }  
-    #chat-container { display: none; position: fixed; bottom: 80px; right: 15px; width: 290px; height: 400px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); z-index: 3000; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; }  
-    #chat-header { background: var(--primario); color: white; padding: 0.8rem; font-size: 0.9rem; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 2px solid var(--secundario); }  
-    #chat-box { flex: 1; padding: 12px; overflow-y: auto; font-size: 0.8rem; display: flex; flex-direction: column; gap: 10px; background: #fdfdfd; scroll-behavior: smooth; }  
-    .bot-msg { background: #f1f5f9; padding: 8px 10px; border-radius: 8px; align-self: flex-start; max-width: 85%; line-height: 1.4; color: #333; }  
-    .bot-msg a { display: inline-block; word-break: break-word; }
-    .user-msg { background: #e0f2fe; padding: 8px 10px; border-radius: 8px; align-self: flex-end; max-width: 85%; color: #0369a1; font-weight: 500; }  
-    .chat-input-area { padding: 8px; border-top: 1px solid #eee; display: flex; gap: 6px; background: #fff; }  
-    .chat-input-area input { flex: 1; border: 1px solid #ddd; padding: 8px; border-radius: 4px; outline: none; font-size: 0.8rem; }  
-    .btn-enviar-chat { background: var(--bot-color); color: white; border: none; padding: 0 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }  
-    
-    footer {
-        background-color: var(--primario);
-        color: #ffffff;
-        text-align: center;
-        padding: 2rem 1rem;
-        font-size: 0.8rem;
-        border-top: 3px solid var(--secundario);
-        letter-spacing: 0.5px;
-        line-height: 1.4;   
-    }
-    .carrusel-general { 
-        width: 100%; 
-        overflow: hidden; 
-        padding: 1.5rem 0; 
-        background: #fff; 
-    }  
-    .track-diplomas { 
-        display: flex; 
-        flex-direction: row; 
-        gap: 8px; 
-        width: 100%;
-        max-width: 600px; 
-        margin: 0 auto;
-        padding: 0 10px;
-        box-sizing: border-box;
-    }  
-    .diploma-card { 
-        flex: 1; 
-        min-width: 0; 
-        cursor: pointer;
-        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), flex 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
-        position: relative;
-        z-index: 1; 
-    }  
-    .diploma-card img { 
-        width: 100%; 
-        height: auto; 
-        display: block;
-        border-radius: 6px; 
-        object-fit: cover;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        border: 1px solid #e2e8f0; 
-    }  
-    .diploma-card.agrandado {
-        flex: 2.2 !important; 
-        transform: scale(1.25); 
-        z-index: 99; 
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-    }
-    @media (min-width: 768px) {
-        header { padding: 1rem 2rem; }
-        .logo { font-size: 1.3rem; }
-        .menu-toggle { display: none; } 
-        .nav-menu { 
-            position: static; 
-            display: flex; 
-            flex-direction: row; 
-            width: auto; 
-            background: transparent; 
-            border-bottom: none; 
-            box-shadow: none;
-        }
-        nav a { 
-            padding: 0 0 0 1.5rem; 
-            border-bottom: none; 
-            font-size: 0.95rem;  
-        }
-        .hero-border-box { padding: 2.5rem; }
-        .hero h1 { font-size: 14px; letter-spacing: 5px; }
-        .hero h2 { font-size: 2.5rem; }
-        .hero p { font-size: 1.1rem; }
-        section, .container { padding: 4.5rem 1.5rem; }
-        .titulo-seccion { font-size: 1.8rem; }
-        .grid-detalles { grid-template-columns: repeat(2, 1fr); } 
-        .tarjeta-detalle h3 { font-size: 1.1rem; }
-        .contacto-contenedor { grid-template-columns: repeat(2, 1fr); gap: 3rem; } 
-        .info-contacto h3 { font-size: 1.3rem; }
-        .info-contacto p { font-size: 0.95rem; margin-bottom: 1rem; }
-        #chat-container { width: 320px; height: 460px; bottom: 95px; right: 20px; }
-        #chat-circle { bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 26px; }
-        .track-diplomas {
-            max-width: 600px;
-            margin: 0 auto;
-            gap: 15px;  
-        } 
-    }
-    @media (min-width: 1024px) {
-        .grid-detalles { grid-template-columns: repeat(4, 1fr); }  
-    }
-    .bloque-confianza {
-        display: flex;
-        justify-content: space-between;
-        gap: 8px; 
-        width: 100%;
-        padding: 10px 5px;  
-    }
-    .bloque-confianza .item {
-        flex: 1; 
-        text-align: center;
-        font-size: 11px; 
-        line-height: 1.3;
-        color: #333;   
-    }
-    @media (min-width: 768px) {
-        .bloque-confianza .item {
-            font-size: 16px; 
-            gap: 20px;  
-        }  
-    }
-    .notificacion {
-        position: fixed;
-        left: 15px;
-        bottom: 20px;
-        background: #0f1c3f;
-        color: #fff;
-        padding: 12px 15px;
-        border-left: 5px solid #c5a059;
-        border-radius: 8px;
-        font-size: 13px;
-        max-width: 250px;
-        box-shadow: 0 5px 15px rgba(0,0,0,.25);
-        transform: translateX(-120%);
-        transition: .5s;
-        z-index: 99999; 
-    }
-    .notificacion.mostrar {
-        transform: translateX(0); 
-    }
-    .contenedor-estados-whatsapp {
-        display: flex;
-        flex-direction: row;
-        gap: 15px;
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 0 15px; 
-    }
-    .estado-whatsapp {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: #fff;
-        border-left: 5px solid var(--secundario);
-        border-top: 1px solid #ececec;
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 66px 15px rgba(0,0,0,.08);
-        transition: .3s;
-        margin: 0;
-    }
-    .estado-whatsapp:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 25px rgba(0,0,0,.15);
-    }
-    .estado-punto {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        flex-shrink: 0;
-    }
-    .estado-texto {
-        display: flex;
-        flex-direction: column;
-    }
-    .estado-texto strong {
-        color: var(--primario);
-        font-size: 15px;
-        margin-bottom: 4px;
-    }
-    .estado-texto span {
-        color: #555;
-        font-size: 13px;
-    }
-    .estado-texto b {
-        color: var(--secundario);
-    }
-    .en-linea {
-        background: #25D366;
-        animation: pulsoWhatsapp-verde 1.5s infinite;
-    }
-    .fuera-linea {
-        background: #e53935;
-        animation: pulsoWhatsapp-rojo 1.5s infinite;
-    }
-    @keyframes pulsoWhatsapp-verde {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,211,102,.7); }
-        70% { transform: scale(1.15); box-shadow: 0 0 0 12px rgba(37,211,102,0); }
-        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37,211,102,0); } 
-    }
-    @keyframes pulsoWhatsapp-rojo {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229,57,53,.7); }
-        70% { transform: scale(1.15); box-shadow: 0 0 0 12px rgba(229,57,53,0); }
-        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229,57,53,0); } 
-    }
-    @media(max-width: 768px) {
-        .contenedor-estados-whatsapp {
-            flex-direction: row;
-            gap: 8px;
-            margin: 15px 8px;
-            padding: 0; 
-        }
-        .estado-whatsapp {
-            flex: 1;
-            min-width: 0;
-            padding: 8px;
-            gap: 6px; 
-        }
-        .estado-punto {
-            width: 10px;
-            height: 10px; 
-        }
-        .estado-texto strong {
-            font-size: 10.5px;
-            line-height: 1.2;
-            margin-bottom: 2px; 
-        }
-        .estado-texto span {
-            font-size: 9px;
-            line-height: 1.2;
-        } 
-    }
-    @media (max-width: 480px) {
-        .track-diplomas {
-            gap: 5px; 
-            padding: 0 5px; 
-        }
-        .diploma-card.agrandado {
-            flex: 2.5 !important; 
-            transform: scale(1.18); }  }
-    </style> 
-<style id="_goober"> .go1475592160{height:0;}.go1671063245{height:auto;}.go1888806478{display:flex;flex-wrap:wrap;flex-grow:1;}@media (min-width:600px){.go1888806478{flex-grow:initial;min-width:288px;}}.go167266335{background-color:#313131;font-size:0.875rem;line-height:1.43;letter-spacing:0.01071em;color:#fff;align-items:center;padding:6px 16px;border-radius:4px;box-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);}.go3162094071{padding-left:20px;}.go3844575157{background-color:#313131;}.go1725278324{background-color:#43a047;}.go3651055292{background-color:#d32f2f;}.go4215275574{background-color:#ff9800;}.go1930647212{background-color:#2196f3;}.go946087465{display:flex;align-items:center;padding:8px 0;}.go703367398{display:flex;align-items:center;margin-left:auto;padding-left:16px;margin-right:-8px;}.go3963613292{width:100%;position:relative;transform:translateX(0);top:0;right:0;bottom:0;left:0;min-width:288px;}.go1141946668{box-sizing:border-box;display:flex;max-height:100%;position:fixed;z-index:1400;height:auto;width:auto;transition:top 300ms ease 0ms,right 300ms ease 0ms,bottom 300ms ease 0ms,left 300ms ease 0ms,max-width 300ms ease 0ms;pointer-events:none;max-width:calc(100% - 40px);}.go1141946668 .notistack-CollapseWrapper{padding:6px 0px;transition:padding 300ms ease 0ms;}@media (max-width:599.95px){.go1141946668{width:100%;max-width:calc(100% - 32px);}}.go3868796639 .notistack-CollapseWrapper{padding:2px 0px;}.go3118922589{top:14px;flex-direction:column;}.go1453831412{bottom:14px;flex-direction:column-reverse;}.go4027089540{left:20px;}@media (min-width:600px){.go4027089540{align-items:flex-start;}}@media (max-width:599.95px){.go4027089540{left:16px;}}.go2989568495{right:20px;}@media (min-width:600px){.go2989568495{align-items:flex-end;}}@media (max-width:599.95px){.go2989568495{right:16px;}}.go4034260886{left:50%;transform:translateX(-50%);}@media (min-width:600px){.go4034260886{align-items:center;}}</style></head> <body data-gptw=""><header>
-     <div class="brand">
-<!-- Logo cargado desde tu carpeta 'imagen' -->
-        <img src="imagen/logo.jpeg" alt="Logo Pablo Alesandre" class="site-logo">
-<span class="logo">⚖️ DR.<span>PABLO ALESANDRE</span></span>  </div>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>  
-    <nav class="nav-menu" id="navMenu">
-        <a href="#inicio" onclick="toggleMenu()">Inicio</a>
-        <a href="#servicios" onclick="toggleMenu()">Servicios</a>
-        <a href="#trayectoria" onclick="toggleMenu()">Sobre Mí</a>
-        <a href="#contacto" onclick="toggleMenu()">CONTACTO</a>
-        <a href="#solicitud" onclick="toggleMenu()">SOLICITUD DE TURNO</a>
-        <a href="#novedades" onclick="toggleMenu()">Novedades</a>
-<a href="uruleyes.html">URULEYES</a></nav> 
-</header>
-
-<section class="hero" id="inicio">
-    <div class="hero-border-box">
- <h1><b>Pablo Alesandre Aizcorbe </b></h1>
-        <div class="divisor-oro"></div>
-        <p><strong>ESTUDIO JURÍDICO &amp; NOTARIAL</strong></p>
-        <p>Asesoramiento legal profesional en Montevideo. Soluciones estratégicas con firmeza, honestidad y compromiso. </p>
-        <a href="#solicitud" class="btn">Solicitar Consulta</a> 
-    </div> 
-</section> 
-
-<div class="cinta-legal">  
-    <div class="contenido-cinta">  
-        <span class="item-noticia">⚖️ Defensas Penales</span>  
-        <span class="item-noticia">💼 Reclamos Laborales</span>  
-        <span class="item-noticia">✍️ Escribanía Pública</span>  
-        <span class="item-noticia">📜 Sucesiones Rápidas</span>  
-        <span class="item-noticia">🏛️ Divorcios y Familia</span>  
-        <span class="item-noticia">⚖️ Defensas Penales</span>  
-        <span class="item-noticia">💼 Reclamos Laborales</span>  
-        <span class="item-noticia">✍️ Escribanía Pública</span>  
-        <span class="item-noticia">📜 Sucesiones Rápidas</span>  
-        <span class="item-noticia">🏛️ Divorcios y Familia</span>   
-    </div>   
-</div>  
-
-<div class="contenedor-estados-whatsapp">
-<div class="estado-whatsapp bloque-horario">
-<span id="estadoPunto" class="fuera-linea"></span><div class="estado-texto">
-<strong id="estadoTitulo">CERRADO</strong>
-<span id="estadoMensaje"><b>Domingo</b><br>🕒 <b>00:00:00</b><br>Abre mañana 09:00</span> </div> </div>
-<div class="estado-whatsapp bloque-respuesta">
-<div class="estado-punto en-linea"></div>
-<div class="estado-texto">
-<strong class="titulo-pablo">Dr:Pablo está ocupado</strong>
-<span class="mensaje-pablo">🕒 Tiempo estimado:<br><b>5 minutos...</b></span></div> 
-    </div></div>
-<style>
-html, body {
-    max-width: 100vw;
-    overflow-x: hidden;}
-.contenedor-estados-whatsapp {
-    display: flex;
-    gap: 12px; 
-    justify-content: center; 
-    align-items: stretch; 
-    padding: 15px;
-    font-family: sans-serif;
-    width: 100%;
-    max-width: 600px; 
-    margin: 20px auto; 
-    box-sizing: border-box;}
-.estado-whatsapp {
-    flex: 1; 
-    min-width: 0; 
-    padding: 14px 10px; 
-    border-radius: 8px;
-    background-color: #ffffff; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    box-sizing: border-box;}
-.estado-punto, #estadoPunto {
-    display: inline-block;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 5px;}
-.en-linea { background-color: #25d366; }
-.fuera-linea { background-color: #ff3b30; }
-.estado-texto {
-    min-width: 0;
-    word-wrap: break-word;
-    overflow-wrap: break-word;}
-.bloque-horario #estadoTitulo {
-    font-size: 1.25rem; 
-    font-weight: bold;
-    display: block;
-    margin-bottom: 4px;}
-.bloque-horario #estadoMensaje {
-    font-size: 0.95rem; 
-    line-height: 1.4;
-    display: block;}
-.bloque-respuesta .titulo-pablo {
-    font-size: 1.1rem; 
-    font-weight: bold;
-    display: block;
-    margin-bottom: 4px;}
-.bloque-respuesta .mensaje-pablo {
-    font-size: 0.9rem;
-    display: block;
-    line-height: 1.3;}
-@media (max-width: 480px) {
-    .contenedor-estados-whatsapp {
-        gap: 6px; 
-        padding: 8px 4px;   }
-    .estado-whatsapp {
-        padding: 10px 6px;
-        gap: 4px;   }
-.bloque-horario #estadoTitulo { font-size: 1rem; }
-    .bloque-horario #estadoMensaje { font-size: 0.78rem; }
-    
-    .bloque-respuesta .titulo-pablo { font-size: 0.88rem; }
-    .bloque-respuesta .mensaje-pablo { font-size: 0.75rem; } }
-</style>
-<script>
-function actualizarEstado(){
-    const ahora = new Date();
-    const dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-    const dia = ahora.getDay();
-    const hora = ahora.getHours();
-    const minutos = String(ahora.getMinutes()).padStart(2, "0");
-    const segundos = String(ahora.getSeconds()).padStart(2, "0");
-    const punto = document.getElementById("estadoPunto");
-    const titulo = document.getElementById("estadoTitulo");
-    const mensaje = document.getElementById("estadoMensaje");
-    if(!punto || !titulo || !mensaje) return;
-    let estado = "";
-    let texto = "";
-
-    // Lunes(1) a Sábado(6), de 09:00 a 18:00
-    if(dia >= 1 && dia <= 6 && hora >= 9 && hora < 18){
-        punto.className = "en-linea";
-        estado = "ABIERTO";
-        texto = "⏰ Cierra hoy 18:00";
-    } else {
-        punto.className = "fuera-linea";
-        estado = "CERRADO";
-        if(dia == 6 && hora >= 18){
-            texto = "Abre lunes 09:00";
-        } else if(dia == 0){
-            texto = "Abre mañana 09:00";
-        } else if(dia >= 1 && dia <= 5 && hora < 9){
-            texto = "Abre hoy 09:00";
-        } else {
-            texto = "Abre mañana 09:00";
-        }
-    }
-    titulo.innerHTML = estado;
-    mensaje.innerHTML = "<b>" + dias[dia] + "</b><br>🕒 <b>" + hora + ":" + minutos + ":" + segundos + "</b><br>" + texto;}
-actualizarEstado();
-setInterval(actualizarEstado, 1000);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Lavadero La Unión | Lavandería profesional en Montevideo</title>
+<meta name="description" content="Lavandería en Montevideo. Lavado de acolchados, frazadas y prendas. Promo 3x2, tratamiento antiolor para mascotas y retiro a domicilio. Juan Jacobo Rousseau 4483.">
+<meta name="keywords" content="lavadero Montevideo, lavandería, acolchados, frazadas, lavado de ropa, antiolor mascotas, lavadero La Unión">
+<meta name="author" content="Lavadero La Unión">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b4f8a">
+<link rel="canonical" href="https://lavaderolaunion.com.uy/">
+<meta property="og:type" content="business.business">
+<meta property="og:title" content="Lavadero La Unión | Lavandería profesional en Montevideo">
+<meta property="og:description" content="Lavado de acolchados, frazadas y prendas. Promo 3x2 y retiro a domicilio en Montevideo.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1200&q=80">
+<meta property="og:url" content="https://lavaderolaunion.com.uy/">
+<meta property="og:locale" content="es_UY">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230b4f8a'/%3E%3Ccircle cx='50' cy='40' r='15' fill='%23fff'/%3E%3Ccircle cx='35' cy='65' r='10' fill='%23fff' opacity='.8'/%3E%3Ccircle cx='60' cy='70' r='8' fill='%23fff' opacity='.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1600&q=80&auto=format">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"LaundryService",
+  "name":"Lavadero La Unión",
+  "image":"https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1200&q=80",
+  "url":"https://lavaderolaunion.com.uy/",
+  "telephone":"+59897192247",
+  "priceRange":"$$",
+  "address":{"@type":"PostalAddress","streetAddress":"Juan Jacobo Rousseau 4483","addressLocality":"Montevideo","addressCountry":"UY"},
+  "geo":{"@type":"GeoCoordinates","latitude":-34.8394,"longitude":-56.1778},
+  "openingHoursSpecification":[
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"18:00"},
+    {"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"00:00","closes":"00:00"}
+  ],
+  "sameAs":["https://www.instagram.com/lavaderounion2024/"],
+  "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"47","bestRating":"5"},
+  "hasOfferCatalog":{
+    "@type":"OfferCatalog",
+    "name":"Servicios de lavandería",
+    "itemListElement":[
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Lavado de acolchados"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Lavado de frazadas"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Lavado de prendas"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Tratamiento antiolor para mascotas"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Retiro y entrega a domicilio"}}
+    ]
+  }
+}
 </script>
-<section id="servicios">
-<h2 class="titulo-seccion">Servicios</h2>
-<div class="grid-detalles">  
-<div class="tarjeta-detalle" onclick="toggleDetalle(this)">  
-<h3>⚖️ DERECHO CIVIL⏬</h3>  
-<div class="contenido-oculto">Accidentes de tránsito, redacción de contratos, cobro de deudas, daños y perjuicios, herencias y propiedades.</div>   </div>  
-<div class="tarjeta-detalle" onclick="toggleDetalle(this)">  
-<h3>🏛️ DERECHO PENAL⏬</h3>  
-<div class="contenido-oculto">Asistencia inmediata en fiscalía, comisarías, defensas en procesos penales complejas y representation 24/7.</div>  </div>  
-<div class="tarjeta-detalle" onclick="toggleDetalle(this)">  
-<h3>💼 DERECHO LABORAL⏬</h3>  
-<div class="contenido-oculto">Cálculo exacto de liquidaciones, despidos injustificados, accidentes de trabajo y audiencias en el MTSS.</div>  </div>  
-<div class="tarjeta-detalle" onclick="toggleDetalle(this)">  
-<h3>✍️ SERVICIOS NOTARIALES⏬</h3>  
-<div class="contenido-oculto">Trámites sucesorios, escrituras, poderes, certificaciones de firmas y asesoría notarial integral.</div> </div> </div>   </section>
-<section class="sobre-mi" id="trayectoria">
-    <div class="sobre-mi-contenido">
-  <h2 class="titulo-seccion">Historia</h2>
- <p>El <b>Dr. Pablo Alesandre Aizcorbe</b> es egresado de la <b>Universidad de la República (UdelaR)</b>, donde obtuvo sus títulos de Abogado y Escribano Público. Con una sólida trayectoria en el sector legal de Uruguay, ofrece un trato personalizado, cercano y profesional.</p> <p>Su práctica se enfoca en la constante actualización en materia Penal y Laboral, asegurando una estrategia rigurosa y a medida para la resolución óptima de sus conflictos jurídicos.</p>  </div>  </section>
-
-<div class="carrusel-general">  
-    <div class="track-diplomas" id="grupoDiplomas">  
-        <div class="diploma-card" onclick="toggleZoom(event, this)">
-            <img src="https://i.ibb.co/mFrqwvTR/1782963978738.png" alt="Título Abogado"> 
-        </div>  
-        <div class="diploma-card" onclick="toggleZoom(event, this)">
-            <img src="https://i.ibb.co/bj6BjhrH/1782964058714.png" alt="Título Escribano"> 
-        </div>  
-        <div class="diploma-card" onclick="toggleZoom(event, this)">
-            <img src="https://i.ibb.co/Xk4Znpyy/1782964131678.png" alt="Especialización"> 
-        </div> 
-    </div>  
-</div>  
-
-<div id="notificacion" class="notificacion mostrar">✍️ Services notariales disponibles.</div>
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"¿Cuánto tarda el servicio?","acceptedAnswer":{"@type":"Answer","text":"Entre 24 y 48 horas dependiendo de la carga. Te avisamos por WhatsApp cuando esté listo."}},
+    {"@type":"Question","name":"¿Retiran a domicilio?","acceptedAnswer":{"@type":"Answer","text":"Sí, contamos con cadetería económica en toda la zona de Montevideo. Coordinamos día y horario por WhatsApp."}},
+    {"@type":"Question","name":"¿Cómo se puede abonar?","acceptedAnswer":{"@type":"Answer","text":"Aceptamos efectivo, transferencia bancaria, Mercado Pago y giros. El pago se realiza al momento de la entrega."}},
+    {"@type":"Question","name":"¿Qué es la fórmula antiolor?","acceptedAnswer":{"@type":"Answer","text":"Es un tratamiento especial con productos que eliminan las bacterias causantes del olor a mascotas, sin dañar las telas ni el relleno."}},
+    {"@type":"Question","name":"¿Atienden los domingos?","acceptedAnswer":{"@type":"Answer","text":"No, los domingos permanecemos cerrados. Podés escribirnos por WhatsApp y te respondemos el lunes a primera hora."}},
+    {"@type":"Question","name":"¿Qué zonas cubren para retiro?","acceptedAnswer":{"@type":"Answer","text":"Cubrimos La Unión, Malvín, Pocitos, Buceo, Centro, Parque Rodó, Punta Carretas y zonas cercanas. Consultá por tu barrio por WhatsApp."}}
+  ]
+}
+</script>
 <style>
-        .contenedor-propaganda {
-        text-align: center;       
-        max-width: 700px;         
-        margin: 40px auto;        
-        padding: 30px;
-        background-color: #f9f9f9; 
-        border: 1px solid #e0e0e0; 
-        font-family: sans-serif; }
-.titulo-seccion {
-        font-size: 24px;
-        font-weight: 800;         
-        color: #111111;
-        margin-top: 0;
-        margin-bottom: 15px;
-        text-transform: uppercase; }
-    .texto-destacado {
-        font-size: 18px;
-        font-weight: 700;         
-        color: #333333;
-        margin-bottom: 15px; }
-.texto-principal {
-        font-size: 16px;
-        font-weight: 600;         
-        color: #555555;
-        margin-bottom: 30px;  }
-    .boton-registro {
-        display: inline-block;
-        padding: 14px 32px;      
-        background-color: #002f6c; 
-        color: #ffffff;            
-        text-decoration: none;     
-        font-size: 16px;
-        font-weight: 700;         
-        text-transform: uppercase; 
-        letter-spacing: 0.5px;     
-        border-radius: 0px;        
-        transition: background-color 0.2s ease-in-out;}
-    .boton-registro:hover {
-        background-color: #001f4d; 
-        cursor: pointer; } </style>
-<section id="solicitud">
-<h2 class="titulo-seccion">SOLICITUD DE TURNO</h2>
-<h4>Agende una consulta llenando la solicitud</h4><p>Lunes a Sábado 9 a 18 hs
-Solo dentro de ese horario te permite reservar turno</p>
-<p><b>🏢 Atención únicamente con agenda previa.</b></p>  
-  <form class="form-agenda" onsubmit="enviarAgenda(event)">    
-<input type="text" id="nombre" placeholder="🪪 Nombre Completo" required="">    
-     <input type="text" id="CI" placeholder="🪪 CI" required="">  
-          <select id="asunto" required="">    
-   <option value="" disabled="" selected="" hidden="">Seleccione el caso</option>
-                    <option value="Penal">Derecho Penal</option>    
-                    <option value="Laboral">Derecho Laboral</option>    
-   <option value="Sucesiones / Escribanía">Sucesiones / Escribanía</option>    
-   <option value="Familia y Divorcios">Familia y Divorcios</option>    
-  <option value="Otro asunto">Otro asunto legal </option>   </select>    
-                <input type="text" id="fecha" placeholder="Seleccione la fecha ⬇️" required="" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'" onchange="this.style.color='#000'" min="2026-07-24">     
-                <input type="text" id="hora" placeholder="Seleccione la hora ⬇️" required="" onfocus="(this.type='time')" onblur="if(!this.value) this.type='text'" onchange="this.style.color='#000'" min="09:00" max="18:00">    
-                <button type="submit" class="btn-enviar-agenda">SOLICITAR CITA POR WHATSAPP</button> 
-            </form>  
-         
-    
-</section>
-<div class="bg-testimonios">
-    <div class="container" style="padding-bottom: 1.5rem;">  
-        <h2 class="titulo-seccion">Opiniones</h2>
-    </div>
-    <div style="width: 100%; overflow: hidden; padding-bottom: 2rem;">  
-        <div class="track-testimonios">  
-            <div class="testimonio">  
-   <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="María G.">  
-   <p>"Excelente profesional, resolvió mi sucesión en tiempo récord."</p>  
-                <h4>María G.</h4>  
-            </div>  
-            <div class="testimonio">  
-   <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos R.">  
-   <p>"Atención inmediata y muy clara. Me sentí muy respaldado legalmente."</p>  
-                <h4>Carlos R.</h4>   
-            </div>  
-            <div class="testimonio">  
-   <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Laura S.">  
-  <p>"Muy humano y certero en sus respuestas. Totalmente recomendable."</p>  
-                <h4>Laura S.</h4>  
-            </div>  
-            <div class="testimonio">  
-    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="María G.">  
-    <p>"Excelente profesional, resolvió mi sucesión en tiempo récord."</p>  
-                <h4>María G.</h4> 
-            </div> 
-        </div> 
-    </div> 
-</div>
-<section id="novedades" style="padding-bottom: 0;">
-    <h2 class="titulo-seccion">Novedades</h2>
-    <div class="carrusel-general">
- <div class="track-diplomas" id="grupoNovedades">
- <div class="diploma-card" onclick="toggleZoom(event, this)"> <img src="https://i.ibb.co/4wPykJ6M/1784182494256.png" alt="Novedad 1"> </div>
- <div class="diploma-card" onclick="toggleZoom(event, this)"> <img src="https://ecosdelhum.com.uy/download/multimedia.normal.a764437715c6c7c0.QWJvZ2Fkb3MgRCtpYV9ub3JtYWwud2VicA==.webp" alt="Novedad 2">  </div>
-<div class="diploma-card" onclick="toggleZoom(event, this)"> <img src="https://i.ibb.co/FkTJYRH2/1784183035801.png" alt="Novedad 3"> </div>
- <div class="diploma-card" onclick="toggleZoom(event, this)"> <img src="https://i.ibb.co/5Wx8BsB1/FB-IMG-1784211520101.jpg" alt="Novedad 4"> </div> </div> </div> </section>
- 
-<section class="presentacion">
-  <div class="presentacion-contenido">
-
-    <!-- Columna 1: Izquierda (Juego completo) -->
-    <div class="presentacion-izquierda">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdhFAmo7zRFu9Bl1B47uE67M7b1hNc_VO5um04B3Eu0KXD9mOe1eX-9iH-&amp;s=10" alt="Servicios Jurídicos">
-      <h4>Ley Nº 17.250:</h4>
-<h3> El Derecho del Consumidor</h3>
-      <p>
- &ZeroWidthSpace;El derecho a la información está protegido por la Ley de Defensa del Consumidor
-&ZeroWidthSpace;Lo central (Artículo 6): Establece como derecho fundamental la información clara, veraz y suficiente sobre los productos o servicios (precio final con impuestos, riesgos y condiciones).
-&ZeroWidthSpace;La obligación: Todo lo que la empresa prometa en la publicidad se considera parte del contrato y es obligatorio cumplirlo. La "letra chica" engañosa no tiene validez.
-</p>
-</div>
-
-<!-- Columna 2: Derecha (Juego completo) -->
-    <div class="presentacion-derecha">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdhFAmo7zRFu9Bl1B47uE67M7b1hNc_VO5um04B3Eu0KXD9mOe1eX-9iH-&amp;s=10" alt="Asesoría Legal">
-      <h4>Ley Nº 19.981:</h4>
-<h3> Derecho a la Desconexión Laboral</h3><p>    
-&ZeroWidthSpace;En Uruguay, este derecho está regulado específicamente por la Ley Nº 19.981 (promulgada en 2021).
-&ZeroWidthSpace;Lo central: Establece que todo trabajador tiene derecho a desconectarse de los dispositivos digitales y del trabajo fuera de su horario.
-&ZeroWidthSpace;La obligación: El empleador no puede exigirte responder ni realizar tareas en tu tiempo de descanso, licencias o días libres.
- </p> 
- </div>
-</div>
-</section>
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-.presentacion{
-  background:#fff;
-  padding:20px 15px;
-}
-.presentacion-contenido{
-  display:flex;
-  align-items:flex-start; 
-  gap:30px;
-  max-width:1100px;
-  margin:auto;
-}
-.presentacion-izquierda,
-.presentacion-derecha{
-  flex:1;
-}
-
-.presentacion-izquierda img,
-.presentacion-derecha img{
+:root{--primary:#0b4f8a;--primary-dark:#083a66;--primary-light:#eaf2fa;--secondary:#c8102e;--accent:#25d366;--accent-dark:#1da851;--gold:#ffd166;--bg-light:#f6f8fb;--text-dark:#1c2b36;--text-muted:#5c6b77;--white:#fff;--border:#e3e9ef;--shadow-sm:0 2px 8px rgba(15,40,70,.06);--shadow:0 4px 16px rgba(15,40,70,.08);--shadow-hover:0 8px 24px rgba(15,40,70,.14);--radius:10px;--radius-sm:6px;--transition:all .25s ease}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+html{scroll-behavior:smooth}
+body{background-color:var(--bg-light);color:var(--text-dark);line-height:1.55;padding-bottom:0;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+header{background:var(--white);box-shadow:var(--shadow-sm);position:sticky;top:0;z-index:200;border-bottom:3px solid var(--primary)}
+.nav{max-width:1100px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+.brand-icon{position:relative;width:44px;height:44px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1.3rem;transition:var(--transition);flex-shrink:0}
+.brand-icon::after{content:'';position:absolute;bottom:-3px;right:-3px;width:14px;height:14px;background:var(--accent);border:2px solid var(--white);border-radius:50%;animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}50%{box-shadow:0 0 0 6px rgba(37,211,102,0)}}
+.brand:hover .brand-icon{transform:rotate(-8deg) scale(1.05);background:var(--primary-dark)}
+.brand-text h1{font-size:1.15rem;font-weight:800;letter-spacing:1.2px;color:var(--primary-dark);line-height:1.1}
+.brand-text p{font-size:.62rem;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;font-weight:500}
+.nav-links{display:flex;align-items:center;gap:.3rem;list-style:none}
+.nav-links a{padding:.5rem .85rem;border-radius:var(--radius-sm);font-size:.82rem;font-weight:500;color:var(--text-dark);transition:var(--transition);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-links a i{font-size:.75rem;color:var(--primary);opacity:.8}
+.nav-links a:hover{background:var(--primary-light);color:var(--primary)}
+.nav-links a[aria-current="page"]{background:var(--primary-light);color:var(--primary);font-weight:600}
+.nav-links a.nav-cta{background:var(--accent);color:var(--white);font-weight:600;box-shadow:0 3px 10px rgba(37,211,102,.3)}
+.nav-links a.nav-cta i{color:var(--white);opacity:1}
+.nav-links a.nav-cta:hover{background:var(--accent-dark);color:var(--white);transform:translateY(-1px)}
+.menu-toggle{display:none;background:transparent;border:1.5px solid var(--border);width:42px;height:42px;border-radius:8px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:var(--transition);padding:0}
+.menu-toggle:hover{background:var(--primary-light);border-color:var(--primary)}
+.menu-toggle span{display:block;width:20px;height:2px;background:var(--primary-dark);border-radius:2px;transition:var(--transition)}
+.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.menu-toggle.active span:nth-child(2){opacity:0}
+.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.menu-backdrop{display:none;position:fixed;inset:0;background:rgba(8,30,55,.5);z-index:150;opacity:0;transition:opacity .3s ease}
+.menu-backdrop.show{display:block;opacity:1}
+.mobile-menu{display:none;background:var(--white);border-top:1px solid var(--border);box-shadow:var(--shadow);max-height:0;overflow:hidden;transition:max-height .35s ease;position:relative;z-index:200}
+.mobile-menu.open{max-height:600px}
+.mobile-menu ul{list-style:none;padding:.5rem .8rem .8rem}
+.mobile-menu ul li a{display:flex;align-items:center;gap:12px;padding:.75rem .9rem;border-radius:var(--radius-sm);font-size:.88rem;font-weight:500;color:var(--text-dark);transition:var(--transition);border-bottom:1px solid #f0f3f7}
+.mobile-menu ul li:last-child a{border-bottom:none;margin-top:.4rem}
+.mobile-menu ul li a i{width:30px;height:30px;background:var(--primary-light);color:var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.mobile-menu ul li a:hover{background:var(--primary-light)}
+.mobile-menu ul li a.mob-cta{background:var(--accent);color:var(--white);font-weight:600;border-bottom:none}
+.mobile-menu ul li a.mob-cta i{background:rgba(255,255,255,.25);color:var(--white)}
+.mobile-menu ul li a.mob-cta:hover{background:var(--accent-dark)}
+.intro{position:relative;height:480px;overflow:hidden;display:flex;align-items:center}
+.intro-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.intro-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(8,30,55,.92) 0%,rgba(8,30,55,.75) 45%,rgba(8,30,55,.35) 100%);z-index:1}
+.intro-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%}
+.intro-content{max-width:560px;color:var(--white)}
+.intro-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);color:var(--white);font-size:.7rem;font-weight:600;padding:.35rem .85rem;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:.6rem;border:1px solid rgba(255,255,255,.25)}
+.intro-tag i{color:var(--gold)}
+.intro-delivery{display:inline-flex;align-items:center;gap:6px;background:var(--secondary);color:var(--white);font-size:.7rem;font-weight:700;padding:.35rem .85rem;border-radius:20px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:1rem;margin-left:6px;box-shadow:0 2px 8px rgba(200,16,46,.35)}
+.estado-local{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;padding:.28rem .7rem;border-radius:20px;margin-bottom:1rem;margin-left:6px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.3);color:var(--white)}
+.intro h2{font-size:2.1rem;font-weight:800;line-height:1.15;margin-bottom:.8rem;color:var(--white);text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.intro h2 small{display:block;font-size:.55em;font-weight:500;opacity:.9;margin-top:4px}
+.intro-desc{font-size:.95rem;color:rgba(255,255,255,.9);margin-bottom:1.3rem;max-width:480px;text-shadow:0 1px 6px rgba(0,0,0,.3)}
+.intro-features{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
+.intro-feature{display:flex;align-items:center;gap:10px;font-size:.85rem;color:rgba(255,255,255,.95);font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+.intro-feature i{color:var(--white);font-size:.7rem;width:20px;height:20px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(37,211,102,.4)}
+.intro-cta{display:flex;gap:.6rem;flex-wrap:wrap}
+.intro-cta .btn-outline{color:var(--white);border-color:rgba(255,255,255,.7)}
+.intro-cta .btn-outline:hover{background:var(--white);color:var(--primary-dark);border-color:var(--white)}
+.marquee-section{background:var(--primary-dark);color:var(--white);padding:.85rem 0;overflow:hidden;border-top:3px solid var(--secondary);border-bottom:3px solid var(--secondary)}
+.marquee{display:flex;width:max-content;animation:scroll-left 30s linear infinite}
+.marquee:hover{animation-play-state:paused}
+.marquee-item{display:inline-flex;align-items:center;gap:10px;padding:0 1.6rem;font-weight:600;font-size:.95rem;letter-spacing:.5px;white-space:nowrap;text-transform:uppercase}
+.marquee-item i{color:var(--secondary);font-size:.85rem}
+.marquee-separator{color:var(--secondary);font-size:1.1rem;display:flex;align-items:center;opacity:.6}
+@keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero{background:var(--white);padding:1.4rem 1rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-20%;width:160px;height:160px;background:var(--primary-light);border-radius:50%;opacity:.7;pointer-events:none}
+.hero-badge{background-color:var(--secondary);color:var(--white);padding:.3rem .95rem;border-radius:4px;font-weight:600;font-size:.75rem;display:inline-block;margin-bottom:.7rem;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 2px 8px rgba(200,16,46,.25)}
+.hero h2{font-size:1.45rem;color:var(--primary-dark);margin-bottom:.4rem;font-weight:800}
+.hero p{color:var(--text-muted);max-width:600px;margin:0 auto 1.1rem;font-size:.9rem}
+.btn-main{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--white);padding:.7rem 1.5rem;border-radius:var(--radius-sm);font-weight:600;font-size:.88rem;box-shadow:0 3px 10px rgba(11,79,138,.25);transition:var(--transition);border:none;cursor:pointer;letter-spacing:.3px}
+.btn-main:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 6px 16px rgba(11,79,138,.35)}
+.btn-wpp{background:var(--accent);box-shadow:0 3px 10px rgba(37,211,102,.3)}
+.btn-wpp:hover{background:var(--accent-dark);box-shadow:0 6px 16px rgba(37,211,102,.4)}
+.btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:transparent;color:var(--primary);padding:.55rem 1rem;border-radius:var(--radius-sm);font-weight:600;font-size:.8rem;border:1.5px solid var(--primary);transition:var(--transition);cursor:pointer}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+.container{max-width:1000px;margin:0 auto;padding:1.4rem .8rem}
+.section-title{text-align:center;font-size:1.25rem;color:var(--primary-dark);margin-bottom:1.1rem;position:relative;font-weight:700;letter-spacing:.3px}
+.section-title::after{content:'';display:block;width:44px;height:3px;background:var(--secondary);margin:8px auto 0;border-radius:2px}
+/* CARRUSEL */
+.carousel-section{position:relative;max-width:1000px;margin:1rem auto;padding:0 .8rem}
+.carousel-container{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:var(--white)}
+.carousel-slides{display:flex;transition:transform .5s ease-in-out;will-change:transform}
+.carousel-slide{min-width:100%;position:relative}
+.carousel-slide img{width:100%;height:300px;object-fit:cover;display:block}
+.carousel-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(8,30,55,.85));color:white;padding:1.6rem 1rem .9rem;text-align:center}
+.carousel-caption h3{font-size:1.15rem;font-weight:700;margin-bottom:.15rem}
+.carousel-caption p{font-size:.82rem;opacity:.92}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.95);color:var(--primary-dark);border:none;width:38px;height:38px;border-radius:50%;font-size:1rem;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.2);transition:var(--transition);display:flex;align-items:center;justify-content:center;z-index:10}
+.carousel-btn:hover{background:var(--white);transform:translateY(-50%) scale(1.08)}
+.carousel-btn.prev{left:10px}
+.carousel-btn.next{right:10px}
+.carousel-dots{display:flex;justify-content:center;gap:7px;margin-top:.7rem}
+.dot{width:9px;height:9px;border-radius:50%;background:#c7d2dc;border:none;cursor:pointer;transition:var(--transition);padding:0}
+.dot.active{background:var(--primary);transform:scale(1.3)}
+/* PROMOS */
+.promos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1.8rem}
+.promo-card{background:var(--white);border-radius:var(--radius);padding:1.2rem 1rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);border-top:3px solid var(--primary);text-align:center;position:relative;overflow:hidden;transition:var(--transition);display:flex;flex-direction:column}
+.promo-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.promo-card.highlight{border-top-color:var(--secondary);background:linear-gradient(180deg,#fef7f8 0%,var(--white) 45%)}
+.promo-card .tag{position:absolute;top:12px;right:-26px;background:var(--secondary);color:white;padding:3px 28px;transform:rotate(45deg);font-size:.65rem;font-weight:800;letter-spacing:1px}
+.promo-card .promo-icon{width:42px;height:42px;background:var(--primary-light);color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.15rem;margin:0 auto .6rem}
+.promo-card.highlight .promo-icon{background:#fde8ec;color:var(--secondary)}
+.promo-card h3{font-size:1.05rem;color:var(--primary-dark);margin-bottom:.35rem;font-weight:700}
+.promo-card .price{font-size:2rem;font-weight:800;color:var(--secondary);margin:.2rem 0;line-height:1}
+.promo-card .price small{font-size:.85rem;color:var(--text-muted);font-weight:600}
+.promo-card p{color:var(--text-muted);font-size:.82rem;margin-bottom:.9rem;flex-grow:1}
+.promo-card .btn-outline{width:100%}
+/* PRECIOS */
+.precios-section{background:var(--white);border-radius:var(--radius);padding:1.3rem 1rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);margin-bottom:1.8rem}
+.tabla-precios{width:100%;border-collapse:collapse;margin-top:.4rem}
+.tabla-precios th,.tabla-precios td{padding:.65rem .5rem;text-align:left;font-size:.85rem;border-bottom:1px solid var(--border)}
+.tabla-precios th{background:var(--primary-light);color:var(--primary-dark);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+.tabla-precios td:last-child{text-align:right;font-weight:700;color:var(--secondary);white-space:nowrap}
+.tabla-precios tr:hover td{background:var(--primary-light)}
+.nota-precios{font-size:.72rem;color:var(--text-muted);margin-top:.7rem;text-align:center;font-style:italic}
+/* ZONAS */
+.zonas-section{background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 100%);border-radius:var(--radius);padding:1.4rem 1.1rem;color:var(--white);margin-bottom:1.8rem;box-shadow:var(--shadow)}
+.zonas-section .section-title{color:var(--white)}
+.zonas-section .section-title::after{background:var(--gold)}
+.zonas-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-top:.6rem}
+.zona-badge{background:rgba(255,255,255,.15);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.3);padding:.4rem .85rem;border-radius:20px;font-size:.78rem;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.zona-badge i{color:var(--gold);font-size:.7rem}
+.zonas-nota{text-align:center;font-size:.78rem;margin-top:.9rem;opacity:.9}
+.zonas-nota a{color:var(--gold);font-weight:600;text-decoration:underline}
+/* WORKFLOW */
+.workflow{background:var(--white);padding:1.3rem 1rem;border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--border);margin-bottom:1.8rem}
+.workflow-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-top:.9rem}
+.step-item{text-align:center;padding:.6rem .3rem;border-radius:var(--radius-sm);transition:var(--transition);border:1px solid transparent}
+.step-item:hover{background:var(--primary-light);border-color:#d5e3f0}
+.step-icon{width:48px;height:48px;background:var(--primary-light);color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto .6rem;transition:var(--transition)}
+.step-item:hover .step-icon{background:var(--primary);color:var(--white);transform:scale(1.06)}
+.step-item h4{font-size:.85rem;margin-bottom:.15rem;color:var(--primary-dark);font-weight:600}
+.step-item p{font-size:.73rem;color:var(--text-muted);line-height:1.35}
+/* TESTIMONIOS */
+.testimonios-section{position:relative;margin-bottom:1.8rem}
+.testimonios-carousel{position:relative;overflow:hidden;border-radius:var(--radius)}
+.testimonios-track{display:flex;transition:transform .5s ease-in-out;will-change:transform}
+.testimonio{min-width:100%;background:var(--white);border-radius:var(--radius);padding:1.4rem 1.2rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);position:relative;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.testimonio::before{content:'\201C';position:absolute;top:8px;left:16px;font-size:3.5rem;font-family:Georgia,serif;color:var(--primary-light);line-height:1}
+.testimonio-stars{color:var(--gold);font-size:.9rem;margin-bottom:.7rem;position:relative}
+.testimonio p{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;position:relative;font-style:italic;line-height:1.6}
+.testimonio-autor{display:flex;align-items:center;justify-content:center;gap:10px;position:relative}
+.testimonio-avatar{width:40px;height:40px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
+.testimonio-autor div{text-align:left}
+.testimonio-autor div strong{font-size:.85rem;color:var(--primary-dark);display:block;line-height:1.2}
+.testimonio-autor div span{font-size:.7rem;color:var(--text-muted)}
+.testimonios-dots{display:flex;justify-content:center;gap:8px;margin-top:.9rem}
+.testimonios-dots .dot{width:10px;height:10px}
+.testimonios-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.95);color:var(--primary-dark);border:none;width:36px;height:36px;border-radius:50%;font-size:.9rem;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);transition:var(--transition);display:flex;align-items:center;justify-content:center;z-index:10}
+.testimonios-btn:hover{background:var(--white);transform:translateY(-50%) scale(1.1)}
+.testimonios-btn.prev{left:8px}
+.testimonios-btn.next{right:8px}
+/* FAQ */
+.faq-section{margin-bottom:1.8rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;align-items:start}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:var(--transition)}
+.faq-item[open]{box-shadow:var(--shadow-sm);border-color:var(--primary)}
+.faq-item summary{padding:.85rem 1rem;cursor:pointer;font-weight:600;font-size:.85rem;color:var(--primary-dark);display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none;transition:var(--transition)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'\f067';font-family:'Font Awesome 6 Free';font-weight:900;font-size:.75rem;color:var(--primary);transition:var(--transition)}
+.faq-item[open] summary::after{content:'\f068'}
+.faq-item summary:hover{background:var(--primary-light)}
+.faq-item .faq-answer{padding:0 1rem 1rem;font-size:.8rem;color:var(--text-muted);line-height:1.5}
+/* INFO CARD */
+.info-card{background:var(--white);border-radius:var(--radius);padding:1.1rem .9rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin-bottom:1.5rem}
+.info-item{display:flex;align-items:center;gap:11px;padding:.55rem;border-radius:var(--radius-sm);transition:var(--transition)}
+.info-item:hover{background:var(--primary-light)}
+.info-item i{font-size:1.05rem;color:var(--primary);width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--primary-light);border-radius:50%;flex-shrink:0}
+.info-item div h5{font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.info-item div p{font-weight:600;font-size:.84rem}
+.info-item div p a{color:var(--primary);font-weight:600;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:var(--transition);cursor:pointer}
+.info-item div p a:hover,.info-item div p a:focus-visible{color:var(--secondary);text-decoration-color:var(--secondary)}
+.pagos{display:flex;align-items:center;gap:.5rem;flex-wrap:nowrap;margin-top:.6rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.pagos::-webkit-scrollbar{height:3px}
+.pagos::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.pagos > span:first-child{font-size:.7rem;color:var(--text-muted);font-weight:600;white-space:nowrap;flex-shrink:0}
+.pago-badge{display:inline-flex;align-items:center;gap:4px;background:var(--white);border:1px solid var(--border);padding:.28rem .55rem;border-radius:6px;font-size:.68rem;color:var(--text-dark);font-weight:600;box-shadow:var(--shadow-sm);white-space:nowrap;flex-shrink:0}
+.pago-badge i{color:var(--primary);font-size:.68rem}
+/* FORMULARIO */
+.form-section{background:var(--white);border-radius:var(--radius);padding:1.4rem 1.1rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);margin-bottom:1.8rem}
+.form-section .section-title{margin-bottom:.6rem}
+.form-intro{text-align:center;color:var(--text-muted);font-size:.85rem;margin-bottom:1.1rem;max-width:500px;margin-left:auto;margin-right:auto}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;max-width:600px;margin:0 auto}
+.form-grid .full{grid-column:1/-1}
+.form-grid input,.form-grid select,.form-grid textarea{width:100%;padding:.7rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.85rem;font-family:inherit;color:var(--text-dark);background:var(--bg-light);transition:var(--transition)}
+.form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{outline:none;border-color:var(--primary);background:var(--white);box-shadow:0 0 0 3px rgba(11,79,138,.1)}
+.form-grid textarea{resize:vertical;min-height:70px}
+.form-grid button{grid-column:1/-1;justify-content:center;padding:.85rem;font-size:.9rem}
+.form-nota{font-size:.68rem;color:var(--text-muted);text-align:center;margin-top:.7rem;line-height:1.4}
+.form-nota a{color:var(--primary);text-decoration:underline}
+/* MAPA */
+.map-section{margin-bottom:0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+.map-header{display:flex;align-items:center;justify-content:space-between;background:var(--white);padding:.75rem 1rem;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap}
+.map-header-left{display:flex;align-items:center;gap:10px}
+.map-header-left i{color:var(--primary);font-size:1.15rem}
+.map-header-left h4{font-size:.9rem;color:var(--primary-dark);font-weight:700}
+.map-header-left p{font-size:.75rem;color:var(--text-muted);margin:0}
+.map-header .btn-outline{padding:.45rem .9rem;font-size:.78rem}
+.map-section iframe{width:100%;height:280px;border:0;display:block;filter:grayscale(15%)}
+/* FOOTER 2 COLUMNAS - SIEMPRE */
+footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;margin-top:2.5rem;border-top:3px solid var(--secondary)}
+.footer-main{
   width:100%;
-  max-width:180px;
-  height:auto;
-  border-radius:10px;
-  display:block;
-  margin:0 auto 15px;
+  max-width:1100px;
+  margin:0 auto;
+  padding:1.6rem 1.5rem 1rem;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+  align-items:start;
 }
-
-.presentacion-izquierda h4{
-  color:#c5a059;
-  font-size:.75rem;
-  letter-spacing:2px;
-  margin-bottom:8px;
-  text-transform:uppercase;
-}
-.presentacion-izquierda h1{
-  color:#0f1c3f;
-  font-size:1.3rem;
-  margin-bottom:10px;
-}
-.presentacion-izquierda p,
-.presentacion-derecha p{
-  color:#555;
+.footer-col{text-align:left}
+.footer-col h4{
+  color:var(--white);
   font-size:.85rem;
+  font-weight:700;
+  margin-bottom:.5rem;
+  letter-spacing:.5px;
+  position:relative;
+  padding-bottom:5px;
+  display:inline-block;
+}
+.footer-col h4::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;
+  width:22px;height:2px;
+  background:var(--gold);
+  border-radius:2px;
+}
+.footer-subtitle{margin-top:.9rem !important}
+.footer-col p,
+.footer-col a{
+  font-size:.75rem;
   line-height:1.6;
-  margin-bottom:15px;
+  color:#b8c8d6;
+  display:block;
+  transition:var(--transition);
 }
+.footer-col a:hover{color:var(--white);text-decoration:underline;text-underline-offset:3px}
+.footer-col a i,
+.footer-col p i{margin-right:4px;color:var(--gold);font-size:.75rem}
 
-@media(min-width:768px){
-  .presentacion{
-    padding:60px;
-  }
-  .presentacion-izquierda h1{
-    font-size:2.8rem;
-  }
-  .presentacion-izquierda p,
-  .presentacion-derecha p{
-    font-size:1.1rem;
-  }
-  .presentacion-izquierda img,
-  .presentacion-derecha img{
-    max-width:420px;  } }
-</style>
-<section id="contacto">
-<h2 class="titulo-seccion">Contacto</h2>
-<p class="info-icon">📍
-<strong>Dirección:</strong>Av.18 de Julio y minas, Mdeo,Uy</p>
-<p class="info-icon">📞 <strong>Teléfono:</strong> <a href="tel:+59898616458" style="color: var(--azul-premium);">LLAMADA</a></p>
-<p class="info-icon">📱 <strong>WhatsApp:</strong> <a href="https://wa.me/59898616458" target="_blank" style="color: var(--verde-whatsapp);">Chatear ahora</a></p>
-<p class="info-icon">✉️ <strong>Email:</strong> <a href="mailto: alesandrepablo@gmail.com" style="color: #d93025;">Enviar correo</a></p>
-<p><strong>🕘Atención:  </strong> Lunes a Sábado 09:00 a 18:00 hs </p>
-<p><b>🏢 Atención únicamente con agenda previa.</b></p>
+/* Marca */
+.footer-brand{display:flex;align-items:center;gap:8px;margin-bottom:.4rem}
+.footer-brand .brand-icon{width:26px;height:26px;font-size:.75rem;background:var(--primary);flex-shrink:0}
+.footer-brand .brand-icon::after{width:7px;height:7px;border-width:1.5px}
+.footer-brand h4{margin:0;font-size:.85rem;padding:0;display:block}
+.footer-brand h4::after{display:none}
+
+/* Links legales */
+.footer-col a[data-modal]{
+  padding:.22rem 0;
+  font-size:.75rem;
+  color:#dbe5ee;
+  font-weight:500;
+}
+.footer-col a[data-modal]:hover{color:var(--gold)}
+
+/* Barra inferior */
+.footer-bottom{
+  width:100%;
+  text-align:center;
+  padding:.8rem 1rem;
+  border-top:1px solid rgba(255,255,255,.1);
+  font-size:.68rem;
+  color:#8ba0b4;
+}
+.footer-bottom strong{color:var(--white)}
+.footer-bottom a{color:var(--gold);text-decoration:underline}
+
+/* WPP FLOTANTE */
+.wpp-flotante{position:fixed;bottom:18px;right:18px;z-index:300;width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--white);font-size:1.7rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.5);transition:var(--transition);animation:pulse-wpp 2s infinite}
+.wpp-flotante:hover{background:var(--accent-dark);transform:scale(1.08)}
+@keyframes pulse-wpp{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,.5),0 0 0 0 rgba(37,211,102,.5)}50%{box-shadow:0 4px 16px rgba(37,211,102,.5),0 0 0 14px rgba(37,211,102,0)}}
+/* MODAL LEGAL */
+.modal-legal{display:none;position:fixed;inset:0;background:rgba(8,30,55,.7);z-index:400;align-items:center;justify-content:center;padding:1rem}
+.modal-legal.show{display:flex}
+.modal-content{background:var(--white);border-radius:var(--radius);max-width:600px;width:100%;max-height:85vh;overflow-y:auto;padding:1.5rem;position:relative;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.modal-content h3{color:var(--primary-dark);font-size:1.1rem;margin-bottom:.8rem}
+.modal-content p{font-size:.82rem;color:var(--text-muted);line-height:1.6;margin-bottom:.7rem}
+.modal-close{position:absolute;top:10px;right:12px;background:var(--primary-light);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;color:var(--primary);font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.modal-close:hover{background:var(--secondary);color:var(--white)}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* RESPONSIVE GENERAL */
+@media(max-width:780px){.nav-links{display:none}.menu-toggle{display:flex}.mobile-menu{display:block}.intro{height:420px}.intro h2{font-size:1.6rem}}
+@media(max-width:640px){.nav{padding:.6rem .7rem}.brand-icon{width:38px;height:38px;font-size:1.1rem}.brand-icon::after{width:12px;height:12px}.brand-text h1{font-size:.95rem;letter-spacing:.8px}.brand-text p{font-size:.55rem}.menu-toggle{width:38px;height:38px}.intro{height:auto;min-height:420px;padding:2rem 0;align-items:flex-end}.intro-overlay{background:linear-gradient(180deg,rgba(8,30,55,.5) 0%,rgba(8,30,55,.85) 55%,rgba(8,30,55,.95) 100%)}.intro-inner{padding:1rem}.intro-tag{font-size:.6rem;padding:.28rem .65rem;margin-bottom:.5rem}.intro-delivery{font-size:.6rem;padding:.28rem .65rem;margin-bottom:.6rem}.estado-local{font-size:.6rem;margin-left:0;margin-bottom:.6rem}.intro h2{font-size:1.3rem;margin-bottom:.5rem}.intro-desc{font-size:.78rem;margin-bottom:.9rem}.intro-features{gap:.35rem;margin-bottom:1rem}.intro-feature{font-size:.72rem}.intro-feature i{width:16px;height:16px;font-size:.6rem}.intro-cta{gap:.5rem}.intro-cta .btn-main{padding:.55rem 1rem;font-size:.75rem;flex:1;justify-content:center}.intro-cta .btn-outline{padding:.5rem .8rem;font-size:.72rem;flex:1}.marquee-section{padding:.6rem 0}.marquee-item{font-size:.75rem;padding:0 1rem;gap:6px}.marquee-item i{font-size:.7rem}.carousel-section{margin:.6rem auto;padding:0 .6rem}.carousel-slide img{height:165px}.carousel-caption{padding:1.1rem .7rem .5rem}.carousel-caption h3{font-size:.9rem}.carousel-caption p{font-size:.7rem}.carousel-btn{width:28px;height:28px;font-size:.8rem}.carousel-btn.prev{left:6px}.carousel-btn.next{right:6px}.carousel-dots{margin-top:.5rem;gap:5px}.dot{width:7px;height:7px}.hero{padding:1rem .8rem}.hero::before{width:110px;height:110px}.hero-badge{font-size:.65rem;padding:.22rem .7rem;margin-bottom:.45rem}.hero h2{font-size:1.1rem}.hero p{font-size:.78rem;margin-bottom:.8rem}.hero .btn-main{padding:.6rem 1.2rem;font-size:.82rem}.container{padding:1rem .65rem}.section-title{font-size:1.05rem;margin-bottom:.85rem}.section-title::after{width:36px;height:2.5px;margin-top:6px}.promos-grid{grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:1.2rem}.promo-card{padding:.85rem .55rem}.promo-card .tag{font-size:.55rem;padding:2px 22px;top:8px;right:-22px}.promo-card .promo-icon{width:36px;height:36px;font-size:1rem;margin-bottom:.45rem}.promo-card h3{font-size:.82rem;margin-bottom:.2rem}.promo-card .price{font-size:1.5rem}.promo-card .price small{font-size:.7rem}.promo-card p{font-size:.68rem;margin-bottom:.6rem;line-height:1.35}.promo-card .btn-outline{padding:.4rem .5rem;font-size:.7rem}.precios-section{padding:.9rem .7rem;margin-bottom:1.2rem}.tabla-precios th,.tabla-precios td{padding:.5rem .3rem;font-size:.72rem}.tabla-precios th{font-size:.62rem}.nota-precios{font-size:.62rem}.zonas-section{padding:1rem .7rem;margin-bottom:1.2rem}.zona-badge{font-size:.68rem;padding:.32rem .7rem}.zonas-nota{font-size:.68rem}.workflow{padding:.9rem .7rem;margin-bottom:1.2rem}.workflow-steps{grid-template-columns:repeat(2,1fr);gap:.5rem;margin-top:.7rem}.step-item{padding:.5rem .2rem}.step-icon{width:40px;height:40px;font-size:1rem;margin-bottom:.4rem}.step-item h4{font-size:.72rem}.step-item p{font-size:.62rem;line-height:1.3}.testimonio{padding:1rem .8rem}.testimonio p{font-size:.78rem}.testimonio-autor div strong{font-size:.78rem}.testimonio-autor div span{font-size:.65rem}.testimonios-btn{width:30px;height:30px;font-size:.75rem}.testimonios-btn.prev{left:4px}.testimonios-btn.next{right:4px}.testimonios-dots{margin-top:.7rem;gap:6px}.testimonios-dots .dot{width:8px;height:8px}.faq-section{grid-template-columns:repeat(2,1fr);gap:.45rem;margin-bottom:1.2rem}.faq-item summary{padding:.65rem .7rem;font-size:.72rem;gap:6px}.faq-item summary::after{font-size:.65rem}.faq-item .faq-answer{padding:0 .7rem .7rem;font-size:.68rem;line-height:1.45}.info-card{grid-template-columns:repeat(2,1fr);padding:.8rem .6rem;gap:.4rem}.info-item{padding:.4rem .3rem;gap:8px;flex-direction:column;text-align:center}.info-item i{width:32px;height:32px;font-size:.9rem}.info-item div h5{font-size:.6rem}.info-item div p{font-size:.72rem}.pagos{gap:.35rem;margin-top:.4rem;margin-bottom:1rem}.pago-badge{font-size:.6rem;padding:.22rem .45rem;gap:3px}.pago-badge i{font-size:.6rem}.pagos > span:first-child{font-size:.62rem}.form-section{padding:1rem .8rem}.form-grid{grid-template-columns:1fr}.form-grid textarea{min-height:60px}.map-header{padding:.6rem .7rem;flex-direction:column;align-items:flex-start;gap:8px}.map-header-left h4{font-size:.8rem}.map-header-left p{font-size:.68rem}.map-header .btn-outline{font-size:.72rem;padding:.4rem .8rem;width:100%}.map-section iframe{height:200px}
+  
+  /* Ajustes para que las 2 columnas del footer entren bien en celular */
+  .footer-main{grid-template-columns:1fr 1fr;padding:1.2rem .8rem .8rem;gap:.5rem}
+  .footer-col h4{font-size:.75rem;margin-bottom:.4rem;padding-bottom:4px}
+  .footer-col h4::after{width:18px}
+  .footer-col p,.footer-col a{font-size:.65rem;line-height:1.45}
+  .footer-col a i,.footer-col p i{font-size:.65rem;margin-right:2px}
+  .footer-brand{gap:4px}
+  .footer-brand h4{font-size:.75rem}
+  .footer-brand .brand-icon{width:22px;height:22px;font-size:.65rem}
+  .footer-bottom{padding:.6rem;font-size:.6rem}
+  .wpp-flotante{width:50px;height:50px;font-size:1.5rem;bottom:14px;right:14px}
+}
+@media(max-width:380px){.brand-text h1{font-size:.85rem}.intro h2{font-size:1.15rem}.intro-desc{font-size:.72rem}.carousel-slide img{height:140px}.promo-card .price{font-size:1.3rem}.promo-card h3{font-size:.75rem}.step-icon{width:36px;height:36px;font-size:.9rem}.step-item h4{font-size:.68rem}.step-item p{font-size:.58rem}.info-item div p{font-size:.68rem}.faq-item summary{padding:.55rem .6rem;font-size:.68rem}.faq-item .faq-answer{padding:0 .6rem .6rem;font-size:.62rem}.footer-main{padding:1rem .5rem .6rem;gap:.4rem}.footer-col h4{font-size:.7rem}.footer-col p,.footer-col a{font-size:.6rem;line-height:1.4}.footer-bottom{font-size:.58rem}}</style></head><body>
+<header><nav class="nav">
+<div class="brand">
+<div class="brand-icon"><i class="fa-solid fa-soap" aria-hidden="true"></i></div>
+<div class="brand-text"><h1>LAVADERO LA UNIÓN</h1><p>Servicio Profesional</p></div></div>
+<ul class="nav-links">
+<li><a href="#inicio" aria-label="Ir a inicio"><i class="fa-solid fa-house" aria-hidden="true"></i> Inicio</a></li>
+<li><a href="#promos" aria-label="Ver promociones"><i class="fa-solid fa-tags" aria-hidden="true"></i> Promos</a></li>
+<li><a href="#precios" aria-label="Ver precios"><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i> Precios</a></li>
+<li><a href="#servicios" aria-label="Ver servicios"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Servicios</a></li>
+<li><a href="#contacto" aria-label="Ir a contacto"><i class="fa-solid fa-address-book" aria-hidden="true"></i> Contacto</a></li>
+<li><a href="#ubicacion" aria-label="Ver ubicación"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ubicación</a></li><li><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener" class="nav-cta" aria-label="Consultar por WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar</a></li></ul>
+<button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button></nav>
+<div class="menu-backdrop" id="menuBackdrop"></div><div class="mobile-menu" id="mobileMenu">
+<ul><li><a href="#inicio"><i class="fa-solid fa-house" aria-hidden="true"></i> Inicio</a></li><li><a href="#promos"><i class="fa-solid fa-tags" aria-hidden="true"></i> Promociones</a></li><li><a href="#precios"><i class="fa-solid fa-dollar-sign" aria-hidden="true"></i> Precios</a></li>
+<li><a href="#servicios"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Servicios</a></li>
+<li><a href="#contacto"><i class="fa-solid fa-address-book" aria-hidden="true"></i> Contacto</a></li>
+<li><a href="#ubicacion"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Ubicación</a></li><li><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener" class="mob-cta" aria-label="Consultar por WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a></li></ul></div></header>
+<section class="intro" id="inicio">
+<img class="intro-bg"
+src="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1600&q=80&auto=format"
+srcset="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=800&q=80&auto=format 800w, https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1600&q=80&auto=format 1600w"
+     sizes="100vw"
+alt="Lavandería profesional - Lavadero La Unión">
+<div class="intro-overlay"></div>
+<div class="intro-inner">
+<div class="intro-content"><div>
+<span class="intro-tag"><i class="fa-solid fa-star" aria-hidden="true"></i> Lavandería de Confianza en Montevideo</span>
+<span class="intro-delivery"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Listo en 24-48 hs</span>
+<span class="estado-local" id="estadoLocal"><i class="fa-solid fa-clock" aria-hidden="true"></i> Verificando horario...</span></div>
+<h2>Lavadero La Unión<small>Tu ropa en las mejores manos</small></h2>
+<p class="intro-desc">Cuidamos las prendas de las familias de Montevideo.</p>
+<div class="intro-features">
+<div class="intro-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> Lavado cuidadoso</div>
+<div class="intro-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> Retiro y entrega a domicilio</div>
+<div class="intro-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> Tratamiento antiolor para mascotas</div></div>
+<div class="intro-cta">
+<a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar%20por%20sus%20servicios%20de%20lavadero" target="_blank" rel="noopener" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar Ahora</a>
+<a href="tel:+59897192247" class="btn-outline"><i class="fa-solid fa-phone" aria-hidden="true"></i> Llamar</a>
+</div></div></div></section>
+<section class="marquee-section" aria-hidden="true">
+<div class="marquee">
+<div class="marquee-item"><i class="fa-solid fa-soap"></i> Acolchados</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-bed"></i> Frazadas</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-shirt"></i> Prendas</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-dog"></i> Antiolor Mascotas</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-truck-fast"></i> Retiro a Domicilio</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-wind"></i> Confiable</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-spray-can-sparkles"></i> Perfumado</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-box-open"></i> Embolsado</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-soap"></i> Acolchados</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-bed"></i> Frazadas</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-shirt"></i> Prendas</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-dog"></i> Antiolor Mascotas</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-truck-fast"></i> Retiro a Domicilio</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-wind"></i> Confiable</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-spray-can-sparkles"></i> Perfumado</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+<div class="marquee-item"><i class="fa-solid fa-box-open"></i> Embolsado</div>
+<span class="marquee-separator"><i class="fa-solid fa-circle"></i></span></div>
+</section><section class="hero">
+<span class="hero-badge"><i class="fa-solid fa-fire" aria-hidden="true"></i> ¡Aprovechá la Temporada!</span>
+<h2>¡Lavales para Guardar Limpios!</h2>
+<p>Trabajo profesional garantizado. Cuidamos tus acolchados, frazadas y prendas.</p>
+<a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar%20por%20sus%20servicios%20de%20lavadero" target="_blank" rel="noopener" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a></section><div class="container">
+<!-- PROMOS -->
+<h3 class="section-title" id="promos">Promociones Destacadas</h3>
+<div class="promos-grid reveal">
+<div class="promo-card highlight">
+<div class="tag">TOP</div>
+<div class="promo-icon"><i class="fa-solid fa-bed" aria-hidden="true"></i></div>
+<h3>Promo Acolchados</h3>
+<div class="price">3x2</div>
+<p>En acolchados y frazadas. ¡Llevás 3 y pagás 2!</p>
+<a href="https://wa.me/59897192247?text=Hola%2C%20me%20interesa%20la%20promo%203x2%20en%20acolchados" target="_blank" rel="noopener" class="btn-outline">Pedir Promo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
+<div class="promo-card">
+<div class="promo-icon"><i class="fa-solid fa-dog" aria-hidden="true"></i></div>
+<h3>Especial Mascotas</h3>
+<div class="price">$600<small>desde</small></div>
+<p><strong>Fórmula Antiolor:</strong> Eliminamos el olor a mascotas. Secado para proteger telas.</p><a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20lavado%20antiolor" target="_blank" rel="noopener" class="btn-outline">Consultar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+</div>
+<div class="promo-card">
+<div class="promo-icon"><i class="fa-solid fa-tags" aria-hidden="true"></i></div>
+<h3>Descuento Cantidad</h3>
+<p>Precios especiales al traer varias prendas juntas. Consultá por tu combo.</p>
+<a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20saber%20los%20precios%20por%20cantidad" target="_blank" rel="noopener" class="btn-outline">Ver Precios <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+</div>
+<div class="promo-card">
+<div class="promo-icon"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i></div>
+<h3>Retiro a Domicilio</h3>
+<p>Pasamos a buscar y entregamos en tu puerta con costos mínimos.</p>
+<a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20coordinar%20un%20retiro%20a%20domicilio" target="_blank" rel="noopener" class="btn-outline">Coordinar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div>
+<!-- PRECIOS -->
+<section class="precios-section reveal" id="precios">
+<h3 class="section-title">Precios Orientativos</h3>
+<table class="tabla-precios">
+<thead>
+<tr><th>Servicio</th><th>Precio</th></tr>
+</thead>
+<tbody>
+<tr><td>Acolchado 1 plaza</td><td>$450</td></tr>
+<tr><td>Acolchado 2 plazas</td><td>$650</td></tr>
+<tr><td>Frazada / manta</td><td>$400</td></tr>
+<tr><td>Tratamiento antiolor mascotas</td><td>+$200</td></tr>
+<tr><td>Retiro y entrega (zona céntrica)</td><td>$150</td></tr>
+</tbody>
+</table>
+<p class="nota-precios">*Precios orientativos. El costo final puede variar según tamaño, cantidad y zona. Consultá sin compromiso.</p>
+</section><!-- ZONAS -->
+<section class="zonas-section reveal" id="zonas">
+<h3 class="section-title">Zonas de Retiro</h3>
+<div class="zonas-grid">
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> La Unión</span>
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Malvín</span>
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Pocitos</span>
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Buceo</span>
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Centro</span>
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Parque Rodó</span>
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Punta Carretas</span>
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Tres Cruces</span>
+<span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Cordón</span>
+</div>
+<p class="zonas-nota">¿No ves tu barrio? <a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20saber%20si%20retiran%20en%20mi%20barrio" target="_blank" rel="noopener">Consultá por WhatsApp</a></p>
+</section><!-- CARRUSEL -->
+<h3 class="section-title">Nuestro Trabajo</h3>
+<section class="carousel-section reveal">
+<div class="carousel-container">
+<div class="carousel-slides" id="carouselSlides">
+<div class="carousel-slide">
+<img src="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1000&q=80&auto=format"
+     srcset="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=600&q=80&auto=format 600w, https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1000&q=80&auto=format 1000w"
+     sizes="(max-width:640px) 100vw, 1000px"
+     alt="Acolchados limpios y esponjosos" loading="lazy">
+<div class="carousel-caption"><h3>Acolchados como nuevos</h3><p>Limpieza profunda y secado</p></div></div>
+<div class="carousel-slide">
+<img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1000&q=80&auto=format"
+     srcset="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&q=80&auto=format 600w, https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1000&q=80&auto=format 1000w"
+     sizes="(max-width:640px) 100vw, 1000px"
+     alt="Lavado de prendas" loading="lazy">
+<div class="carousel-caption"><h3>Lavado de prendas</h3><p>Cuidamos cada prenda con dedicación</p></div>
+</div>
+<div class="carousel-slide">
+<img src="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=1000&q=80&auto=format"
+     srcset="https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600&q=80&auto=format 600w, https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=1000&q=80&auto=format 1000w"
+     sizes="(max-width:640px) 100vw, 1000px"
+     alt="Servicio de retiro y entrega" loading="lazy">
+<div class="carousel-caption"><h3>Retiro y entrega a domicilio</h3><p>Cadetería económica en Montevideo</p></div>
+</div>
+<div class="carousel-slide">
+<img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=1000&q=80&auto=format"
+     srcset="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=600&q=80&auto=format 600w, https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=1000&q=80&auto=format 1000w"
+     sizes="(max-width:640px) 100vw, 1000px"
+     alt="Frazadas y mantas limpias" loading="lazy">
+<div class="carousel-caption"><h3>Frazadas y mantas</h3><p>Listas para guardar limpias y perfumadas</p></div>
+</div>
+</div>
+<button class="carousel-btn prev" id="prevBtn" aria-label="Imagen anterior"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+<button class="carousel-btn next" id="nextBtn" aria-label="Imagen siguiente"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+</div>
+<div class="carousel-dots" id="carouselDots"></div></section><!-- SERVICIOS -->
+<section class="workflow reveal" id="servicios">
+<h3 class="section-title">¿Cómo Funciona?</h3>
+<div class="workflow-steps">
+<div class="step-item">
+<div class="step-icon"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></div>
+<h4>1. Nos Escribís</h4>
+<p>Coordinamos rápido por WhatsApp.</p>
+</div>
+<div class="step-item">
+<div class="step-icon"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i></div>
+<h4>2. Lo Buscamos</h4>
+<p>Retiro en tu puerta (cadetería económica).</p>
+</div>
+<div class="step-item">
+<div class="step-icon"><i class="fa-solid fa-hands-bubbles" aria-hidden="true"></i></div>
+<h4>3. Lavado</h4>
+<p>Limpieza profunda y secado.</p>
+</div>
+<div class="step-item">
+<div class="step-icon"><i class="fa-solid fa-box-open" aria-hidden="true"></i></div>
+<h4>4. Entrega Listo</h4>
+<p>Limpio, embolsado y perfumado.</p>
+</div>
+</div>
 </section>
- <br>
-<style>
-#contacto { padding-bottom: 0 !important; }
-.redes-estudio-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 15px;
-    text-align: center;
-    font-family: 'Inter', sans-serif; 
-}
-.redes-titulo {
-    color: var(--primario);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-}
-.redes-titulo::after {
-    content: '';
-    display: block;
-    width: 40px;
-    height: 2px;
-    background-color: var(--secundario);
-    margin: 6px auto 0; 
-}
-.redes-botones-grupo {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap; }
-.btn-red-estudio {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background-color: var(--primario);
-    color: #ffffff;
-    border: 1px solid var(--secundario);
-    padding: 10px 20px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.04);
-    cursor: pointer;}
-.btn-red-estudio i {
-    font-size: 1.1rem;
-    color: var(--secundario); 
-    transition: color 0.3s;}
-.btn-red-estudio:hover {
-    background-color: var(--secundario);
-    color: var(--primario);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);}
-.btn-red-estudio:hover i {
-    color: var(--primario); }
-@media (max-width: 768px) {
-    .redes-botones-grupo { gap: 8px; }
-    .btn-red-estudio {
-        flex: 1;
-        min-width: 120px;
-        justify-content: center;
-        padding: 10px 12px;
-        font-size: 0.75rem; } }
-</style>
-<div class="redes-estudio-container">
-    <p class="redes-titulo">SÍGANOS EN NUESTRAS REDES</p>
-    <h6>ESTAMOS EMPESANDO EN REDES DESPUES DE MUCHOS AÑOS EJERCIENDO</h6>
-    <div class="redes-botones-grupo">
-        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="btn-red-estudio instagram">
-            <i class="fab fa-instagram"></i>
-            <span>Instagram</span> 
-        </a>
-        <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" class="btn-red-estudio tiktok">
-            <i class="fab fa-tiktok"></i>
-            <span>TikTok</span> 
-        </a>
-        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="btn-red-estudio youtube">
-            <i class="fab fa-youtube"></i>
-            <span>YouTube</span>
-        </a>
-    </div>
+
+<!-- TESTIMONIOS -->
+<h3 class="section-title">Lo que Dicen Nuestros Clientes</h3>
+<section class="testimonios-section reveal">
+<div class="testimonios-carousel">
+<div class="testimonios-track" id="testimoniosTrack">
+<div class="testimonio">
+<div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+<p>Impecable el lavado de mi acolchado. Quedó como nuevo y sin olor a humedad. El retiro fue puntual y muy amable.</p>
+<div class="testimonio-autor">
+<div class="testimonio-avatar">M</div>
+<div><strong>María</strong><span>Cliente verificado · Google</span></div>
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const botonesRedes = document.querySelectorAll(".btn-red-estudio");
-    botonesRedes.forEach(boton => {
-        boton.addEventListener("click", function() {
-            console.log("Redirigiendo a red social del Estudio."); 
-        });
-    }); 
-});
-</script>
-
-<b> 
-<div class="bloque-confianza">  
-    <div class="item">✔️ Atención Profesional</div>  
-    <div class="item">✔️ Confidencialidad Asegurada</div>  
-    <div class="item">✔️ Experiencia en Litigios Complejos</div>  
-</div> 
-</b>
-
-<!-- FOOTER 2 COLUMNAS ESTILO PABLO -->
-<footer style="background-color: var(--primario); color: #ffffff; padding: 2rem 1.5rem 1rem; border-top: 3px solid var(--secundario); text-align: left; font-family: 'Inter', sans-serif;">
-  <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start;">
-<!-- Columna Izquierda: Marca + Horarios -->
-<span class="logo">⚖️ DR.<span>PABLO ALESANDRE</span>
-   <p style="font-size: 0.75rem; line-height: 1.6; color: #cccccc; margin-bottom: 1rem;">Estudio Jurídico &amp; Notarial en Montevideo.</p> </div>
-  <!-- Columna Derecha: Legal -->
-    <div>
-      <h4 style="color: #ffffff; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem; position: relative; padding-bottom: 5px; display: inline-block;">
-        Legal</br>
-  <span style="position: absolute; bottom: 0; left: 0; width: 22px; height: 2px; background: var(--secundario); border-radius: 2px;"></span>
-      </h4>
- <!-- USO DE BOTONES PARA EVITAR BLOQUEOS -->
-    <button onclick="abrirModal('modal-privacidad')" style="background: none; border: none; display: block; font-size: 0.75rem; color: #dbe5ee; font-weight: 500; padding: 0.25rem 0; cursor: pointer; text-align: left; font-family: inherit;" onmouseover="this.style.color='var(--secundario)'" onmouseout="this.style.color='#dbe5ee'"><b>Política de privacidad</b></button>
-      
-      <button onclick="abrirModal('modal-terminos')" style="background: none; border: none; display: block; font-size: 0.75rem; color: #dbe5ee; font-weight: 500; padding: 0.25rem 0; cursor: pointer; text-align: left; font-family: inherit;" onmouseover="this.style.color='var(--secundario)'" onmouseout="this.style.color='#dbe5ee'"><b>Términos y condiciones</b></button></div> </div>    
-
-  <div style="max-width: 1100px; margin: 1.5rem auto 0; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.7rem; color: #8ba0b4; letter-spacing: 0.5px;">
-    <p>© <span id="year-pablo"></span> <strong>PABLO ALESANDRE</strong> Montevideo, Uruguay · TODOS LOS DERECHOS RESERVADOS.</p>
-  </div>
-</footer>
-
-<div id="chat-circle" onclick="toggleChat()">💬</div>  
-<div id="chat-container">  
-    <div id="chat-header">
-        <span>Asistente Jurídico Virtual</span>
-        <span onclick="toggleChat()" style="cursor:pointer; font-size: 1.2rem;">X</span> 
-    </div>  
-    <div id="chat-box">  
-        <div class="bot-msg">¡Hola! Soy el asistente virtual del <b>Dr. Pablo Alesandre Aizcorbe</b>. ¿En qué te podemos ayudar? Penal, Laboral, Civil, Familia y Escribanía.</div>   
-    </div>  
-    <div class="chat-input-area">  
-        <input type="text" id="user-input" placeholder="Escribe tu consulta aquí..." onkeypress="if(event.keyCode==13) sendMessage()">  
-        <button class="btn-enviar-chat" onclick="sendMessage()">➤</button>
-    </div>  
-</div>  
-
-<!-- ============ MODALES LEGALES (NUEVO) ============ -->
-<div id="modal-privacidad" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:99999; align-items:center; justify-content:center; padding:1rem;">
-  <div style="background:#fff; max-width:600px; width:100%; max-height:85vh; overflow-y:auto; border-radius:8px; padding:2rem; position:relative; text-align:left; color:#333; font-family:'Inter',sans-serif;">
-    <span onclick="cerrarModal('modal-privacidad')" style="position:absolute; top:10px; right:18px; font-size:1.8rem; cursor:pointer; color:#0f1c3f; font-weight:bold;">&times;</span>
-    <h2 style="color:#0f1c3f; margin-bottom:1rem; font-size:1.3rem; border-bottom:2px solid #c5a059; padding-bottom:0.5rem;">Política de Privacidad</h2>
-    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.8rem;">El <b>Estudio Jurídico del Dr. Pablo Alesandre Aizcorbe</b> respeta la confidencialidad de todos los datos personales que nos proporcionás a través de este sitio web, conforme a la <b>Ley N° 18.331 de Protección de Datos Personales</b> de la República Oriental del Uruguay.</p>
-    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.8rem;"><b>Datos recopilados:</b> nombre completo, cédula de identidad, teléfono y descripción de la consulta, utilizados exclusivamente para coordinar tu turno y brindarte asesoramiento legal.</p>
-    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.8rem;"><b>Confidencialidad:</b> toda la información compartida está protegida por el <b>secreto profesional</b> del abogado y no será divulgada a terceros sin tu consentimiento.</p>
-    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.8rem;"><b>Comunicaciones:</b> los datos de contacto se utilizan únicamente para responder tu consulta por WhatsApp, teléfono o correo electrónico.</p>
-    <p style="font-size:0.9rem; line-height:1.6;"><b>Derechos del titular:</b> podés ejercer tus derechos de acceso, rectificación, actualización o supresión escribiendo a <a href="mailto:alesandrepablo@gmail.com" style="color:#c5a059; font-weight:bold;">alesandrepablo@gmail.com</a>.</p>
-  </div>
 </div>
-
-<div id="modal-terminos" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:99999; align-items:center; justify-content:center; padding:1rem;">
-  <div style="background:#fff; max-width:600px; width:100%; max-height:85vh; overflow-y:auto; border-radius:8px; padding:2rem; position:relative; text-align:left; color:#333; font-family:'Inter',sans-serif;">
-    <span onclick="cerrarModal('modal-terminos')" style="position:absolute; top:10px; right:18px; font-size:1.8rem; cursor:pointer; color:#0f1c3f; font-weight:bold;">&times;</span>
-    <h2 style="color:#0f1c3f; margin-bottom:1rem; font-size:1.3rem; border-bottom:2px solid #c5a059; padding-bottom:0.5rem;">Términos y Condiciones</h2>
-    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.8rem;">El contenido de este sitio web tiene carácter <b>meramente informativo</b> y no constituye asesoramiento legal vinculante. Cada situación jurídica debe ser evaluada de forma individual en consulta privada con el profesional.</p>
-    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.8rem;"><b>Uso del sitio:</b> la información publicada no genera relación abogado-cliente hasta que se formalice la contratación del servicio correspondiente.</p>
-    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.8rem;"><b>Solicitud de turnos:</b> el envío del formulario no garantiza la reserva; la cita queda sujeta a confirmación expresa del estudio.</p>
-    <p style="font-size:0.9rem; line-height:1.6; margin-bottom:0.8rem;"><b>Propiedad intelectual:</b> los textos, imágenes y contenido de este sitio pertenecen al Dr. Pablo Alesandre Aizcorbe y no pueden reproducirse sin autorización.</p>
-    <p style="font-size:0.9rem; line-height:1.6;">Para consultas: <a href="mailto:alesandrepablo@gmail.com" style="color:#c5a059; font-weight:bold;">alesandrepablo@gmail.com</a></p>
-  </div>
+<div class="testimonio">
+<div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+<p>Tengo dos perros y el tratamiento antiolor funcionó de maravilla. Muy recomendable, volveré a usar el servicio.</p>
+<div class="testimonio-autor">
+<div class="testimonio-avatar">J</div>
+<div><strong>Jorge</strong><span>Cliente verificado · Google</span></div>
 </div>
+</div>
+<div class="testimonio">
+<div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+<p>Excelente atención y precio. Aproveché la promo 3x2 y quedé encantada con el resultado. Gracias por el cuidado.</p>
+<div class="testimonio-autor">
+<div class="testimonio-avatar">A</div>
+<div><strong>Ana</strong><span>Cliente verificado · Google</span></div></div></div>
+</div><button class="testimonios-btn prev" id="testimoniosPrev" aria-label="Testimonio anterior"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+<button class="testimonios-btn next" id="testimoniosNext" aria-label="Testimonio siguiente"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div>
+<div class="testimonios-dots" id="testimoniosDots"></div></section>
+<h3 class="section-title">Preguntas Frecuentes</h3>
+<section class="faq-section reveal">
+<details class="faq-item">
+<summary>¿Cuánto tarda el servicio?</summary>
+<div class="faq-answer">Entre 24 y 48 horas dependiendo de la carga. Te avisamos por WhatsApp cuando esté listo.</div>
+</details>
+<details class="faq-item">
+<summary>¿Retiran a domicilio?</summary>
+<div class="faq-answer">Sí, contamos con cadetería económica en toda la zona de Montevideo. Coordinamos día y horario por WhatsApp.</div>
+</details>
+<details class="faq-item">
+<summary>¿Cómo se puede abonar?</summary>
+<div class="faq-answer">Aceptamos efectivo, transferencia bancaria, Mercado Pago y giros. El pago se al momento de la entrega.</div>
+</details><details class="faq-item">
+<summary>¿Qué es la fórmula antiolor?</summary>
+<div class="faq-answer">Es un tratamiento especial con productos que eliminan las bacterias causantes del olor a mascotas, sin dañar las telas ni el relleno.</div></details>
+<details class="faq-item">
+<summary>¿Qué pasa si llueve varios días?</summary>
+<div class="faq-answer">Usamos secado con protección. Te mantenemos informado siempre y coordinamos la entrega cuando esté listo.</div>
+</details>
+<details class="faq-item">
+<summary>¿Atienden los domingos?</summary>
+<div class="faq-answer">No, los domingos permanecemos cerrados. Podés escribirnos por WhatsApp y te respondemos el lunes a primera hora.</div></details>
+<details class="faq-item">
+<summary>¿Qué zonas cubren para retiro?</summary>
+<div class="faq-answer">Cubrimos La Unión, Malvín, Pocitos, Buceo, Centro, Parque Rodó, Punta Carretas, Tres Cruces y Cordón. Consultá por tu barrio por WhatsApp.</div>
+</details>
+<details class="faq-item">
+<summary>¿Los precios incluyen retiro?</summary>
+<div class="faq-answer">El retiro y entrega tiene un costo adicional según la zona (desde $150). Consultá por tu barrio al coordinar.</div></details></section><!-- FORMULARIO -->
+<section class="form-section reveal" id="formulario">
+<h3 class="section-title">Pedí Presupuesto</h3>
+<p class="form-intro">Completá el formulario y te contactamos por WhatsApp con un presupuesto personalizado.</p>
+<form class="form-grid" id="formConsulta" novalidate>
+<input type="text" name="nombre" placeholder="Tu nombre *" required autocomplete="name">
+<input type="tel" name="telefono" placeholder="Tu teléfono *" required autocomplete="tel">
+<select name="servicio" required>
+<option value="">¿Qué necesitás lavar? *</option>
+<option value="Acolchado">Acolchado</option>
+<option value="Frazada">Frazada / manta</option>
+<option value="Prendas">Prendas de ropa</option>
+<option value="Antiolor mascotas">Antiolor mascotas</option>
+<option value="Combo / varios">Combo / varios ítems</option>
+</select>
+<input type="text" name="barrio" placeholder="Tu barrio (para retiro)" autocomplete="address-level3">
+<textarea name="comentario" placeholder="Comentario adicional (opcional)"></textarea>
+<button type="submit" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Enviar por WhatsApp</button></form>
+<p class="form-nota">Al enviar aceptás nuestra <a href="#" data-modal="privacidad">política de privacidad</a>. No compartimos tus datos con terceros.</p></section><!-- CONTACTO -->
+<h3 class="section-title" id="contacto">Contacto</h3>
+<div class="info-card reveal">
+<div class="info-item">
+<i class="fa-solid fa-location-dot" aria-hidden="true"></i><div>
+<h5>Dirección</h5><p><a href="https://www.google.com/maps/search/?api=1&query=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay" target="_blank" rel="noopener" title="Ver ubicación en Google Maps">Juan Jacobo Rousseau 4483</a></p></div></div>
+<div class="info-item">
+<i class="fa-brands fa-whatsapp" aria-hidden="true"></i><div><h5>WhatsApp</h5>
+<p><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar%20por%20el%20servicio%20de%20lavadero" target="_blank" rel="noopener" title="Escribir por WhatsApp">097 192 247</a></p></div></div>
+<div class="info-item">
+<i class="fa-solid fa-phone" aria-hidden="true"></i><div><h5>Teléfono</h5>
+<p><a href="tel:+59897192247" title="Llamar ahora">097 192 247</a></p></div></div>
+<div class="info-item">
+<i class="fa-brands fa-instagram" aria-hidden="true"></i><div><h5>Instagram</h5>
+<p><a href="https://www.instagram.com/lavaderounion2024/" target="_blank" rel="noopener" title="Abrir Instagram">@lavaderounion2024</a></p>
+</div>
+</div>
+<div class="info-item">
+<i class="fa-solid fa-motorcycle" aria-hidden="true"></i>
+<div>
+<h5>Cadetería</h5>
+<p><a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20coordinar%20un%20retiro%20y%20entrega%20a%20domicilio" target="_blank" rel="noopener" title="Coordinar retiro por WhatsApp">Retiros y entregas económicos</a></p>
+</div>
+</div>
+<div class="info-item">
+<i class="fa-solid fa-clock" aria-hidden="true"></i>
+<div>
+<h5>Horarios</h5>
+<p><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20saber%20si%20est%C3%A1n%20atendiendo%20ahora" target="_blank" rel="noopener" title="Consultar disponibilidad por WhatsApp">Lun a Sáb 9 a 18 · Dom cerrado</a></p></div></div></div>
+<div class="pagos">
+<span>Pagos:</span>
+<span class="pago-badge"><i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i> Efectivo</span>
+<span class="pago-badge"><i class="fa-solid fa-building-columns" aria-hidden="true"></i> Transferencia</span>
+<span class="pago-badge"><i class="fa-solid fa-mobile-screen" aria-hidden="true"></i> Mercado Pago</span></div><!-- MAPA -->
+<h3 class="section-title" id="ubicacion">Ubicación</h3>
+<div class="map-section reveal">
+<div class="map-header">
+<div class="map-header-left">
+<i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+<div><h4>Juan Jacobo Rousseau 4483</h4><p>Montevideo, Uruguay</p></div></div><a href="https://www.google.com/maps/search/?api=1&query=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay" target="_blank" rel="noopener" class="btn-outline"><i class="fa-solid fa-diamond-turn-right" aria-hidden="true"></i> Cómo llegar</a></div><iframe src="https://www.google.com/maps?q=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación Lavadero La Unión"></iframe>
+</div></div>
+<footer>
+  <div class="footer-main">
+    <!-- Columna izquierda: Marca + Horarios -->
+    <div class="footer-col">
+      <div class="footer-brand">
+        <div class="brand-icon"><i class="fa-solid fa-soap" aria-hidden="true"></i></div> <h4>Lavadero La Unión</h4></div>
+      <p>Lavandería en Montevideo.</p>
+ <h4 class="footer-subtitle">Horarios</h4>
+      <p><i class="fa-solid fa-clock" aria-hidden="true"></i> Lun a Sáb: 9 – 18 hs</p>
+      <p><i class="fa-solid fa-clock" aria-hidden="true"></i> Domingos: Cerrado</p>
+    </div><!-- Columna derecha: Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+<a href="#" data-modal="privacidad">Política de privacidad</a>
+<a href="#" data-modal="terminos">Términos y condiciones</a> </div></div>
+<div class="footer-bottom">
+    <p>© <span id="year"></span> <strong>Lavadero de Ropa La Unión</strong> · Montevideo, Uruguay</p> </div></footer><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener" class="wpp-flotante" aria-label="Consultar por WhatsApp">
+<i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+<div class="modal-legal" id="modal-privacidad" role="dialog" aria-modal="true" aria-labelledby="titulo-priv">
+<div class="modal-content">
+<button class="modal-close" data-close-modal aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+<h3 id="titulo-priv">Política de Privacidad</h3>
+<p>En <strong>Lavadero La Unión</strong> respetamos tu privacidad. Los datos que ingresás en el formulario (nombre, teléfono, barrio, servicio) se utilizan únicamente para responder tu consulta y coordinar el servicio.</p>
+<p>No compartimos tu información con terceros. Los datos se conservan solo el tiempo necesario para gestionar el servicio solicitado.</p>
+<p>Conforme a la <strong>Ley 18.331 de Protección de Datos Personales</strong> de Uruguay, podés solicitar el acceso, rectificación o eliminación de tus datos escribiéndonos a <a href="https://wa.me/59897192247" target="_blank" rel="noopener">nuestro WhatsApp</a>.</p>
+<p>Al enviar el formulario, aceptás esta política.</p></div></div>
+<div class="modal-legal" id="modal-terminos" role="dialog" aria-modal="true" aria-labelledby="titulo-term">
+<div class="modal-content">
+<button class="modal-close" data-close-modal aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+<h3 id="titulo-term">Términos y Condiciones</h3>
+<p><strong>1. Servicio:</strong> Lavadero La Unión brinda servicios de lavado, secado y tratamiento de acolchados, frazadas y prendas en Montevideo, Uruguay.</p>
+<p><strong>2. Plazos:</strong> El tiempo estimado de entrega es de 24 a 48 horas hábiles, pudiendo variar según la carga y las condiciones climáticas.</p>
+<p><strong>3. Precios:</strong> Los precios publicados son orientativos. El valor final se confirma al momento de coordinar el servicio según tamaño, cantidad y zona de retiro.</p>
+<p><strong>4. Responsabilidad:</strong> No nos hacemos responsables por daños preexistentes en las prendas ni por objetos olvidados dentro de las mismas. Recomendamos revisar bolsillos antes de entregar.</p>
+<p><strong>5. Pagos:</strong> Se aceptan efectivo, transferencia bancaria, Mercado Pago y giros. El pago se realiza al momento de la entrega.</p>
+<p><strong>6. Datos personales:</strong> El tratamiento de datos se rige por nuestra Política de Privacidad conforme a la Ley 18.331.</p>
+<p>Para consultas escribinos a <a href="https://wa.me/59897192247" target="_blank" rel="noopener">nuestro WhatsApp</a>.</p></div>
+</div><script>
+const CONFIG = {
+  telefono: "59897192247",
+  telefonoMostrar: "097 192 247",
+  instagram: "lavaderounion2024",
+  direccion: "Juan Jacobo Rousseau 4483",
+  ciudad: "Montevideo, Uruguay",
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay", horarios: { semana: "Lun a Sáb 9 a 18", domingo: "Cerrado" } };
+document.addEventListener("DOMContentLoaded", function () {
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  function actualizarEstado() {
+    const el = document.getElementById('estadoLocal');
+    if (!el) return;
+    const ahora = new Date();
+    const dia = ahora.getDay();
+    const h = ahora.getHours();
+    const min = ahora.getMinutes();
+    const minutos = h * 60 + min;
+    let abierto = false;
+    // Lunes(1) a Sábado(6) de 9:00 a 18:00. Domingo(0) cerrado.
+    if (dia >= 1 && dia <= 6 && minutos >= 9*60 && minutos < 18*60) abierto = true;
+    el.innerHTML = abierto
+      ? '<i class="fa-solid fa-circle" style="color:#25d366;font-size:.6rem"></i> Abierto ahora'
+      : '<i class="fa-solid fa-circle" style="color:#c8102e;font-size:.6rem"></i> Cerrado ahora'; }
+  actualizarEstado();
+  setInterval(actualizarEstado, 60000);
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuBackdrop = document.getElementById('menuBackdrop');
+ function closeMenu() {
+    menuToggle.classList.remove('active');
+    mobileMenu.classList.remove('open');
+    menuBackdrop.classList.remove('show');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = ''; }
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('open');
+    if (isOpen) closeMenu(); else {
+      menuToggle.classList.add('active');
+      mobileMenu.classList.add('open');
+      menuBackdrop.classList.add('show');
+menuToggle.setAttribute('aria-expanded', 'true');
+      if (window.innerWidth <= 780) document.body.style.overflow = 'hidden'; } });
+  menuBackdrop.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
 
-<script>  
-function toggleMenu() {  
-    const menu = document.getElementById('navMenu');  
-    menu.classList.toggle('active'); 
-}  
-function toggleDetalle(elemento) {  
-    elemento.classList.toggle("activo");  
-}  
-function toggleChat() {   
-    const c = document.getElementById('chat-container');  
-    c.style.display = (c.style.display === 'none' || c.style.display === '') ? 'flex' : 'none'; 
-}  
+  window.addEventListener('scroll', () => {
+    if (mobileMenu.classList.contains('open')) closeMenu();  }, { passive: true });
+ const slidesContainer = document.getElementById('carouselSlides');
+  const slides = slidesContainer.querySelectorAll('.carousel-slide');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dotsContainer = document.getElementById('carouselDots');
+  let currentIndex = 0, autoPlayInterval;
+  slides.forEach((_, i) => {
+ const dot = document.createElement('button');
+    dot.classList.add('dot');
+    if (i === 0) dot.classList.add('active');
+    dot.setAttribute('aria-label', `Ir a la imagen ${i + 1}`);
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot); });
+  const dots = dotsContainer.querySelectorAll('.dot');
+ function updateCarousel() {
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    dots.forEach((dot, i) => dot.classList.toggle('active',i=== currentIndex));}
+  function goToSlide(i) { currentIndex = i; updateCarousel(); resetAutoPlay(); }
+  function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateCarousel(); }
+  function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateCarousel(); }
+  nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
+  prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
+  function startAutoPlay() { autoPlayInterval = setInterval(nextSlide, 5000); }
+  function resetAutoPlay() { clearInterval(autoPlayInterval); startAutoPlay(); }
+  startAutoPlay();
+  const carouselContainer = document.querySelector('.carousel-container');
+carouselContainer.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+carouselContainer.addEventListener('mouseleave', startAutoPlay);
+  let touchStartX = 0, touchEndX = 0;
+  slidesContainer.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; clearInterval(autoPlayInterval); }, { passive: true });
+slidesContainer.addEventListener('touchend',e=> { touchEndX = e.changedTouches[0].screenX;
+ if (touchStartX - touchEndX > 50) nextSlide();
+  if (touchEndX - touchStartX > 50) prevSlide();
+    startAutoPlay(); }, { passive: true });
 
-/* ============ FUNCIONES DE MODALES (NUEVO) ============ */
-function abrirModal(id) {
-    const m = document.getElementById(id);
-    if (m) m.style.display = 'flex';
-}
-function cerrarModal(id) {
-    const m = document.getElementById(id);
-    if (m) m.style.display = 'none';
-}
-// Cerrar al hacer clic en el fondo
-document.addEventListener('click', function(e) {
-    if (e.target.id === 'modal-privacidad' || e.target.id === 'modal-terminos') {
-        e.target.style.display = 'none';
-    }
-});
-// Cerrar con tecla ESC
-document.addEventListener('keydown', function(e) {
+  const testimoniosTrack = document.getElementById('testimoniosTrack');
+  const testimoniosSlides = testimoniosTrack.querySelectorAll('.testimonio');
+  const testimoniosPrev = document.getElementById('testimoniosPrev');
+  const testimoniosNext = document.getElementById('testimoniosNext');
+  const testimoniosDotsContainer = document.getElementById('testimoniosDots');
+  let testIndex = 0, testAutoPlay;
+ testimoniosSlides.forEach((_, i) => {
+ const dot = document.createElement('button');
+ dot.classList.add('dot');
+ if (i === 0) dot.classList.add('active');
+ dot.setAttribute('aria-label', `Ir al testimonio ${i + 1}`);
+    dot.addEventListener('click', () => goToTestimonio(i));
+testimoniosDotsContainer.appendChild(dot); });
+  const testDots = testimoniosDotsContainer.querySelectorAll('.dot'); function updateTestimonios() {
+    testimoniosTrack.style.transform = `translateX(-${testIndex * 100}%)`;
+    testDots.forEach((dot, i) => dot.classList.toggle('active', i === testIndex));  }
+  function goToTestimonio(i) { testIndex = i; updateTestimonios(); resetTestAutoPlay(); }
+  function nextTestimonio() { testIndex = (testIndex + 1) % testimoniosSlides.length; updateTestimonios(); }
+  function prevTestimonio() { testIndex = (testIndex - 1 + testimoniosSlides.length) % testimoniosSlides.length; updateTestimonios(); }
+  testimoniosNext.addEventListener('click', () => { nextTestimonio(); resetTestAutoPlay(); });
+  testimoniosPrev.addEventListener('click', () => { prevTestimonio(); resetTestAutoPlay(); });
+  function startTestAutoPlay() { testAutoPlay = setInterval(nextTestimonio, 6000); }
+  function resetTestAutoPlay() { clearInterval(testAutoPlay); startTestAutoPlay(); }  startTestAutoPlay();
+ const testimoniosCarousel = document.querySelector('.testimonios-carousel');
+testimoniosCarousel.addEventListener('mouseenter', () => clearInterval(testAutoPlay));
+testimoniosCarousel.addEventListener('mouseleave', startTestAutoPlay);
+ let testTouchStartX = 0, testTouchEndX = 0;
+ testimoniosTrack.addEventListener('touchstart', e => { testTouchStartX = e.changedTouches[0].screenX; clearInterval(testAutoPlay); }, { passive: true });
+testimoniosTrack.addEventListener('touchend', e => {
+    testTouchEndX = e.changedTouches[0].screenX;
+    if (testTouchStartX - testTouchEndX > 50) nextTestimonio();
+    if (testTouchEndX - testTouchStartX > 50) prevTestimonio();
+  startTestAutoPlay();  }, { passive: true });
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+ link.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+if (href === '#' || href.startsWith('#modal')) return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const offset = 70;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+window.scrollTo({ top, behavior: 'smooth' }); }
+    }); }); const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+ revealObserver.unobserve(entry.target); } });
+  }, { threshold: 0.1 });
+  revealElements.forEach(el => revealObserver.observe(el));
+ const secciones = document.querySelectorAll('section[id], h3[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.removeAttribute('aria-current'));
+        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (active) active.setAttribute('aria-current','page'); }
+    }); }, { rootMargin: '-40% 0px -55% 0px' });
+  secciones.forEach(s => { if (s.id) navObserver.observe(s); }); const form = document.getElementById('formConsulta');
+  if (form) {
+ form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const data = new FormData(form);
+  const nombre = (data.get('nombre') || '').trim();
+      const tel = (data.get('telefono') || '').trim();
+      const servicio = (data.get('servicio') || '').trim();
+      const barrio = (data.get('barrio') || '').trim();
+      const comentario = (data.get('comentario') || '').trim();
+ if (!nombre || !tel || !servicio) {
+  alert('Por favor completá nombre, teléfono y servicio.'); return;  }
+let msg = `Hola! Quisiera un presupuesto.\n\n`;
+      msg += `*Nombre:* ${nombre}\n`;
+      msg += `*Teléfono:* ${tel}\n`;
+      msg += `*Servicio:* ${servicio}\n`;
+   if (barrio) msg += `*Barrio:* ${barrio}\n`;
+   if (comentario) msg += `*Comentario:* ${comentario}\n`; const url = `https://wa.me/${CONFIG.telefono}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank', 'noopener');
+      form.reset();  });  }
+document.querySelectorAll('[data-modal]').forEach(trigger => {
+trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      const modal = document.getElementById('modal-' + this.dataset.modal);
+if (modal) {
+        modal.classList.add('show');
+document.body.style.overflow ='hidden';}});});
+document.querySelectorAll('[data-close-modal]').forEach(btn => {
+ btn.addEventListener('click', function () {
+this.closest('.modal-legal').classList.remove('show');
+ document.body.style.overflow = ''; }); });
+document.querySelectorAll('.modal-legal').forEach(modal => {
+ modal.addEventListener('click', function (e) {
+ if (e.target === modal) {
+   modal.classList.remove('show');
+ document.body.style.overflow = ''; } }); });
+  document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-        const p = document.getElementById('modal-privacidad');
-        const t = document.getElementById('modal-terminos');
-        if (p) p.style.display = 'none';
-        if (t) t.style.display = 'none';
-    }
-});
-
-function getBotResponse(userInput) {
-    const input = userInput.toLowerCase()
-                    .replace(/á/g, "a")
-                    .replace(/é/g, "e")
-                    .replace(/í/g, "i")
-                    .replace(/ó/g, "o")
-                    .replace(/ú/g, "u");
-    if (input.includes("hola") || input.includes("buen") || input.includes("saludos")) {
-        return "¡Hola! 👋 ¿En qué te podemos ayudar? Penal, Laboral, Civil, Familia y Escribanía."; 
-    }
-    if (input.includes("penal") || input.includes("fiscal") || input.includes("detenido") || input.includes("comisaria")) {
-        return "⚖️ <b>Área Penal:</b> Defensa y asistencia inmediata en fiscalías o comisarías de urgencia 24/7. <br><br><a href='https://wa.me/59898616458?text=URGENCIA%20PENAL' target='_blank' style='color:#27ae60;font-weight:bold;text-decoration:none;'>🚨 Contactar Urgencia Penal</a>";  
-    }
-    if (input.includes("divorcio") || input.includes("separar") || input.includes("separacion")) {
-        return "El estudio tramita divorcios por mutuo consentimiento, por sola voluntad o por causales. Para asesorarte sobre los requisitos y los plazos, te invitamos a coordinar una consulta privada.";  
-    }
-    if (input.includes("pension") || input.includes("diborcio") || input.includes("hijos") || input.includes("tenencia")|| input.includes("familia")  || input.includes("visita")) {
-        return "⚖️ <b>Área Familiar:</b> Atendemos asuntos de familia relacionados con pensión alimenticia, régimen de visitas, tenencia y divorcio. Es un área delicada que tratamos con absoluta confidencialidad. <br><br><a href='https://wa.me/59898616458?text=Consulta%20Familia' target='_blank' style='color:#27ae60;font-weight:bold;text-decoration:none;'>Consultar Caso de Familia</a>";  
-    }
-    if (input.includes("sucesi") || input.includes("herencia") || input.includes("testamento") || input.includes("heredar")) {
-        return "✍️ <b>Escribanía:</b> Realizamos la tramitación de sucesiones judiciales y notariales, aperturas de testamentos y particiones de bienes de forma ágil. ¿Ya hay un acuerdo entre los herederos?";  
-    }
-    if (input.includes("escribano") || input.includes("notarial") || input.includes("firma") || input.includes("certificar")) {
-        return "Ofrecemos servicios notariales completos: certificación de firmas, actas, poderes, protocolizaciones and asesoramiento en contratos de todo tipo."; 
-    }
-    if (input.includes("alquiler") || input.includes("arrendamiento") || input.includes("desalojo")) {
-        return "Brindamos asistencia legal tanto a propietarios como a inquilinos en la redacción de contratos de alquiler, garantías, rescisiones y procesos de desalojo.";  
-    }
-    if (input.includes("comprar") || input.includes("vender") || input.includes("propiedad") || input.includes("casa") || input.includes("terreno") || input.includes("inmueble")) {
-        return "Si estás por comprar o vender un inmueble, el Dr. Pablo Alesandre realiza el estudio de títulos, control de deudas y la escritura traslativa de dominio para garantizar una operación 100% segura.";  
-    }
-    if (input.includes("laboral") || input.includes("despido") || input.includes("trabajo") || input.includes("sueldo") || input.includes("liquidaci")) {
-        return "💼 <b>Derecho Laboral:</b> Asesoramos en materia laboral (cálculo de liquidaciones, despidos y audiencias en el MTSS). <br><br><a href='https://wa.me/59898616458?text=Consulta%20Laboral' target='_blank' style='color:#27ae60;font-weight:bold;text-decoration:none;'>Consultar Caso Laboral</a>"; 
-    }
-    if (input.includes("accidente") || input.includes("choque") || input.includes("transito")) {
-        return "Si sufriste un accidente de tránsito, te ayudamos a gestionar el reclamo ante las aseguradoras para obtener la indemnización correspondiente por daños y perjuicios.";  
-    }
-    if (input.includes("empresa") || input.includes("sociedad") || input.includes("sas") || input.includes("sa") || input.includes("srl")) {
-        return "Ayudamos a emprendedores and empresas en la constitución de Sociedades Anónimas, SRL y SAS, además de la redacción de contratos comerciales y estatutos.";  
-    }
-    if (input.includes("costo") || input.includes("precio") || input.includes("honorarios") || input.includes("cuanto cobra") || input.includes("cuanto")) {
-        return "Los honorarios profesionales se ajustan al Arancel Oficial y varían según la complejidad. Te sugerimos agendar una primera consulta o enviarnos un WhatsApp con los detalles de tu caso.";  
-    }
-    if (input.includes("contacto") || input.includes("telefono") || input.includes("celular") || input.includes("whatsapp") || input.includes("llamar") || input.includes("numero")) {
-        return "📲 Conéctate directo al WhatsApp del Dr. Alesandre: <br><br><a href='https://wa.me/59898616458' target='_blank' style='background:#27ae60;color:white;padding:8px 12px;border-radius:4px;text-decoration:none;display:inline-block;font-weight:bold;'>ABRIR WHATSAPP</a>";  
-    }
-    if (input.includes("ubicacion") || input.includes("donde estan") || input.includes("direccion") || input.includes("oficina") || input.includes("montevideo")) {
-        return "Nuestra oficina principal está ubicada en <b>Montevideo, Uruguay</b>. Atendemos consultas presenciales exclusivamente con agenda previa de lunes a viernes."; 
-    }
-    if (input.includes("horario") || input.includes("atienden") || input.includes("abierto")) {
-        return "El horario de atención del estudio es de <b>lunes a sábado de 09:00 a 18:00 hs</b> (domingo cerrado)."; 
-    }
-    if (input.includes("feria") || input.includes("receso") || input.includes("julio")) {
-        return "🏛️ <b>Feria Judicial:</b> Durante los recesos de los tribunales (como del 1° al 15 de julio), la activity formal en juzgados se detiene. Sin embargo, en el estudio seguimos atendiendo consultas, analizando casos y preparando estrategias para la reapertura.";
-    }
-    if (input.includes("plazo") || input.includes("reclamar despido") || input.includes("tiempo para reclamar")) {
-        return "💼 <b>Plazo Laboral:</b> En Uruguay, el plazo para reclamar rubros laborales o indemnizaciones por despido es estricto. Te recomendamos iniciar la citación ante el MTSS lo antes posible para evitar la caducidad de tus derechos."; 
-    }
-    if (input.includes("requisito") || input.includes("documento") || input.includes("calcular liquidacion") || input.includes("recibo")) {
-        return "📜 <b>Documentación requerida:</b> Para realizar un cálculo de liquidación exacto, es indispensable contar con tus últimos recibos de sueldo, constancia de la fecha de ingreso y, si corresponde, la copia de la notificación del despido (ya sea por telegrama o WhatsApp)."; 
-    }
-    if (input.includes("tipo de divorcio") || input.includes("como es el divorcio")) {
-        return "🏛️ <b>Divorcios:</b> En Uruguay tramitamos divorcios bajo tres modalidades: por mutuo consentimiento de ambos cónyuges, por la sola voluntad de uno de ellos, o por causales específicas previstas en nuestro Código Civil."; 
-    }
-    if (input.includes("fija la pension") || input.includes("cuanto corresponde de pension") || input.includes("alimento ")) {
-        return "⚖️ <b>Pensión Alimenticia:</b> La pensión se calcula en base a las necesidades del menor y a las posibilidades económicas reales de los padres, buscando siempre un equilibrio justo o la homologación judicial de un acuerdo."; 
-    }
-    if (input.includes("virtual") || input.includes("zoom") || input.includes("videollamada") || input.includes("distancia") || input.includes("interior")) {
-        return "🖥️ <b>Consultas Virtuales:</b> Si te encuentras en el interior del país o prefieres no trasladarte, coordinamos sesiones seguras mediante Zoom, Google Meet o videollamada de WhatsApp. Puedes agendarla en la sección de citas."; 
-    }
-    if (input.includes("redes") || input.includes("instagram") || input.includes("facebook") || input.includes("web")) {
-        return "📱 Puedes seguir las actualizaciones legales y novedades del estudio a través de nuestros canales y contactarnos directamente mediante nuestro botón principal de WhatsApp en cualquier momento."; }
-    if (input.includes("gracias") || input.includes("impecable") || input.includes("bueno") || input.includes("barbaro") || input.includes("chau")) {
-return "¡A las órdenes! Muchas gracias por comunicarte con nuestro estudio jurídico. ⚖️";  }
-    return "Para evaluar correctamente tu situation y analizar la documentacion, le aconsejamos coordinar directamente con el Dr. Pablo Alesandre por WhatsApp. <br><br><a href='https://wa.me/59898616458' target='_blank' style='color:#27ae60;font-weight:bold;text-decoration:none;'>Hacer clic aquí para chatear</a>"; }
-function sendMessage() {  
-    const input = document.getElementById('user-input');  
-    const box = document.getElementById('chat-box');  
-    const text = input.value.trim();  
-    if(!text) return;  
-    box.innerHTML += `<div class="user-msg">${text}</div>`;  
-    input.value = "";  
-    box.scrollTop = box.scrollHeight;  
-    const respuestaBot = getBotResponse(text);
-    setTimeout(() => {  
-        box.innerHTML += `<div class="bot-msg">${respuestaBot}</div>`;  
-        box.scrollTop = box.scrollHeight; 
-    }, 600); }  
-function enviarAgenda(e) {  
-    e.preventDefault();  
-    const nombre = document.getElementById('nombre').value;  
-    const asunto = document.getElementById('asunto').value;  
-    const fecha = document.getElementById('fecha').value;  
-    const hora = document.getElementById('hora').value;  
-    const texto = `Hola Dr. Alesandre Aizcorbe, soy ${nombre}. Quisiera agendar una consulta por un tema de ${asunto} para el día ${fecha} a las ${hora} hs.`;  
-    window.open(`https://wa.me/59898616458?text=${encodeURIComponent(texto)}`, '_blank'); }  
-function toggleZoom(event, elemento) { 
-    event.stopPropagation(); 
-    if (elemento.classList.contains('agrandado')) {
-        elemento.classList.remove('agrandado');
-    } else {
-        document.querySelectorAll('.diploma-card').forEach(card => card.classList.remove('agrandado'));
-        elemento.classList.add('agrandado'); } }
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('.diploma-card')) {
-        document.querySelectorAll('.diploma-card').forEach(card => card.classList.remove('agrandado')); } });
-const mensajes = [
-    "⚖️ Agenda abierta para consultas.",
-    "📅 Quedan turnos disponibles esta semana.",
-    "💼 Consultas laborales y despidos.",
-    "🏛️ Atención en Derecho Penal y Civil.",
-    "📞 Escribinos por WhatsApp para asesorarte.",
-    "✍️ Services notariales disponibles." ];
-let indice = 0;
-function mostrarNotificacion() {
-    const aviso = document.getElementById("notificacion");
-    if(aviso) {
-        aviso.innerHTML = mensajes[indice];
-        aviso.classList.add("mostrar");
-        setTimeout(() => { aviso.classList.remove("mostrar");}, 5000);
-        indice = (indice + 1) % mensajes.length; } }
-setInterval(mostrarNotificacion, 12000);
-setTimeout(mostrarNotificacion, 3000);
-document.getElementById('year-pablo').textContent = new Date().getFullYear();
-</script> </body></html>
+document.querySelectorAll('.modal-legal.show').forEach(m => m.classList.remove('show'));
+ document.body.style.overflow = '';} }); });
+</script> </body> </html>
