@@ -21,8 +21,7 @@
 <link rel="preload" as="image" href="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1600&q=80&auto=format">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
   "@context":"https://schema.org",
   "@type":"LaundryService",
   "name":"Lavadero La Unión",
@@ -30,18 +29,15 @@
   "url":"https://lavaderolaunion.com.uy/",
   "telephone":"+59897192247",
   "priceRange":"$$",
-  "address":{"@type":"PostalAddress","streetAddress":"Juan Jacobo Rousseau 4483","addressLocality":"Montevideo","addressCountry":"UY"},
+"address":{"@type":"PostalAddress","streetAddress":"Juan Jacobo Rousseau 4483","addressLocality":"Montevideo","addressCountry":"UY"},
   "geo":{"@type":"GeoCoordinates","latitude":-34.8394,"longitude":-56.1778},
   "openingHoursSpecification":[
-    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"19:00"},
-    {"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"14:00"}
-  ],
-  "sameAs":["https://www.instagram.com/lavaderounion2024/"],
-  "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"47","bestRating":"5"}
-}
+        {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"19:00"}    ,
+{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"14:00"}],
+"sameAs":["https://www.instagram.com/lavaderounion2024/"],
+"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"47","bestRating":"5"} }
 </script>
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
   "@context":"https://schema.org",
   "@type":"FAQPage",
   "mainEntity":[
@@ -333,14 +329,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;margin-top:
 <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
 </div>
 </section>
-<section class="trust-badges">
-<div class="trust-inner">
-<div class="trust-item"><strong data-counter="15" data-suffix="+">0</strong><span>Años de experiencia</span></div>
-<div class="trust-item"><strong data-counter="500" data-suffix="+">0</strong><span>Clientes satisfechos</span></div>
-<div class="trust-item"><strong>3x2</strong><span>En acolchados</span></div>
-<div class="trust-item"><strong>100%</strong><span>Confiable</span></div>
-</div>
-</section>
+
 <section class="hero">
 <span class="hero-badge"><i class="fa-solid fa-fire" aria-hidden="true"></i> ¡Aprovechá la Temporada!</span>
 <h2>¡Lavales para Guardar Limpios!</h2>
@@ -549,17 +538,18 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;margin-top:
   <div class="footer-main">
     <div class="footer-col">
       <div class="footer-brand">
-        <div class="brand-icon"><i class="fa-solid fa-soap" aria-hidden="true"></i></div> <h4>Lavadero La Unión</h4>  </div>
-      <p>Lavandería en Montevideo.</p> </div>
-     <div class="footer-col">
+        <div class="brand-icon"><i class="fa-solid fa-soap" aria-hidden="true"></i></div>
+        <h4>Lavadero La Unión</h4>
+      </div>
+ <p>Lavandería profesional en Montevideo.</p>
+    </div>
+    <div class="footer-col">
       <h4>Horarios</h4>
       <p><i class="fa-solid fa-clock" aria-hidden="true"></i> Lun a Vie: 8 - 19 hs</p>
-      <p><i class="fa-solid fa-clock" aria-hidden="true"></i> Sábados: 9 - 14 hs</p>
-    </div>
- </div>
-  <div>
-    <p><h3><strong>Lavadero de Ropa La Unión</strong> © Montevideo, Uruguay</p></h3>
-  </div></footer>
+      <p><i class="fa-solid fa-clock" aria-hidden="true"></i>Sábados: 9 - 14 hs</p>
+    </div></div>
+  <div class="footer-bottom">
+<p><strong>Lavadero de Ropa La Unión</strong> &copy; Montevideo, Uruguay</p> </div></footer>
 <script>
 const CONFIG = {
   telefono: "59897192247",
@@ -697,8 +687,7 @@ revealObserver.unobserve(entry.target);} });
           current += step;
           if (current >= target) {
             el.textContent = target + suffix;
-            clearInterval(timer);
-          } else {
+     clearInterval(timer);  } else {
 el.textContent = current + suffix; } }, 30);
 counterObserver.unobserve(el); } }); }, { threshold: 0.5 });
   counters.forEach(c => counterObserver.observe(c)); });
