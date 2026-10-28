@@ -67,11 +67,26 @@
 }
 </script>
 
-<script>  
-    // ❌ Bloqueos de seguridad estrictos (sin alertas)
-    document.addEventListener("contextmenu", e => e.preventDefault());  
-    document.addEventListener("keydown", e => {  
-        if (e.key === "F12" || e.key === "F8" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "u")) {
+<script>
+  // Bloqueo de menú contextual (clic derecho)
+  document.addEventListener("contextmenu", e => e.preventDefault());
+
+  // Bloqueo de atajos de desarrollador
+  document.addEventListener("keydown", e => {
+    const bloqueadas =
+      e.key === "F12" ||
+      e.key === "F8" ||
+      (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) ||
+      (e.ctrlKey && (e.key === "u" || e.key === "U"));
+    if (bloqueadas) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  });
+
+  // Bloqueo de doble clic (opcional, según lo que pidas)
+  document.addEventListener("dblclick", e => e.preventDefault());
 </script>
 
 
