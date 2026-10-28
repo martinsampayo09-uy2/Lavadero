@@ -24,7 +24,18 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script type="application/ld+json">{
+<script
+
+
+
+ // ❌ Bloqueos de seguridad estrictos (sin alertas)
+    document.addEventListener("contextmenu", e => e.preventDefault());  
+    document.addEventListener("keydown", e => {  
+        if (e.key === "F12" || e.key === "F8" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "u")) { 
+
+
+
+ type="application/ld+json">{
   "@context":"https://schema.org",
   "@type":"LaundryService",
   "name":"Lavadero La Unión",
