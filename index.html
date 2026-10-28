@@ -432,12 +432,11 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
     </div>
     <div class="promo-card">
       <div class="promo-icon"><i class="fa-solid fa-shoe-prints"></i></div>
-      <h3>Champiñones</h3>
+      <h3>Championes</h3>
       <div class="price">$200</div>
       <p>Lavado de calzado. <strong>Lunes a sábados</strong> de 9:00 a 18:00 hs.</p>
       <a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20lavar%20mis%20zapatillas%20por%20%24200" target="_blank" rel="noopener" class="btn-outline">Coordinar <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-  </div>
+    </div></div>
 
   <!-- PRECIOS CON BOTÓN DE SELECCIÓN -->
   <section class="precios-section reveal" id="precios">
@@ -458,7 +457,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
         <tr><td>Acolchados o Frazadas</td><td>2 plazas</td><td>$500 o $600</td><td style="text-align:center;"><button class="btn-select" data-servicio="Acolchado 2 plazas ($500/$600)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
         <tr><td>Almohadas</td><td>Lavado</td><td>$300</td><td style="text-align:center;"><button class="btn-select" data-servicio="Almohadas ($300)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
         <tr><td>Alfombras</td><td>Por metro</td><td>$250</td><td style="text-align:center;"><button class="btn-select" data-servicio="Alfombras por metro ($250)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
-        <tr><td>Champiñones</td><td>Lavado de calzado</td><td>$200</td><td style="text-align:center;"><button class="btn-select" data-servicio="Champiñones ($200)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Championes</td><td>Lavado de calzado</td><td>$200</td><td style="text-align:center;"><button class="btn-select" data-servicio="Championes ($200)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
       </tbody>
     </table>
     <p class="nota-precios">*Limpieza profunda para acolchados (elimina casi todas las bacterias). Precios sujetos a cambios sin previo aviso.</p>
@@ -1007,11 +1006,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const modal = document.getElementById('modal-' + this.dataset.modal);
       if (modal) {
         modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-      }
-    });
-  });
-  document.querySelectorAll('[data-close-modal]').forEach(btn => {
+document.body.style.overflow = 'hidden'; }
+    });  });
+document.querySelectorAll('[data-close-modal]').forEach(btn => {
     btn.addEventListener('click', function () {
       this.closest('.modal-legal').classList.remove('show');
       document.body.style.overflow = '';
