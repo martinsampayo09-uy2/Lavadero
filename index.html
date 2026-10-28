@@ -25,16 +25,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script
-
-
-
- // ❌ Bloqueos de seguridad estrictos (sin alertas)
-    document.addEventListener("contextmenu", e => e.preventDefault());  
-    document.addEventListener("keydown", e => {  
-        if (e.key === "F12" || e.key === "F8" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "u")) { 
-
-
-
  type="application/ld+json">{
   "@context":"https://schema.org",
   "@type":"LaundryService",
@@ -76,6 +66,15 @@
   ]
 }
 </script>
+
+<script>  
+    // ❌ Bloqueos de seguridad estrictos (sin alertas)
+    document.addEventListener("contextmenu", e => e.preventDefault());  
+    document.addEventListener("keydown", e => {  
+        if (e.key === "F12" || e.key === "F8" || (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J")) || (e.ctrlKey && e.key === "u")) {
+</script>
+
+
 <style>
 :root{--primary:#0b4f8a;--primary-dark:#083a66;--primary-light:#eaf2fa;--secondary:#c8102e;--accent:#25d366;--accent-dark:#1da851;--gold:#ffd166;--bg-light:#f6f8fb;--text-dark:#1c2b36;--text-muted:#5c6b77;--white:#fff;--border:#e3e9ef;--shadow-sm:0 2px 8px rgba(15,40,70,.06);--shadow:0 4px 16px rgba(15,40,70,.08);--shadow-hover:0 8px 24px rgba(15,40,70,.14);--radius:10px;--radius-sm:6px;--transition:all .25s ease}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
