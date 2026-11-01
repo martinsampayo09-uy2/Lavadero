@@ -23,7 +23,7 @@ header{height:76px;background:rgba(6,16,30,0.92);backdrop-filter:blur(10px);bord
 
 /* MENÚ LATERAL DESPLEGABLE ORIGINAL */
 nav{display:flex;align-items:center;gap:18px}
-nav a{color:var(--subtexto);text-decoration:none;font-size:12px;font-weight:bold;transition:.3s;text-transform:uppercase}
+nav a{color:var(--subtexto);text-decoration:none;font-size:12px;font-weight:bold;transition:.3s;text-transform:uppercase;cursor:pointer}
 nav a:hover{color:var(--azul)}
 
 .header-actions{display:flex;align-items:center;gap:12px}
@@ -53,7 +53,7 @@ nav a:hover{color:var(--azul)}
 radio-player{display:block;width:100%;height:130px}
 
 /* SOLICITA WEB WIDGET (Más grande y grueso) */
-.solicita-widget{background:linear-gradient(135deg,#0a1a2b,#0f2942);border:1px solid var(--azul);padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 5px 20px rgba(0,189,245,.15);text-decoration:none;transition:.3s}
+.solicita-widget{background:linear-gradient(135deg,#0a1a2b,#0f2942);border:1px solid var(--azul);padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 5px 20px rgba(0,189,245,.15);text-decoration:none;transition:.3s;cursor:pointer}
 .solicita-widget:hover{transform:translateY(-3px);border-color:#fff}
 .solicita-widget h3{font-size:14px;color:#fff;margin-bottom:4px;letter-spacing:1px;font-weight:900}
 .solicita-widget p{color:#b5c7d9;font-size:11.5px;margin-bottom:8px;line-height:1.3;font-weight:600}
@@ -90,14 +90,14 @@ radio-player{display:block;width:100%;height:130px}
 .contenido h3{font-size:19px;margin-bottom:7px;color:var(--texto)}
 .contenido p{color:var(--subtexto);font-size:12.5px;line-height:1.4;margin-bottom:14px}
 .card-actions{display:flex;margin-top:auto}
-.btn{width:100%;text-align:center;text-decoration:none;color:var(--texto);border:1px solid var(--azul);border-radius:8px;padding:9px 6px;font-weight:bold;font-size:11px;transition:.3s;background:rgba(8,121,181,0.15)}
+.btn{width:100%;text-align:center;text-decoration:none;color:var(--texto);border:1px solid var(--azul);border-radius:8px;padding:9px 6px;font-weight:bold;font-size:11px;transition:.3s;background:rgba(8,121,181,0.15);cursor:pointer}
 .btn:hover{background:var(--azul);color:#001321}
 
 .solicita-seccion{max-width:900px;margin:0 auto 35px;padding:0 5%}
 .solicita-box{background:linear-gradient(135deg,#0a1a2b,#0f2942);border:1px solid var(--azul);border-radius:18px;padding:30px 20px;text-align:center;box-shadow:0 10px 30px rgba(0,189,245,.15)}
 .solicita-box h2{font-size:22px;color:#fff;margin-bottom:8px;letter-spacing:1px}
 .solicita-box p{color:#b5c7d9;font-size:13.5px;margin-bottom:18px;line-height:1.5}
-.btn-solicita{display:inline-block;background:var(--azul);color:#001321;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:800;font-size:13.5px;transition:.3s;box-shadow:0 0 15px rgba(8,189,245,.4)}
+.btn-solicita{display:inline-block;background:var(--azul);color:#001321;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:800;font-size:13.5px;transition:.3s;box-shadow:0 0 15px rgba(8,189,245,.4);cursor:pointer}
 .btn-solicita:hover{background:#fff;transform:scale(1.05)}
 
 .contacto{max-width:800px;margin:0 auto 35px;padding:0 5%}
@@ -114,11 +114,56 @@ radio-player{display:block;width:100%;height:130px}
 .fab-whatsapp:hover{transform:scale(1.1);background:#16a34a}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7)}70%{box-shadow:0 0 0 15px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
 
+/* VISOR INTERNO MEJORADO */
+#visor-interno {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: var(--fondo);
+}
+#visor-interno.activo {
+  display: flex;
+  flex-direction: column;
+}
+.visor-header {
+  height: 60px;
+  background: rgba(6,16,30,0.95);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.btn-cerrar-visor {
+  background: var(--azul);
+  color: #001321;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 900;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(8,189,245,.4);
+  transition: .2s;
+}
+.btn-cerrar-visor:hover {
+  background: #fff;
+}
+#visor-iframe {
+  width: 100%;
+  height: calc(100vh - 60px);
+  border: none;
+  background: #fff;
+}
+
 /* PIE DE PÁGINA (Más grande y grueso) */
 footer{border-top:1px solid var(--border);padding:18px 5%;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
 .footer-top{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;width:100%;font-size:16px;font-weight:900}
 .footer-tagline p{font-size:12px;color:var(--subtexto);letter-spacing:1px;margin:0;font-weight:700}
-.footer-legal #btnTerminos{font-size:15px;font-weight:bold;color:var(--azul);text-decoration:none}
+.footer-legal #btnTerminos{font-size:15px;font-weight:bold;color:var(--azul);text-decoration:none;cursor:pointer}
 .footer-legal #btnTerminos:hover{text-decoration:underline}
 
 .modal-legal{display:none;position:fixed;inset:0;z-index:999;background:rgba(2,10,18,.85);backdrop-filter:blur(6px);padding:20px;overflow-y:auto}
@@ -198,26 +243,33 @@ footer{border-top:1px solid var(--border);padding:18px 5%;display:flex;flex-dire
   <nav id="nav">
     <a href="#inicio">Inicio</a>
     <a href="#servicios">Servicios</a>
-    <a href="https://tinmar.vercel.app">Tienda</a>
-    <a href="https://pabloalesandre.vercel.app">Abogado</a>
-    <a href="https://javiertato.vercel.app">Tatuaje</a>
-    <a href="https://lavaderounion.vercel.app">Lavadero</a>
-    <a href="masajes/index.html">Masajes</a>
-    <a href="trabajos/index.html">Trabajos</a>
-<a href="juegovascolet/index.html">Vascolet</a>
-    <a href="https://tinmar.vercel.app/solicita">Solicita Web</a>
-<a href="#contacto">Contacto</a></nav></header>
+    <a href="https://tinmar.vercel.app" class="web-interna">Tienda</a>
+    <a href="https://pabloalesandre.vercel.app" class="web-interna">Abogado</a>
+    <a href="https://javiertato.vercel.app" class="web-interna">Tatuaje</a>
+    <a href="https://lavaderounion.vercel.app" class="web-interna">Lavadero</a>
+    <a href="masajes/index.html" class="web-interna">Masajes</a>
+    <a href="trabajos/index.html" class="web-interna">Trabajos</a>
+    <a href="juegovascolet/index.html" class="web-interna">Vascolet</a>
+    <a href="https://tinmar.vercel.app/solicita" class="web-interna">Solicita Web</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
 <section class="seccion" id="servicios">
 <div class="marquee">
   <div class="marquee-track">
     <span>⚖️ Consultas legales con abogado</span><span>🖋️ Tatuajes personalizados</span><span>🌿 Masajes relajantes</span><span>🧺 Lavadero de ropa</span><span>🔧 Trabajos en general</span><span>🏗️ Construcción y pintura</span><span>🌱 Jardinería y mantenimiento</span><span>🎮 Juego Vascolet</span><span>Servicios profesionales 24 horas</span>
-<span>⚖️ Consultas legales con abogado</span><span>🖋️ Tatuajes personalizados</span><span>🌿 Masajes relajantes</span><span>🧺 Lavadero de ropa</span><span>🔧 Trabajos en general</span><span>🏗️ Construcción y pintura</span><span>🌱 Jardinería y mantenimiento</span><span>🎮 Juego Vascolet</span><span>Servicios profesionales 24 horas</span> </div> </div>
+    <span>⚖️ Consultas legales con abogado</span><span>🖋️ Tatuajes personalizados</span><span>🌿 Masajes relajantes</span><span>🧺 Lavadero de ropa</span><span>🔧 Trabajos en general</span><span>🏗️ Construcción y pintura</span><span>🌱 Jardinería y mantenimiento</span><span>🎮 Juego Vascolet</span><span>Servicios profesionales 24 horas</span> 
+  </div> 
+</div>
+
 <div class="widgets" id="inicio">
   <div id="reloj-lluvia">
     <canvas></canvas>
     <div class="contenido">
       <div id="hora">00:00:00</div>
-<div id="fecha">Cargando fecha...</div></div>
+      <div id="fecha">Cargando fecha...</div>
+    </div>
   </div>
 
   <div class="clima-container" id="climaWidget">
@@ -228,88 +280,115 @@ footer{border-top:1px solid var(--border);padding:18px 5%;display:flex;flex-dire
 
   <radio-player></radio-player>
 
-  <a href="https://tinmar.vercel.app/solicita" class="solicita-widget">
+  <a href="https://tinmar.vercel.app/solicita" class="solicita-widget web-interna">
     <h3>🚀 SOLICITA TU WEB</h3>
     <p>Impulsa tu negocio hoy</p>
-<div class="btn-solicita-mini">PEDIR AQUÍ</div>
-  </a></div>
+    <div class="btn-solicita-mini">PEDIR AQUÍ</div>
+  </a>
+</div>
+
 <section class="hero">
   <div class="hero-text">
     <h1><span>◎</span>TINMAR Portal de negocios</h1> 
     <div class="titulo">
-      <h2>ALGUNAS WEB</h2></div> </div>
-<div class="hero-icon">◎</div></section>
-<div class="grid" id="servicesGrid">
-    <article class="card" data-search="tienda tinmar productos variedad compras">
-  <span class="badge-status">🟢 Abierto</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800" alt="Tienda"></div>
-      <div class="contenido">
-        <h3>🛒 TINMAR</h3>
-<p>Productos, variedad y la mejor atención.</p>
-        <div class="card-actions">
-<a href="https://tinmar.vercel.app" class="btn">VER TIENDA →</a> </div> </div></article>
-
-<article class="card" data-search="abogado asesoramiento jurídico consultas legales derecho">
-<span class="badge-status">🟢 Disponible</span>
-      <div class="foto"><img src="https://i.ibb.co/5hCFkk3Z/Screenshot-20261030-171925-Chrome.jpg" alt="Abogado"></div>
-      <div class="contenido">
-        <h3>⚖️ ABOGADO</h3>
-        <p>Asesoramiento jurídico y consultas profesionales.</p>
-        <div class="card-actions">
-<a href="https://pabloalesandre.vercel.app" class="btn">VER ABOGADO →</a> </div> </div></article>
-
-    <article class="card" data-search="tatuajes tatuaje diseños únicos estilo personalizado arte">
-<span class="badge-status">🟢 Abierto</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=800" alt="Tatuajes"></div>
-      <div class="contenido">
-        <h3>🖋️ TATUAJES</h3>
-<p>Diseños únicos y estilo personalizado.</p>
-        <div class="card-actions">
- <a href="https://javiertato.vercel.app" class="btn">VER TATUAJES →</a></div> </div>  </article>
- <article class="card" data-search="lavadero unión lavado ropa prendas rápido secado">
-<span class="badge-status">🟢 Disponible</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=800" alt="Lavadero"></div>
-      <div class="contenido">
-        <h3>🧺 LAVADERO</h3>
-        <p>Lavado de ropa y prendas. Rápido y confiable.</p>
-        <div class="card-actions">
-<a href="https://lavaderounion.vercel.app/" class="btn">VER LAVADERO →</a> </div> </div>  </article>
- <article class="card" data-search="masajes relajación bienestar equilibrio cuerpo descontracturante">
-<span class="badge-status">🟢 Disponible</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800" alt="Masajes"></div>
-      <div class="contenido">
-        <h3>🌿 MASAJES</h3>
-  <p>Relajación, bienestar y equilibrio corporal.</p>
-        <div class="card-actions">
-  <a href=" " class="btn">VER MASAJES →</a> </div> </div> </article>
-
-    <article class="card" data-search="trabajos en general mantenimiento construcción jardinería pintura hogar">
-      <span class="badge-status">🟢 Presupuesto</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800" alt="Trabajos en general"></div>
-      <div class="contenido">
-        <h3>🔧 TRABAJOS</h3>
-        <p>Mantenimiento, construcción, jardinería y pintura.</p>
-        <div class="card-actions">
-<a href="trabajos/index.html" class="btn">VER TRABAJOS →</a> </div> </div>  </article>
-<article class="card" data-search="juego vascolet entretenimiento diversión online arcade">
- <span class="badge-status">🎮 Online</span>
-      <div class="foto"><img src="   " alt="Juego Vascolet"></div>
-      <div class="contenido">
-        <h3>🎮 VASCOLET</h3>
-        <p>Entretenimiento retro y diversión online.</p>
-        <div class="card-actions">
-          <a href="juegovascolet/index.html" class="btn">JUGAR AHORA →</a>
-        </div>
-      </div>
-    </article>
+      <h2>ALGUNAS WEB</h2>
+    </div> 
   </div>
+  <div class="hero-icon">◎</div>
+</section>
+
+<div class="grid" id="servicesGrid">
+  <article class="card" data-search="tienda tinmar productos variedad compras">
+    <span class="badge-status">🟢 Abierto</span>
+    <div class="foto"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800" alt="Tienda"></div>
+    <div class="contenido">
+      <h3>🛒 TINMAR</h3>
+      <p>Productos, variedad y la mejor atención.</p>
+      <div class="card-actions">
+        <a href="https://tinmar.vercel.app" class="btn web-interna">VER TIENDA →</a> 
+      </div> 
+    </div>
+  </article>
+
+  <article class="card" data-search="abogado asesoramiento jurídico consultas legales derecho">
+    <span class="badge-status">🟢 Disponible</span>
+    <div class="foto"><img src="https://i.ibb.co/5hCFkk3Z/Screenshot-20261030-171925-Chrome.jpg" alt="Abogado"></div>
+    <div class="contenido">
+      <h3>⚖️ ABOGADO</h3>
+      <p>Asesoramiento jurídico y consultas profesionales.</p>
+      <div class="card-actions">
+        <a href="https://pabloalesandre.vercel.app" class="btn web-interna">VER ABOGADO →</a> 
+      </div> 
+    </div>
+  </article>
+
+  <article class="card" data-search="tatuajes tatuaje diseños únicos estilo personalizado arte">
+    <span class="badge-status">🟢 Abierto</span>
+    <div class="foto"><img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=800" alt="Tatuajes"></div>
+    <div class="contenido">
+      <h3>🖋️ TATUAJES</h3>
+      <p>Diseños únicos y estilo personalizado.</p>
+      <div class="card-actions">
+        <a href="https://javiertato.vercel.app" class="btn web-interna">VER TATUAJES →</a>
+      </div> 
+    </div>  
+  </article>
+
+  <article class="card" data-search="lavadero unión lavado ropa prendas rápido secado">
+    <span class="badge-status">🟢 Disponible</span>
+    <div class="foto"><img src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=800" alt="Lavadero"></div>
+    <div class="contenido">
+      <h3>🧺 LAVADERO</h3>
+      <p>Lavado de ropa y prendas. Rápido y confiable.</p>
+      <div class="card-actions">
+        <a href="https://lavaderounion.vercel.app/" class="btn web-interna">VER LAVADERO →</a> 
+      </div> 
+    </div>  
+  </article>
+
+  <article class="card" data-search="masajes relajación bienestar equilibrio cuerpo descontracturante">
+    <span class="badge-status">🟢 Disponible</span>
+    <div class="foto"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800" alt="Masajes"></div>
+    <div class="contenido">
+      <h3>🌿 MASAJES</h3>
+      <p>Relajación, bienestar y equilibrio corporal.</p>
+      <div class="card-actions">
+        <a href="#" class="btn web-interna">VER MASAJES →</a> 
+      </div> 
+    </div> 
+  </article>
+
+  <article class="card" data-search="trabajos en general mantenimiento construcción jardinería pintura hogar">
+    <span class="badge-status">🟢 Presupuesto</span>
+    <div class="foto"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800" alt="Trabajos en general"></div>
+    <div class="contenido">
+      <h3>🔧 TRABAJOS</h3>
+      <p>Mantenimiento, construcción, jardinería y pintura.</p>
+      <div class="card-actions">
+        <a href="trabajos/index.html" class="btn web-interna">VER TRABAJOS →</a> 
+      </div> 
+    </div>  
+  </article>
+
+  <article class="card" data-search="juego vascolet entretenimiento diversión online arcade">
+    <span class="badge-status">🎮 Online</span>
+    <div class="foto"><img src="" alt="Juego Vascolet"></div>
+    <div class="contenido">
+      <h3>🎮 VASCOLET</h3>
+      <p>Entretenimiento retro y diversión online.</p>
+      <div class="card-actions">
+        <a href="juegovascolet/index.html" class="btn web-interna">JUGAR AHORA →</a>
+      </div>
+    </div>
+  </article>
+</div>
 </section>
 
 <section class="solicita-seccion" id="solicita">
   <div class="solicita-box">
     <h2>🚀 ¿NECESITAS UNA PÁGINA WEB PROFESIONAL?</h2>
     <p>Impulsa tu emprendimiento con un diseño moderno, ultrarrápido y 100% adaptado para móviles.</p>
-    <a href="https://tinmar.vercel.app/solicita" target="_blank" rel="noopener" class="btn-solicita">SOLICITA TU WEB AHORA</a>
+    <a href="https://tinmar.vercel.app/solicita" class="btn-solicita web-interna">SOLICITA TU WEB AHORA</a>
   </div>
 </section>
 
@@ -322,19 +401,33 @@ footer{border-top:1px solid var(--border);padding:18px 5%;display:flex;flex-dire
     <p class="info-icon">📍 <strong>Ubicación:</strong> Montevideo, Uruguay</p>
     <p class="info-icon">⏰ <strong>Horario:</strong> Todos los días - Atención 24 horas</p>
     <p class="info-icon">📞 <strong>Teléfono:</strong> <a href="tel:+59899295848" class="tel">099 295 848</a></p>
-    <p class="info-icon">📱 <strong>WhatsApp Directo:</strong> <a href="https://wa.me/59899295848" target="_blank" rel="noopener"class="wa">Chat de WhatsApp</a></p>
+    <p class="info-icon">📱 <strong>WhatsApp Directo:</strong> <a href="https://wa.me/59899295848" target="_blank" rel="noopener" class="wa">Chat de WhatsApp</a></p>
     <p class="info-icon">✉️ <strong>Correo Electrónico:</strong> <a href="mailto:martinsampayo9@gmail.com" class="mail">martinsampayo9@gmail.com</a></p>
   </div>
 </section>
 
+<!-- Visor Interno Dinámico -->
+<div id="visor-interno">
+  <div class="visor-header">
+    <span style="font-weight:900; color:var(--azul);">◎ TINMAR - Vista Integrada</span>
+    <button class="btn-cerrar-visor" id="cerrarVisor">VOLVER AL PORTAL ✕</button>
+  </div>
+  <iframe id="visor-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+</div>
+
 <!-- Botón Flotante WhatsApp -->
 <a href="https://wa.me/59899295848" class="fab-whatsapp" target="_blank" aria-label="Chat WhatsApp" rel="noopener">📱</a>
 
-<footer> <div class="footer-top">
+<footer> 
+  <div class="footer-top">
     <div>◎ TINMAR</div>
-    <div class="footer-tagline"><p>CALIDAD · CONFIANZA · SERVICIOS INTEGRALES</p></div></div>
+    <div class="footer-tagline"><p>CALIDAD · CONFIANZA · SERVICIOS INTEGRALES</p></div>
+  </div>
   <div class="footer-legal">
-    <a href="#" id="btnTerminos">Términos y Condiciones</a> </div></br></footer>
+    <a href="#" id="btnTerminos">Términos y Condiciones</a> 
+  </div>
+  <br>
+</footer>
 
 <div class="modal-legal" id="modalTerminos" role="dialog" aria-modal="true" aria-labelledby="tituloTerminos">
   <div class="modal-legal-box">
@@ -357,56 +450,9 @@ footer{border-top:1px solid var(--border);padding:18px 5%;display:flex;flex-dire
     <h3>5. Limitación de Responsabilidad</h3>
     <p>TINMAR actúa como un facilitador de enlaces y contacto directo. No se responsabiliza por inconvenientes, daños indirectos, disputas o incumplimientos derivados de las transacciones comerciales o acuerdos particulares realizados directamente entre los usuarios y los prestadores de cada servicio anunciado.</p>
 
-    <div style="margin-top:20px; font-size:11.5px; color:var(--subtexto);">Última actualización: <span id="fechaActualizacion">Octubre 2026</span>
-      </div></div>
-
-<div class="modal-legal" id="modalPrivacidad" role="dialog" aria-modal="true" aria-labelledby="tituloPrivacidad">
-  <div class="modal-legal-box">
-    <button class="modal-cerrar" id="cerrarPrivacidad" aria-label="Cerrar">✕</button>
-    <h2 id="tituloPrivacidad">🔒 Política de Privacidad</h2>
-    <div class="modal-sub">Portal TINMAR · Montevideo, Uruguay</div>
-
-    <h3>1. Responsable del tratamiento</h3>
-    <p>El responsable del tratamiento de los datos personales recabados a través de este Portal es <strong>TINMAR</strong>, con domicilio en Montevideo, Uruguay. Contacto: <a href="mailto:martinsampayo9@gmail.com">martinsampayo9@gmail.com</a>.</p>
-
-    <h3>2. Datos que recopilamos</h3>
-    <p>Podemos recopilar los siguientes datos cuando el usuario se comunica con nosotros:</p>
-    <ul>
-      <li>Nombre y apellido</li>
-      <li>Número de teléfono / WhatsApp</li>
-      <li>Dirección de correo electrónico</li>
-      <li>Contenido de los mensajes o consultas</li>
-      <li>Datos técnicos de navegación (dirección IP, tipo de dispositivo, navegador)</li>
-    </ul>
-
-    <h3>3. Finalidad del tratamiento</h3>
-    <p>Los datos se utilizan exclusivamente para:</p>
-    <ul>
-      <li>Responder consultas y solicitudes de información.</li>
-      <li>Coordinar y prestar los servicios solicitados.</li>
-      <li>Mejorar la experiencia de navegación y el funcionamiento del Portal.</li>
-      <li>Cumplir con obligaciones legales aplicables.</li>
-    </ul>
-
-    <h3>4. Base legal</h3>
-    <p>El tratamiento se basa en el consentimiento del usuario, en la ejecución de la relación de servicio y en el cumplimiento de obligaciones legales, conforme a la Ley N.º 18.331 de Protección de Datos Personales de Uruguay.</p>
-
-    <h3>5. Conservación de los datos</h3>
-    <p>Los datos se conservarán durante el tiempo necesario para cumplir con la finalidad para la que fueron recabados y, posteriormente, durante los plazos legales que correspondan.</p>
-
-    <h3>6. Derechos del usuario</h3>
-    <p>El usuario puede ejercer en cualquier momento sus derechos de acceso, rectificación, actualización, inclusión y supresión de sus datos personales, así como oponerse a su tratamiento, enviando una solicitud a <a href="mailto:martinsampayo9@gmail.com">martinsampayo9@gmail.com</a>.</p>
-
-    <h3>7. Seguridad</h3>
-    <p>Adoptamos medidas técnicas y organizativas razonables para proteger los datos personales contra pérdida, acceso no autorizado, alteración o divulgación.</p>
-
-    <h3>8. Terceros y enlaces</h3>
-    <p>El Portal puede contener enlaces a sitios de terceros (por ejemplo, WhatsApp, servicios de mapas o proveedores de clima). No somos responsables de las políticas de privacidad de dichos sitios.</p>
-
-    <h3>9. Cambios en esta política</h3>
-    <p>Nos reservamos el derecho de actualizar esta Política de Privacidad en cualquier momento. Las modificaciones serán publicadas en esta misma sección.</p>
-
-    <div style="margin-top:20px; font-size:11.5px; color:var(--subtexto);">Última actualización: <span id="fechaActualizacion2">Octubre 2026</span></div></div></div>
+    <div style="margin-top:20px; font-size:11.5px; color:var(--subtexto);">Última actualización: <span id="fechaActualizacion">Octubre 2026</span></div>
+  </div>
+</div>
 
 <script>
 const menuToggle=document.getElementById("menuToggle");
@@ -416,28 +462,39 @@ menuToggle.addEventListener("click",()=>{
   menuToggle.textContent=nav.classList.contains("abierto")?"✕":"☰";
 });
 nav.querySelectorAll("a").forEach(a=>{
-  a.addEventListener("click",()=>{
-    nav.classList.remove("abierto");
-    menuToggle.textContent="☰";
-  });
+  if(!a.classList.contains("web-interna")) {
+    a.addEventListener("click",()=>{
+      nav.classList.remove("abierto");
+      menuToggle.textContent="☰";
+    });
+  }
 });
 
+/* Lógica para abrir las páginas web dentro del mismo portal */
 (function(){
-  const searchInput = document.getElementById("searchInput");
-  const cards = document.querySelectorAll("#servicesGrid .card");
-  if(!searchInput) return;
-  searchInput.addEventListener("input", e=>{
-    const term = e.target.value.toLowerCase().trim();
-    cards.forEach(card=>{
-      const text = card.getAttribute("data-search") || "";
-      const title = card.querySelector("h3").textContent.toLowerCase();
-      const desc = card.querySelector("p").textContent.toLowerCase();
-      if(text.includes(term) || title.includes(term) || desc.includes(term)){
-        card.style.display = "flex";
-      } else {
-        card.style.display = "none";
-      }
+  const visor = document.getElementById("visor-interno");
+  const iframe = document.getElementById("visor-iframe");
+  const btnCerrar = document.getElementById("cerrarVisor");
+  
+  document.querySelectorAll(".web-interna").forEach(link => {
+    link.addEventListener("click", e => {
+      const url = link.getAttribute("href");
+      if(!url || url.startsWith("#") || url.startsWith("tel:") || url.startsWith("mailto:") || url.includes("wa.me")) return;
+      e.preventDefault();
+      
+      nav.classList.remove("abierto");
+      menuToggle.textContent="☰";
+      
+      iframe.src = url;
+      visor.classList.add("activo");
+      document.body.style.overflow = "hidden";
     });
+  });
+
+  btnCerrar.addEventListener("click", () => {
+    visor.classList.remove("activo");
+    iframe.src = "";
+    document.body.style.overflow = "auto";
   });
 })();
 
@@ -463,7 +520,7 @@ nav.querySelectorAll("a").forEach(a=>{
     gotas=[];
     for(let i=0;i<25;i++) gotas.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, l:8+Math.random()*10, v:2+Math.random()*3});  }
   function animar(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.strokeStyle="#7eefff";
     ctx.lineWidth=1;
     for(const g of gotas){
@@ -473,9 +530,11 @@ nav.querySelectorAll("a").forEach(a=>{
       ctx.stroke();
       g.y+=g.v;
       if(g.y>canvas.height){g.y=-10;g.x=Math.random()*canvas.width;} }
- requestAnimationFrame(animar);  }
+    requestAnimationFrame(animar);  }
   ajustar();animar();
-window.addEventListener("resize",ajustar); })();
+  window.addEventListener("resize",ajustar); 
+})();
+
 (function(){
   const tempEl = document.getElementById("climaTemp");
   const descEl = document.getElementById("climaDesc");
@@ -484,18 +543,20 @@ window.addEventListener("resize",ajustar); })();
       const data = await res.json();
       if(data && data.current){
         tempEl.textContent = Math.round(data.current.temperature_2m) + "°C";
-descEl.textContent = "🌤️ Clima en Montevideo";}
+        descEl.textContent = "🌤️ Clima en Montevideo";}
     } catch(e){
       tempEl.textContent = "--°C";
-descEl.textContent = "Clima no disponible"; }}
-  cargarClima(); })();
+      descEl.textContent = "Clima no disponible"; }}
+  cargarClima(); 
+})();
+
 if(!customElements.get("radio-player")){
   customElements.define("radio-player",class extends HTMLElement{
     constructor(){super();this.attachShadow({mode:"open"});}
     connectedCallback(){
       this.shadowRoot.innerHTML=`
       <style>
- :host{display:block;width:100%;height:100%;}
+      :host{display:block;width:100%;height:100%;}
       *{box-sizing:border-box;}
       .radio-container{width:100%;height:100%;min-height:130px;padding:12px;background:linear-gradient(180deg,#082530,#073b48);border:1px solid #197b8b;border-radius:20px;box-shadow:0 5px 20px rgba(0,0,0,.25),inset 0 -20px 35px rgba(0,190,220,.10);font-family:Arial,sans-serif;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;}
       .radio-screen{width:100%;min-height:28px;display:flex;align-items:center;justify-content:center;padding:4px;background:rgba(255,255,255,.08);border:1px solid rgba(100,230,245,.35);border-radius:10px;color:#70efff;font-size:12.5px;font-weight:800;}
@@ -511,22 +572,25 @@ if(!customElements.get("radio-player")){
       @media(max-width:750px){
         .radio-container{padding:8px;min-height:115px;border-radius:16px;}
         .radio-screen{font-size:11.5px;min-height:24px;font-weight:800;}
- .radio-song{font-size:10px;font-weight:700;}
+        .radio-song{font-size:10px;font-weight:700;}
         .live{font-size:9.5px;font-weight:800;}
- .play-button{width:32px;height:32px;}
+        .play-button{width:32px;height:32px;}
       }
       </style>
       <div class="radio-container">
         <div class="radio-screen"><span id="status">📻 RADIO ONLINE</span></div>
         <div class="radio-song" id="song">🎶 MÚSICA ACTIVA 24/7</div>
-  <button class="play-button" id="play" type="button">
-<div class="play-icon"></div>
-<div class="pause-icon"></div>
+        <button class="play-button" id="play" type="button">
+          <div class="play-icon"></div>
+          <div class="pause-icon"></div>
         </button>
- <div class="live" id="live">● PAUSADO</div>
-        <audio id="audio" preload="none" pplaysinline crossorigin="anonymous">
-          <source src="https://stream.zeno.fm/8wup8yd9dm0uv" type="audio/mpeg">  </audio>  </div>`;
-      this.iniciar();   }
+        <div class="live" id="live">● PAUSADO</div>
+        <audio id="audio" preload="none" crossorigin="anonymous">
+          <source src="https://stream.zeno.fm/8wup8yd9dm0uv" type="audio/mpeg">  
+        </audio>  
+      </div>`;
+      this.iniciar();   
+    }
     iniciar(){
       const root=this.shadowRoot;
       const cont=root.querySelector(".radio-container");
@@ -541,7 +605,7 @@ if(!customElements.get("radio-player")){
       btn.addEventListener("click",async()=>{
         if(audio.paused){
           try{
-       status.textContent="⏳ CONECTANDO...";
+            status.textContent="⏳ CONECTANDO...";
             live.textContent="● CONECTANDO";
             audio.load();
             await audio.play();
@@ -561,7 +625,11 @@ if(!customElements.get("radio-player")){
         }
       });
       audio.addEventListener("playing",()=>{cont.classList.add("playing");status.textContent="⚡ EN VIVO";live.textContent="● EN VIVO";});
-      audio.addEventListener("pause",()=>{if(!audio.ended){cont.classList.remove("playing");status.textContent="📻 PAUSADA";live.textContent="● PAUSADO";}}); } }); }
+      audio.addEventListener("pause",()=>{if(!audio.ended){cont.classList.remove("playing");status.textContent="📻 PAUSADA";live.textContent="● PAUSADO";}}); 
+    } 
+  });
+}
+
 (function(){
   const modalTerminos = document.getElementById("modalTerminos");
   const btnTerminos = document.getElementById("btnTerminos");
@@ -569,4 +637,8 @@ if(!customElements.get("radio-player")){
   if(btnTerminos && modalTerminos){
     btnTerminos.addEventListener("click", e=>{ e.preventDefault(); modalTerminos.classList.add("abierto"); });
     cerrarTerminos.addEventListener("click", ()=>modalTerminos.classList.remove("abierto"));
-  } })(); </script> </body> </html>lava
+  } 
+})(); 
+</script> 
+</body> 
+</html>
