@@ -2,585 +2,1031 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#061323">
-<title>TINMAR | Portal de Negocios y Servicios</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --azul:#08bdf5;
-  --azul-hover:#0696c4;
-  --fondo:#061323;
-  --card:#0b1b2e;
-  --texto:#ffffff;
-  --subtexto:#b5c7d9;
-  --border:#164365;}
-html{scroll-behavior:smooth}
-body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:var(--fondo);color:var(--texto);overflow-x:hidden}
-header{height:76px;background:rgba(6,16,30,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:100}
-.logo{display:flex;align-items:center;gap:10px;color:var(--texto);text-decoration:none;font-size:30px;font-weight:900;letter-spacing:1px}
-.logo span{font-size:39px;color:var(--azul)}
-
-/* MENÚ LATERAL DESPLEGABLE ORIGINAL */
-nav{display:flex;align-items:center;gap:18px}
-nav a{color:var(--subtexto);text-decoration:none;font-size:12px;font-weight:bold;transition:.3s;text-transform:uppercase}
-nav a:hover{color:var(--azul)}
-
-.header-actions{display:flex;align-items:center;gap:12px}
-.menu{display:none;background:none;border:0;color:var(--texto);font-size:28px;cursor:pointer}
-
-.marquee{width:100%;overflow:hidden;background:linear-gradient(90deg,#082530,#0a3a48,#082530);border-top:1px solid #197b8b;border-bottom:1px solid #197b8b;padding:8px 0}
-.marquee-track{display:inline-flex;white-space:nowrap;animation:mover 28s linear infinite;will-change:transform}
-.marquee-track span{color:#c6f8ff;font-size:13px;font-weight:700;letter-spacing:1px;padding:0 26px;text-shadow:0 0 6px rgba(0,220,240,.5)}
-.marquee-track span::after{content:"◆";color:var(--azul);margin-left:26px;font-size:10px}
-@keyframes mover{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-.widgets{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:1250px;margin:22px auto 0;padding:0 5%}
-#reloj-lluvia, .clima-container, radio-player, .solicita-widget{background:var(--card);border-radius:20px;position:relative;height:130px;overflow:hidden;border:1px solid var(--border);box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-#reloj-lluvia canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-#reloj-lluvia .contenido, .clima-container{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 6px}
-
-/* RELOJ (Más grande y grueso) */
-#reloj-lluvia #hora{font-size:clamp(18px,2.5vw,34px);font-weight:900;color:#e0ffff;font-family:monospace;text-shadow:0 0 10px rgba(126,239,255,.8);line-height:1}
-#reloj-lluvia #fecha{color:#b0e0e6;font-size:clamp(9.5px,1.3vw,13px);margin-top:6px;text-shadow:0 0 5px rgba(126,239,255,.5);line-height:1.3;font-weight:700}
-
-/* CLIMA (Más grande y grueso) */
-.clima-container{background:linear-gradient(180deg,#082530,#073b48);padding:14px;box-shadow:0 5px 20px rgba(0,0,0,.25),inset 0 -20px 35px rgba(0,190,220,.10)}
-.clima-screen{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 8px;background:rgba(255,255,255,.08);border:1px solid rgba(100,230,245,.35);border-radius:11px;color:#70efff;font-size:13px;font-weight:800;text-shadow:0 0 7px rgba(0,230,255,.6)}
-.clima-temp{font-size:26px;font-weight:900;color:#e0ffff;margin:4px 0;font-family:monospace;text-shadow:0 0 10px rgba(126,239,255,.8)}
-.clima-desc{color:#b0e0e6;font-size:11.5px;font-weight:700;text-transform:capitalize}
-
-radio-player{display:block;width:100%;height:130px}
-
-/* SOLICITA WEB WIDGET (Más grande y grueso) */
-.solicita-widget{background:linear-gradient(135deg,#0a1a2b,#0f2942);border:1px solid var(--azul);padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 5px 20px rgba(0,189,245,.15);text-decoration:none;transition:.3s}
-.solicita-widget:hover{transform:translateY(-3px);border-color:#fff}
-.solicita-widget h3{font-size:14px;color:#fff;margin-bottom:4px;letter-spacing:1px;font-weight:900}
-.solicita-widget p{color:#b5c7d9;font-size:11.5px;margin-bottom:8px;line-height:1.3;font-weight:600}
-.btn-solicita-mini{background:var(--azul);color:#001321;padding:6px 12px;border-radius:8px;font-weight:900;font-size:11.5px;box-shadow:0 0 10px rgba(8,189,245,.4)}
-
-.hero{min-height:340px;padding:50px 6% 50px;display:flex;align-items:center;justify-content:space-between;gap:25px;background:radial-gradient(ellipse at 75% 50%,#063b70 0%,#061323 58%)}
-.hero-text{max-width:550px}
-.mini{color:var(--azul);letter-spacing:4px;font-size:12px;font-weight:bold}
-.hero h1{font-size:clamp(48px,8vw,85px);font-weight:900;margin:10px 0;color:white}
-.hero h1 span{color:var(--azul)}
-.hero h2{font-size:clamp(19px,3vw,27px);margin-bottom:17px;color:#b5c7d9}
-.hero-icon{font-size:clamp(110px,22vw,230px);color:#087fc1;text-shadow:0 0 45px #087fc1;animation:flotar 4s ease-in-out infinite}
-@keyframes flotar{50%{transform:translateY(-13px)}}
-
-.search-container{max-width:650px;margin:20px auto 10px;padding:0 5%;text-align:center}
-.search-box{position:relative;display:flex;align-items:center}
-.search-input{width:100%;padding:13px 20px 13px 45px;background:var(--card);border:1px solid var(--border);border-radius:30px;color:var(--texto);font-size:14px;outline:none;transition:.3s;box-shadow:0 5px 20px rgba(0,0,0,.15)}
-.search-input:focus{border-color:var(--azul);box-shadow:0 0 15px rgba(8,189,245,.3)}
-.search-icon{position:absolute;left:18px;color:var(--azul);font-size:16px;pointer-events:none}
-
-.seccion{padding:30px 4% 55px}
-.titulo{text-align:center;margin-bottom:25px}
-.titulo h2{font-size:26px;letter-spacing:2px}
-.titulo p{color:var(--subtexto);margin-top:8px;font-size:13.5px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1250px;margin:auto}
-.card{background:var(--card);border:1px solid var(--border);border-radius:15px;overflow:hidden;transition:.3s;display:flex;flex-direction:column;position:relative}
-.card:hover{transform:translateY(-6px);border-color:var(--azul);box-shadow:0 12px 35px rgba(0,139,213,0.25)}
-.badge-status{position:absolute;top:10px;right:10px;background:rgba(34,197,94,0.9);color:#fff;font-size:9.5px;font-weight:bold;padding:3px 7px;border-radius:12px;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
-.foto{height:170px;position:relative;overflow:hidden}
-.foto img{width:100%;height:100%;object-fit:cover;transition:.5s}
-.card:hover .foto img{transform:scale(1.07)}
-.foto:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,var(--card) 100%)}
-.contenido{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1}
-.contenido h3{font-size:19px;margin-bottom:7px;color:var(--texto)}
-.contenido p{color:var(--subtexto);font-size:12.5px;line-height:1.4;margin-bottom:14px}
-.card-actions{display:flex;margin-top:auto}
-.btn{width:100%;text-align:center;text-decoration:none;color:var(--texto);border:1px solid var(--azul);border-radius:8px;padding:9px 6px;font-weight:bold;font-size:11px;transition:.3s;background:rgba(8,121,181,0.15)}
-.btn:hover{background:var(--azul);color:#001321}
-
-.solicita-seccion{max-width:900px;margin:0 auto 35px;padding:0 5%}
-.solicita-box{background:linear-gradient(135deg,#0a1a2b,#0f2942);border:1px solid var(--azul);border-radius:18px;padding:30px 20px;text-align:center;box-shadow:0 10px 30px rgba(0,189,245,.15)}
-.solicita-box h2{font-size:22px;color:#fff;margin-bottom:8px;letter-spacing:1px}
-.solicita-box p{color:#b5c7d9;font-size:13.5px;margin-bottom:18px;line-height:1.5}
-.btn-solicita{display:inline-block;background:var(--azul);color:#001321;padding:12px 24px;border-radius:10px;text-decoration:none;font-weight:800;font-size:13.5px;transition:.3s;box-shadow:0 0 15px rgba(8,189,245,.4)}
-.btn-solicita:hover{background:#fff;transform:scale(1.05)}
-
-.contacto{max-width:800px;margin:0 auto 35px;padding:0 5%}
-.contacto .titulo{text-align:center;margin-bottom:20px}
-.contacto-box{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:24px 20px}
-.contacto-box .info-icon{font-size:14.5px;margin-bottom:14px;color:var(--subtexto);line-height:1.6}
-.contacto-box .info-icon strong{color:var(--texto)}
-.contacto-box .info-icon a{text-decoration:none;font-weight:600}
-.contacto-box .wa{color:#22c55e}
-.contacto-box .mail{color:#f04454}
-.contacto-box .tel{color:var(--azul)}
-
-.fab-whatsapp{position:fixed;bottom:25px;right:25px;background:#22c55e;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 5px 20px rgba(34,197,94,0.5);text-decoration:none;z-index:99;animation:pulse 2s infinite;transition:.3s}
-.fab-whatsapp:hover{transform:scale(1.1);background:#16a34a}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7)}70%{box-shadow:0 0 0 15px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
-
-/* PIE DE PÁGINA (Más grande y grueso) */
-footer{border-top:1px solid var(--border);padding:18px 5%;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
-.footer-top{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;width:100%;font-size:16px;font-weight:900}
-.footer-tagline p{font-size:12px;color:var(--subtexto);letter-spacing:1px;margin:0;font-weight:700}
-.footer-legal #btnTerminos{font-size:15px;font-weight:bold;color:var(--azul);text-decoration:none}
-.footer-legal #btnTerminos:hover{text-decoration:underline}
-
-.modal-legal{display:none;position:fixed;inset:0;z-index:999;background:rgba(2,10,18,.85);backdrop-filter:blur(6px);padding:20px;overflow-y:auto}
-.modal-legal.abierto{display:flex;align-items:flex-start;justify-content:center}
-.modal-legal-box{background:var(--card);border:1px solid var(--azul);border-radius:18px;max-width:820px;width:100%;margin:40px auto;padding:30px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-.modal-legal-box h2{color:var(--texto);font-size:22px;margin-bottom:6px}
-.modal-legal-box .modal-sub{color:var(--azul);font-size:11px;letter-spacing:2px;font-weight:bold;margin-bottom:20px}
-.modal-legal-box h3{color:var(--azul);font-size:15px;margin:18px 0 8px}
-.modal-legal-box p, .modal-legal-box ul{color:var(--subtexto);font-size:13px;line-height:1.7}
-.modal-legal-box ul{margin-left:20px}
-.modal-cerrar{position:absolute;top:14px;right:16px;width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--fondo);color:var(--texto);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-
-/* ESTILOS RESPONSIVE PARA MENÚ LATERAL DERECHO / IZQUIERDO COMPACTO */
-@media(max-width:750px){
-  header{height:65px;padding:0 5%}
-  .logo{font-size:24px}
-  .menu{display:block}
-  
-  /* Menú lateral compacto de costado con letras grandes y gruesas */
-  nav{display:none;position:absolute;top:65px;right:0;width:240px;background:rgba(11,27,46,0.98);backdrop-filter:blur(12px);padding:25px 20px;flex-direction:column;align-items:flex-start;gap:18px;border-left:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:-10px 15px 30px rgba(0,0,0,0.5);border-bottom-left-radius:16px}
-  nav.abierto{display:flex}
-  nav a{font-size:14px;font-weight:800;letter-spacing:0.5px}
-
-  .hero-icon{display:block; font-size: 110px;}
-  .widgets{
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px;
-    padding: 0 4%; }
-  #reloj-lluvia, .clima-container, radio-player, .solicita-widget {
-    height: 115px;
-    border-radius: 16px; }
-  #reloj-lluvia #hora { font-size: 22px; font-weight: 900; }
-  #reloj-lluvia #fecha { font-size: 10px; font-weight: 700; }
-  .clima-temp { font-size: 24px; font-weight: 900; }
-  .clima-screen { font-size: 11.5px; padding: 3px 6px; font-weight: 800; }
-  .clima-desc { font-size: 10.5px; font-weight: 700; }
-  .solicita-widget h3 { font-size: 12.5px; font-weight: 900; }
-  .solicita-widget p { font-size: 10.5px; font-weight: 600; }
-  .btn-solicita-mini { padding: 4px 8px; font-size: 10.5px; font-weight: 900; }
-  .grid{
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px; }
-  .foto { height: 115px; }
-  .contenido { padding: 10px 12px 12px; }
-  .contenido h3 { font-size: 14.5px; margin-bottom: 4px; }
-  .contenido p { font-size: 11px; margin-bottom: 10px; line-height: 1.3; }
-  .btn { font-size: 9.5px; padding: 7px 4px; }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Lavadero Unión</title>
+<meta name="description" content="Lavandería en Montevideo. Lavado de ropa, acolchados, tintas y calzado. Retiro y entrega a domicilio. Juan Jacobo Rousseau 4483.">
+<meta name="keywords" content="lavadero Montevideo, lavandería, acolchados, lavado de ropa, tintas, calzado, lavadero Unión">
+<meta name="author" content="Lavadero Unión">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b4f8a">
+<link rel="canonical" href="https://lavaderolaunion.com.uy/">
+<meta property="og:type" content="business.business">
+<meta property="og:title" content="Lavadero Unión | Lavandería profesional en Montevideo">
+<meta property="og:description" content="Lavado de ropa, acolchados, tintas y calzado. Retiro a domicilio en Montevideo.">
+<meta property="og:image" content="https://i.ibb.co/7JKCjvGs/Screenshot-20261027-224201-Instagram.png">
+<meta property="og:url" content="https://lavaderolaunion.com.uy/">
+<meta property="og:locale" content="es_UY">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://i.ibb.co/7JKCjvGs/Screenshot-20261027-224201-Instagram.png">
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">{
+  "@context":"https://schema.org",
+  "@type":"LaundryService",
+  "name":"Lavadero Unión",
+  "image":"https://i.ibb.co/7JKCjvGs/Screenshot-20261027-224201-Instagram.png",
+  "url":"https://lavaderolaunion.com.uy/",
+  "telephone":"+59897192247",
+  "priceRange":"$$",
+  "address":{"@type":"PostalAddress","streetAddress":"Juan Jacobo Rousseau 4483","addressLocality":"Montevideo","addressCountry":"UY"},
+  "geo":{"@type":"GeoCoordinates","latitude":-34.8394,"longitude":-56.1778},
+  "openingHoursSpecification":[
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"18:00"}
+  ],
+  "sameAs":["https://www.instagram.com/lavaderounion2024/"],
+  "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"47","bestRating":"5"}
 }
-</style>
+</script>
 <script>
-  // Bloqueo de menú contextual (clic derecho)
   document.addEventListener("contextmenu", e => e.preventDefault());
-
-  // Bloqueo de atajos de desarrollador
   document.addEventListener("keydown", e => {
     const bloqueadas =
-      e.key === "F12" ||
-      e.key === "F8" ||
+      e.key === "F12" || e.key === "F8" ||
       (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) ||
       (e.ctrlKey && (e.key === "u" || e.key === "U"));
-    if (bloqueadas) {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    }
+    if (bloqueadas) { e.preventDefault(); e.stopPropagation(); return false; }
   });
-  // Bloqueo de doble clic
   document.addEventListener("dblclick", e => e.preventDefault());
 </script>
+
+<style>
+:root{--primary:#0b4f8a;--primary-dark:#083a66;--primary-light:#eaf2fa;--secondary:#c8102e;--accent:#25d366;--accent-dark:#1da851;--gold:#ffd166;--bg-light:#f6f8fb;--text-dark:#1c2b36;--text-muted:#5c6b77;--white:#fff;--border:#e3e9ef;--shadow-sm:0 2px 8px rgba(15,40,70,.06);--shadow:0 4px 16px rgba(15,40,70,.08);--shadow-hover:0 8px 24px rgba(15,40,70,.14);--radius:10px;--radius-sm:6px;--transition:all .25s ease}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+html{scroll-behavior:smooth}
+body{background-color:var(--bg-light);color:var(--text-dark);line-height:1.55;padding-bottom:0;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+header{background:var(--white);box-shadow:var(--shadow-sm);position:sticky;top:0;z-index:200;border-bottom:3px solid var(--primary)}
+.nav{max-width:1100px;margin:0 auto;padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+.brand-icon{position:relative;width:58px;height:58px;background:var(--primary);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1.3rem;transition:var(--transition);flex-shrink:0;overflow:hidden}
+.brand-icon img{width:100%;height:100%;object-fit:cover;display:block}
+.brand-icon::after{content:'';position:absolute;bottom:-3px;right:-3px;width:16px;height:16px;background:var(--accent);border:2px solid var(--white);border-radius:50%;animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}50%{box-shadow:0 0 0 6px rgba(37,211,102,0)}}
+.brand:hover .brand-icon{transform:rotate(-8deg) scale(1.05);background:var(--primary-dark)}
+.brand-text h1{font-size:1.25rem;font-weight:800;letter-spacing:1.2px;color:var(--primary-dark);line-height:1.1}
+.brand-text p{font-size:.65rem;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;font-weight:500}
+.nav-links{display:flex;align-items:center;gap:.3rem;list-style:none}
+.nav-links a{padding:.5rem .85rem;border-radius:var(--radius-sm);font-size:.82rem;font-weight:500;color:var(--text-dark);transition:var(--transition);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-links a i{font-size:.75rem;color:var(--primary);opacity:.8}
+.nav-links a:hover{background:var(--primary-light);color:var(--primary)}
+.nav-links a[aria-current="page"]{background:var(--primary-light);color:var(--primary);font-weight:600}
+.nav-links a.nav-cta{background:var(--accent);color:var(--white);font-weight:600;box-shadow:0 3px 10px rgba(37,211,102,.3)}
+.nav-links a.nav-cta i{color:var(--white);opacity:1}
+.nav-links a.nav-cta:hover{background:var(--accent-dark);color:var(--white);transform:translateY(-1px)}
+.menu-toggle{display:none;background:transparent;border:1.5px solid var(--border);width:42px;height:42px;border-radius:8px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:var(--transition);padding:0}
+.menu-toggle:hover{background:var(--primary-light);border-color:var(--primary)}
+.menu-toggle span{display:block;width:20px;height:2px;background:var(--primary-dark);border-radius:2px;transition:var(--transition)}
+.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.menu-toggle.active span:nth-child(2){opacity:0}
+.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.menu-backdrop{display:none;position:fixed;inset:0;background:rgba(8,30,55,.5);z-index:150;opacity:0;transition:opacity .3s ease}
+.menu-backdrop.show{display:block;opacity:1}
+.mobile-menu{display:none;background:var(--white);border-top:1px solid var(--border);box-shadow:var(--shadow);max-height:0;overflow:hidden;transition:max-height .35s ease;position:relative;z-index:200}
+.mobile-menu.open{max-height:600px}
+.mobile-menu ul{list-style:none;padding:.5rem .8rem .8rem}
+.mobile-menu ul li a{display:flex;align-items:center;gap:12px;padding:.75rem .9rem;border-radius:var(--radius-sm);font-size:.88rem;font-weight:500;color:var(--text-dark);transition:var(--transition);border-bottom:1px solid #f0f3f7}
+.mobile-menu ul li:last-child a{border-bottom:none;margin-top:.4rem}
+.mobile-menu ul li a i{width:30px;height:30px;background:var(--primary-light);color:var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.mobile-menu ul li a:hover{background:var(--primary-light)}
+.mobile-menu ul li a.mob-cta{background:var(--accent);color:var(--white);font-weight:600;border-bottom:none}
+.mobile-menu ul li a.mob-cta i{background:rgba(255,255,255,.25);color:var(--white)}
+.mobile-menu ul li a.mob-cta:hover{background:var(--accent-dark)}
+.intro{position:relative;height:480px;overflow:hidden;display:flex;align-items:center}
+.intro-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+.intro-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(8,30,55,.85) 0%,rgba(8,30,55,.7) 45%,rgba(8,30,55,.4) 100%);z-index:1}
+.intro-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%}
+.intro-content{max-width:560px;color:var(--white)}
+.intro-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);color:var(--white);font-size:.7rem;font-weight:600;padding:.35rem .85rem;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:.6rem;border:1px solid rgba(255,255,255,.25)}
+.intro-tag i{color:var(--gold)}
+.estado-local{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;padding:.5rem 1rem;border-radius:24px;margin-bottom:1rem;margin-left:6px;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);border:1.5px solid rgba(255,255,255,.4);color:var(--white);letter-spacing:.3px;line-height:1.2}
+.estado-local i{font-size:.8rem}
+.intro h2{font-size:2.1rem;font-weight:800;line-height:1.15;margin-bottom:.8rem;color:var(--white);text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.intro h2 small{display:block;font-size:.55em;font-weight:500;opacity:.9;margin-top:4px}
+.intro-desc{font-size:.95rem;color:rgba(255,255,255,.9);margin-bottom:1.3rem;max-width:480px;text-shadow:0 1px 6px rgba(0,0,0,.3)}
+.intro-features{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
+.intro-feature{display:flex;align-items:center;gap:10px;font-size:.85rem;color:rgba(255,255,255,.95);font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+.intro-feature i{color:var(--white);font-size:.7rem;width:20px;height:20px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(37,211,102,.4)}
+.intro-cta{display:flex;gap:.6rem;flex-wrap:wrap}
+.intro-cta .btn-outline{color:var(--white);border-color:rgba(255,255,255,.7)}
+.intro-cta .btn-outline:hover{background:var(--white);color:var(--primary-dark);border-color:var(--white)}
+.marquee-section{background:var(--primary-dark);color:var(--white);padding:.85rem 0;overflow:hidden;border-top:3px solid var(--secondary);border-bottom:3px solid var(--secondary)}
+.marquee{display:flex;width:max-content;animation:scroll-left 30s linear infinite}
+.marquee:hover{animation-play-state:paused}
+.marquee-item{display:inline-flex;align-items:center;gap:10px;padding:0 1.6rem;font-weight:600;font-size:.95rem;letter-spacing:.5px;white-space:nowrap;text-transform:uppercase}
+.marquee-item i{color:var(--secondary);font-size:.85rem}
+.marquee-separator{color:var(--secondary);font-size:1.1rem;display:flex;align-items:center;opacity:.6}
+@keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero{background:var(--white);padding:1.4rem 1rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-20%;width:160px;height:160px;background:var(--primary-light);border-radius:50%;opacity:.7;pointer-events:none}
+.hero-badge{background-color:var(--secondary);color:var(--white);padding:.3rem .95rem;border-radius:4px;font-weight:600;font-size:.75rem;display:inline-block;margin-bottom:.7rem;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 2px 8px rgba(200,16,46,.25)}
+.hero h2{font-size:1.45rem;color:var(--primary-dark);margin-bottom:.4rem;font-weight:800}
+.hero p{color:var(--text-muted);max-width:600px;margin:0 auto 1.1rem;font-size:.9rem}
+.btn-main{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:var(--white);padding:.7rem 1.5rem;border-radius:var(--radius-sm);font-weight:600;font-size:.88rem;box-shadow:0 3px 10px rgba(11,79,138,.25);transition:var(--transition);border:none;cursor:pointer;letter-spacing:.3px}
+.btn-main:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 6px 16px rgba(11,79,138,.35)}
+.btn-wpp{background:var(--accent);box-shadow:0 3px 10px rgba(37,211,102,.3)}
+.btn-wpp:hover{background:var(--accent-dark);box-shadow:0 6px 16px rgba(37,211,102,.4)}
+.btn-outline{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:transparent;color:var(--primary);padding:.55rem 1rem;border-radius:var(--radius-sm);font-weight:600;font-size:.8rem;border:1.5px solid var(--primary);transition:var(--transition);cursor:pointer}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+.container{max-width:1000px;margin:0 auto;padding:1.4rem .8rem}
+.section-title{text-align:center;font-size:1.25rem;color:var(--primary-dark);margin-bottom:1.1rem;position:relative;font-weight:700;letter-spacing:.3px}
+.section-title::after{content:'';display:block;width:44px;height:3px;background:var(--secondary);margin:8px auto 0;border-radius:2px}
+
+.carousel-section{position:relative;max-width:1000px;margin:1rem auto;padding:0 .8rem}
+.carousel-container{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#0b1d2e}
+.carousel-slides{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1);will-change:transform}
+.carousel-slide{min-width:100%;width:100%;flex-shrink:0;position:relative;height:420px;background:#0b1d2e;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.carousel-slide img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;margin:0 auto}
+.carousel-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(8,30,55,.95));color:white;padding:2rem 1rem 1rem;text-align:center;pointer-events:none;z-index: 2;}
+.carousel-caption h3{font-size:1.1rem;font-weight:700;margin-bottom:.2rem;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.carousel-caption p{font-size:.8rem;opacity:.95;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.95);color:var(--primary-dark);border:none;width:38px;height:38px;border-radius:50%;font-size:1rem;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3);transition:var(--transition);display:flex;align-items:center;justify-content:center;z-index:10}
+.carousel-btn:hover{background:var(--white);transform:translateY(-50%) scale(1.08)}
+.carousel-btn.prev{left:10px}
+.carousel-btn.next{right:10px}
+.carousel-dots{display:flex;justify-content:center;gap:7px;margin-top:.7rem}
+.dot{width:9px;height:9px;border-radius:50%;background:#c7d2dc;border:none;cursor:pointer;transition:var(--transition);padding:0}
+.dot.active{background:var(--primary);transform:scale(1.3)}
+
+/* PROMOS & PRECIOS */
+.promos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1.8rem}
+.promo-card{background:var(--white);border-radius:var(--radius);padding:1.2rem 1rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);border-top:3px solid var(--primary);text-align:center;position:relative;overflow:hidden;transition:var(--transition);display:flex;flex-direction:column}
+.promo-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.promo-card.highlight{border-top-color:var(--secondary);background:linear-gradient(180deg,#fef7f8 0%,var(--white) 45%)}
+.promo-card .tag{position:absolute;top:12px;right:-26px;background:var(--secondary);color:white;padding:3px 28px;transform:rotate(45deg);font-size:.65rem;font-weight:800;letter-spacing:1px}
+.promo-card .promo-icon{width:42px;height:42px;background:var(--primary-light);color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.15rem;margin:0 auto .6rem}
+.promo-card.highlight .promo-icon{background:#fde8ec;color:var(--secondary)}
+.promo-card h3{font-size:1.05rem;color:var(--primary-dark);margin-bottom:.35rem;font-weight:700}
+.promo-card .price{font-size:2rem;font-weight:800;color:var(--secondary);margin:.2rem 0;line-height:1}
+.promo-card .price small{font-size:.85rem;color:var(--text-muted);font-weight:600}
+.promo-card p{color:var(--text-muted);font-size:.82rem;margin-bottom:.9rem;flex-grow:1}
+.promo-card .btn-outline{width:100%}
+
+.precios-section{background:var(--white);border-radius:var(--radius);padding:1.3rem 1rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);margin-bottom:1.8rem}
+.tabla-precios{width:100%;border-collapse:collapse;margin-top:.4rem}
+.tabla-precios th,.tabla-precios td{padding:.65rem .5rem;text-align:left;font-size:.85rem;border-bottom:1px solid var(--border)}
+.tabla-precios th{background:var(--primary-light);color:var(--primary-dark);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+.tabla-precios td:last-child{text-align:right;font-weight:700;color:var(--secondary);white-space:nowrap}
+.tabla-precios tr:hover td{background:var(--primary-light)}
+.btn-select{background:var(--primary);color:var(--white);border:none;padding:.35rem .6rem;border-radius:4px;font-size:.7rem;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;gap:4px;font-weight:600}
+.btn-select:hover{background:var(--secondary)}
+.nota-precios{font-size:.72rem;color:var(--text-muted);margin-top:.7rem;text-align:center;font-style:italic}
+
+.zonas-section{background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 100%);border-radius:var(--radius);padding:1.4rem 1.1rem;color:var(--white);margin-bottom:1.8rem;box-shadow:var(--shadow)}
+.zonas-section .section-title{color:var(--white)}
+.zonas-section .section-title::after{background:var(--gold)}
+.zonas-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-top:.6rem}
+.zona-badge{background:rgba(255,255,255,.15);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.3);padding:.4rem .85rem;border-radius:20px;font-size:.78rem;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.zona-badge i{color:var(--gold);font-size:.7rem}
+.zonas-nota{text-align:center;font-size:.78rem;margin-top:.9rem;opacity:.9}
+.zonas-nota a{color:var(--gold);font-weight:600;text-decoration:underline}
+
+.workflow{background:var(--white);padding:1.3rem 1rem;border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--border);margin-bottom:1.8rem}
+.workflow-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-top:.9rem}
+.step-item{text-align:center;padding:.6rem .3rem;border-radius:var(--radius-sm);transition:var(--transition);border:1px solid transparent}
+.step-item:hover{background:var(--primary-light);border-color:#d5e3f0}
+.step-icon{width:48px;height:48px;background:var(--primary-light);color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto .6rem;transition:var(--transition)}
+.step-item:hover .step-icon{background:var(--primary);color:var(--white);transform:scale(1.06)}
+.step-item h4{font-size:.85rem;margin-bottom:.15rem;color:var(--primary-dark);font-weight:600}
+.step-item p{font-size:.73rem;color:var(--text-muted);line-height:1.35}
+
+.testimonios-section{position:relative;margin-bottom:1.8rem}
+.testimonios-carousel{position:relative;overflow:hidden;border-radius:var(--radius)}
+.testimonios-track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1);will-change:transform}
+.testimonio{min-width:100%;flex-shrink:0;background:var(--white);border-radius:var(--radius);padding:1.4rem 1.2rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);position:relative;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.testimonio::before{content:'\201C';position:absolute;top:8px;left:16px;font-size:3.5rem;font-family:Georgia,serif;color:var(--primary-light);line-height:1}
+.testimonio-stars{color:var(--gold);font-size:.9rem;margin-bottom:.7rem;position:relative}
+.testimonio p{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;position:relative;font-style:italic;line-height:1.6}
+.testimonio-autor{display:flex;align-items:center;justify-content:center;gap:10px;position:relative}
+.testimonio-avatar{width:40px;height:40px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
+.testimonio-autor div{text-align:left}
+.testimonio-autor div strong{font-size:.85rem;color:var(--primary-dark);display:block;line-height:1.2}
+.testimonio-autor div span{font-size:.7rem;color:var(--text-muted)}
+.testimonios-dots{display:flex;justify-content:center;gap:8px;margin-top:.9rem}
+.testimonios-dots .dot{width:10px;height:10px}
+.testimonios-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.95);color:var(--primary-dark);border:none;width:36px;height:36px;border-radius:50%;font-size:.9rem;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);transition:var(--transition);display:flex;align-items:center;justify-content:center;z-index:10}
+.testimonios-btn:hover{background:var(--white);transform:translateY(-50%) scale(1.1)}
+.testimonios-btn.prev{left:8px}
+.testimonios-btn.next{right:8px}
+
+.faq-section{margin-bottom:1.8rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;align-items:stretch}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:var(--transition);display:flex;flex-direction:column}
+.faq-item[open]{box-shadow:var(--shadow-sm);border-color:var(--primary)}
+.faq-item summary{padding:.85rem 1rem;cursor:pointer;font-weight:600;font-size:.85rem;color:var(--primary-dark);display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none;transition:var(--transition)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'\f067';font-family:'Font Awesome 6 Free';font-weight:900;font-size:.75rem;color:var(--primary);transition:var(--transition)}
+.faq-item[open] summary::after{content:'\f068'}
+.faq-item summary:hover{background:var(--primary-light)}
+.faq-item .faq-answer{padding:0 1rem 1rem;font-size:.8rem;color:var(--text-muted);line-height:1.5}
+
+.info-card{background:var(--white);border-radius:var(--radius);padding:1.1rem .9rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin-bottom:1.5rem}
+.info-item{display:flex;align-items:center;gap:11px;padding:.55rem;border-radius:var(--radius-sm);transition:var(--transition)}
+.info-item:hover{background:var(--primary-light)}
+.info-item i{font-size:1.05rem;color:var(--primary);width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--primary-light);border-radius:50%;flex-shrink:0}
+.info-item div h5{font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.info-item div p{font-weight:600;font-size:.84rem}
+.info-item div p a{color:var(--primary);font-weight:600;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:var(--transition);cursor:pointer}
+.info-item div p a:hover,.info-item div p a:focus-visible{color:var(--secondary);text-decoration-color:var(--secondary)}
+.pagos{display:flex;align-items:center;gap:.5rem;flex-wrap:nowrap;margin-top:.6rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.pagos::-webkit-scrollbar{height:3px}
+.pagos::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.pagos > span:first-child{font-size:.7rem;color:var(--text-muted);font-weight:600;white-space:nowrap;flex-shrink:0}
+.pago-badge{display:inline-flex;align-items:center;gap:4px;background:var(--white);border:1px solid var(--border);padding:.28rem .55rem;border-radius:6px;font-size:.68rem;color:var(--text-dark);font-weight:600;box-shadow:var(--shadow-sm);white-space:nowrap;flex-shrink:0}
+.pago-badge i{color:var(--primary);font-size:.68rem}
+
+.form-section{background:var(--white);border-radius:var(--radius);padding:1.4rem 1.1rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);margin-bottom:1.8rem;scroll-margin-top: 80px;}
+.form-section .section-title{margin-bottom:.6rem}
+.form-intro{text-align:center;color:var(--text-muted);font-size:.85rem;margin-bottom:1.1rem;max-width:500px;margin-left:auto;margin-right:auto}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;max-width:600px;margin:0 auto}
+.form-grid .full{grid-column:1/-1}
+.form-grid input,.form-grid select,.form-grid textarea{width:100%;padding:.7rem .85rem;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.85rem;font-family:inherit;color:var(--text-dark);background:var(--bg-light);transition:var(--transition)}
+.form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{outline:none;border-color:var(--primary);background:var(--white);box-shadow:0 0 0 3px rgba(11,79,138,.1)}
+.form-grid textarea{resize:vertical;min-height:70px}
+.form-grid button{grid-column:1/-1;justify-content:center;padding:.85rem;font-size:.9rem}
+.form-nota{font-size:.68rem;color:var(--text-muted);text-align:center;margin-top:.7rem;line-height:1.4}
+.form-nota a{color:var(--primary);text-decoration:underline}
+
+.map-section{margin-bottom:0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+.map-header{display:flex;align-items:center;justify-content:space-between;background:var(--white);padding:.75rem 1rem;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap}
+.map-header-left{display:flex;align-items:center;gap:10px}
+.map-header-left i{color:var(--primary);font-size:1.15rem}
+.map-header-left h4{font-size:.9rem;color:var(--primary-dark);font-weight:700}
+.map-header-left p{font-size:.75rem;color:var(--text-muted);margin:0}
+.map-header .btn-outline{padding:.45rem .9rem;font-size:.78rem}
+.map-section iframe{width:100%;height:280px;border:0;display:block;filter:grayscale(15%)}
+
+footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;margin-top:2.5rem;border-top:3px solid var(--secondary)}
+.footer-main{width:100%;max-width:1100px;margin:0 auto;padding:1.6rem 1.5rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
+.footer-col{text-align:left}
+.footer-col h4{color:var(--white);font-size:.85rem;font-weight:700;margin-bottom:.5rem;letter-spacing:.5px;position:relative;padding-bottom:5px;display:inline-block}
+.footer-col h4::after{content:'';position:absolute;bottom:0;left:0;width:22px;height:2px;background:var(--gold);border-radius:2px}
+.footer-subtitle{margin-top:.9rem !important}
+.footer-col p,.footer-col a{font-size:.75rem;line-height:1.6;color:#b8c8d6;display:block;transition:var(--transition)}
+.footer-col a:hover{color:var(--white);text-decoration:underline;text-underline-offset:3px}
+.footer-col a i,.footer-col p i{margin-right:4px;color:var(--gold);font-size:.75rem}
+.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
+.footer-brand .brand-icon{width:40px;height:40px;font-size:.75rem;background:var(--primary);flex-shrink:0;overflow:hidden;border-radius:10px}
+.footer-brand .brand-icon img{width:100%;height:100%;object-fit:cover;display:block}
+.footer-brand .brand-icon::after{width:9px;height:9px;border-width:1.5px}
+.footer-brand h4{margin:0;font-size:1rem;padding:0;display:block}
+.footer-brand h4::after{display:none}
+.footer-col a[data-modal]{padding:.22rem 0;font-size:.75rem;color:#dbe5ee;font-weight:500}
+.footer-col a[data-modal]:hover{color:var(--gold)}
+.footer-bottom{width:100%;text-align:center;padding:.8rem 1rem;border-top:1px solid rgba(255,255,255,.1);font-size:.68rem;color:#8ba0b4}
+.footer-bottom strong{color:var(--white)}
+.footer-bottom a{color:var(--gold);text-decoration:underline}
+
+.wpp-flotante{position:fixed;bottom:18px;right:18px;z-index:300;width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--white);font-size:1.7rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.5);transition:var(--transition);animation:pulse-wpp 2s infinite}
+.wpp-flotante:hover{background:var(--accent-dark);transform:scale(1.08)}
+@keyframes pulse-wpp{0%,100%{box-shadow:0 4px 16px rgba(37,211,102,.5),0 0 0 0 rgba(37,211,102,.5)}50%{box-shadow:0 4px 16px rgba(37,211,102,.5),0 0 0 14px rgba(37,211,102,0)}}
+
+.modal-legal{display:none;position:fixed;inset:0;background:rgba(8,30,55,.7);z-index:400;align-items:center;justify-content:center;padding:1rem}
+.modal-legal.show{display:flex}
+.modal-content{background:var(--white);border-radius:var(--radius);max-width:600px;width:100%;max-height:85vh;overflow-y:auto;padding:1.5rem;position:relative;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.modal-content h3{color:var(--primary-dark);font-size:1.1rem;margin-bottom:.8rem}
+.modal-content p{font-size:.82rem;color:var(--text-muted);line-height:1.6;margin-bottom:.7rem}
+.modal-close{position:absolute;top:10px;right:12px;background:var(--primary-light);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;color:var(--primary);font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.modal-close:hover{background:var(--secondary);color:var(--white)}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:780px){.nav-links{display:none}.menu-toggle{display:flex}.mobile-menu{display:block}.intro{height:420px}.intro h2{font-size:1.6rem}}
+@media(max-width:640px){.nav{padding:.6rem .7rem}.brand-icon{width:48px;height:48px;font-size:1.1rem}.brand-icon::after{width:13px;height:13px}.brand-text h1{font-size:1rem;letter-spacing:.8px}.brand-text p{font-size:.55rem}.menu-toggle{width:38px;height:38px}.intro{height:auto;min-height:420px;padding:2rem 0;align-items:flex-end}.intro-overlay{background:linear-gradient(180deg,rgba(8,30,55,.55) 0%,rgba(8,30,55,.85) 55%,rgba(8,30,55,.95) 100%)}.intro-inner{padding:1rem}.intro-tag{font-size:.6rem;padding:.28rem .65rem;margin-bottom:.5rem}.estado-local{font-size:.72rem;padding:.42rem .8rem;gap:6px;margin-left:0;margin-bottom:.6rem}.estado-local i{font-size:.65rem}.intro h2{font-size:1.3rem;margin-bottom:.5rem}.intro-desc{font-size:.78rem;margin-bottom:.9rem}.intro-features{gap:.35rem;margin-bottom:1rem}.intro-feature{font-size:.72rem}.intro-feature i{width:16px;height:16px;font-size:.6rem}.intro-cta{gap:.5rem}.intro-cta .btn-main{padding:.55rem 1rem;font-size:.75rem;flex:1;justify-content:center}.intro-cta .btn-outline{padding:.5rem .8rem;font-size:.72rem;flex:1}.marquee-section{padding:.6rem 0}.marquee-item{font-size:.75rem;padding:0 1rem;gap:6px}.marquee-item i{font-size:.7rem}.carousel-section{margin:.6rem auto;padding:0 .6rem}.carousel-slide{height:300px}.carousel-caption{padding:1.2rem .7rem .6rem}.carousel-caption h3{font-size:.9rem}.carousel-caption p{font-size:.7rem}.carousel-btn{width:28px;height:28px;font-size:.8rem}.carousel-btn.prev{left:6px}.carousel-btn.next{right:6px}.carousel-dots{margin-top:.5rem;gap:5px}.dot{width:7px;height:7px}.hero{padding:1rem .8rem}.hero::before{width:110px;height:110px}.hero-badge{font-size:.65rem;padding:.22rem .7rem;margin-bottom:.45rem}.hero h2{font-size:1.1rem}.hero p{font-size:.78rem;margin-bottom:.8rem}.hero .btn-main{padding:.6rem 1.2rem;font-size:.82rem}.container{padding:1rem .65rem}.section-title{font-size:1.05rem;margin-bottom:.85rem}.section-title::after{width:36px;height:2.5px;margin-top:6px}.promos-grid{grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:1.2rem}.promo-card{padding:.85rem .55rem}.promo-card .tag{font-size:.55rem;padding:2px 22px;top:8px;right:-22px}.promo-card .promo-icon{width:36px;height:36px;font-size:1rem;margin-bottom:.45rem}.promo-card h3{font-size:.82rem;margin-bottom:.2rem}.promo-card .price{font-size:1.5rem}.promo-card .price small{font-size:.7rem}.promo-card p{font-size:.68rem;margin-bottom:.6rem;line-height:1.35}.promo-card .btn-outline{padding:.4rem .5rem;font-size:.7rem}.precios-section{padding:.9rem .7rem;margin-bottom:1.2rem}.tabla-precios th,.tabla-precios td{padding:.5rem .3rem;font-size:.72rem}.tabla-precios th{font-size:.62rem}.btn-select{font-size:.6rem;padding:.25rem .4rem}.nota-precios{font-size:.62rem}.zonas-section{padding:1rem .7rem;margin-bottom:1.2rem}.zona-badge{font-size:.68rem;padding:.32rem .7rem}.zonas-nota{font-size:.68rem}.workflow{padding:.9rem .7rem;margin-bottom:1.2rem}.workflow-steps{grid-template-columns:repeat(2,1fr);gap:.5rem;margin-top:.7rem}.step-item{padding:.5rem .2rem}.step-icon{width:40px;height:40px;font-size:1rem;margin-bottom:.4rem}.step-item h4{font-size:.72rem}.step-item p{font-size:.62rem;line-height:1.3}.testimonio{padding:1rem .8rem}.testimonio p{font-size:.78rem}.testimonio-autor div strong{font-size:.78rem}.testimonio-autor div span{font-size:.65rem}.testimonios-btn{width:30px;height:30px;font-size:.75rem}.testimonios-btn.prev{left:4px}.testimonios-btn.next{right:4px}.testimonios-dots{margin-top:.7rem;gap:6px}.testimonios-dots .dot{width:8px;height:8px}.faq-section{grid-template-columns:repeat(2,1fr);gap:.45rem;margin-bottom:1.2rem}.faq-item summary{padding:.65rem .7rem;font-size:.72rem;gap:6px}.faq-item summary::after{font-size:.65rem}.faq-item .faq-answer{padding:0 .7rem .7rem;font-size:.68rem;line-height:1.45}.info-card{grid-template-columns:repeat(2,1fr);padding:.8rem .6rem;gap:.4rem}.info-item{padding:.4rem .3rem;gap:8px;flex-direction:column;text-align:center}.info-item i{width:32px;height:32px;font-size:.9rem}.info-item div h5{font-size:.6rem}.info-item div p{font-size:.72rem}.pagos{gap:.35rem;margin-top:.4rem;margin-bottom:1rem}.pago-badge{font-size:.6rem;padding:.22rem .45rem;gap:3px}.pago-badge i{font-size:.6rem}.pagos > span:first-child{font-size:.62rem}.form-section{padding:1rem .8rem}.form-grid{grid-template-columns:1fr}.form-grid textarea{min-height:60px}.map-header{padding:.6rem .7rem;flex-direction:column;align-items:flex-start;gap:8px}.map-header-left h4{font-size:.8rem}.map-header-left p{font-size:.68rem}.map-header .btn-outline{font-size:.72rem;padding:.4rem .8rem;width:100%}.map-section iframe{height:200px}.footer-main{grid-template-columns:1fr 1fr;padding:1.2rem .8rem .8rem;gap:.5rem}.footer-col h4{font-size:.75rem;margin-bottom:.4rem;padding-bottom:4px}.footer-col h4::after{width:18px}.footer-col p,.footer-col a{font-size:.65rem;line-height:1.45}.footer-col a i,.footer-col p i{font-size:.65rem;margin-right:2px}.footer-brand{gap:6px}.footer-brand h4{font-size:.8rem}.footer-brand .brand-icon{width:32px;height:32px;font-size:.65rem}.footer-bottom{padding:.6rem;font-size:.6rem}.wpp-flotante{width:50px;height:50px;font-size:1.5rem;bottom:14px;right:14px}}
+@media(max-width:380px){.brand-text h1{font-size:.9rem}.intro h2{font-size:1.15rem}.intro-desc{font-size:.72rem}.carousel-slide{height:240px}.promo-card .price{font-size:1.3rem}.promo-card h3{font-size:.75rem}.step-icon{width:36px;height:36px;font-size:.9rem}.step-item h4{font-size:.68rem}.step-item p{font-size:.58rem}.info-item div p{font-size:.68rem}.faq-item summary{padding:.55rem .6rem;font-size:.68rem}.faq-item .faq-answer{padding:0 .6rem .6rem;font-size:.62rem}.footer-main{padding:1rem .5rem .6rem;gap:.4rem}.footer-col h4{font-size:.7rem}.footer-col p,.footer-col a{font-size:.6rem;line-height:1.4}.footer-bottom{font-size:.58rem}}
+</style>
 </head>
 <body>
+
 <header>
-  <a href="#inicio" class="logo"><span>◎</span>TINMAR</a><p>🏗️ En Construcción</p>
-  <div class="header-actions">
-    <button class="menu" id="menuToggle" aria-label="Abrir menú">☰</button>
-  </div>
-  <nav id="nav">
-    <a href="#inicio">Inicio</a>
-    <a href="#servicios">Servicios</a>
-    <a href="https://tinmar.vercel.app">Tienda</a>
-    <a href="https://pabloalesandre.vercel.app">Abogado</a>
-    <a href="https://javiertato.vercel.app">Tatuaje</a>
-    <a href="https://lavaderounion.vercel.app">Lavadero</a>
-    <a href="masajes/index.html">Masajes</a>
-    <a href="trabajos/index.html">Trabajos</a>
-    <a href="juegovascolet/index.html">Vascolet</a>
-    <a href="https://tinmar.vercel.app/solicita">Solicita Web</a>
-    <a href="#contacto">Contacto</a>
+  <nav class="nav">
+    <div class="brand">
+      <div class="brand-icon"><img src="https://i.ibb.co/7JKCjvGs/Screenshot-20261027-224201-Instagram.png" alt="Logo Lavadero Unión"></div>
+<div class="brand-text"><h1>LAVADERO UNIÓN</h1><p>Tu ropa en buenas manos</p></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="#promos"><i class="fa-solid fa-tags"></i> Promos</a></li>
+      <li><a href="#precios"><i class="fa-solid fa-dollar-sign"></i> Precios</a></li>
+      <li><a href="#servicios"><i class="fa-solid fa-list-check"></i> Servicios</a></li>
+      <li><a href="#contacto"><i class="fa-solid fa-address-book"></i> Contacto</a></li>
+      <li><a href="#ubicacion"><i class="fa-solid fa-map-location-dot"></i> Ubicación</a></li>
+      <li><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener" class="nav-cta"><i class="fa-brands fa-whatsapp"></i> Consultar</a></li>
+    </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
   </nav>
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="#promos"><i class="fa-solid fa-tags"></i> Promociones</a></li>
+      <li><a href="#precios"><i class="fa-solid fa-dollar-sign"></i> Precios</a></li>
+      <li><a href="#servicios"><i class="fa-solid fa-list-check"></i> Servicios</a></li>
+      <li><a href="#contacto"><i class="fa-solid fa-address-book"></i> Contacto</a></li>
+      <li><a href="#ubicacion"><i class="fa-solid fa-map-location-dot"></i> Ubicación</a></li>
+      <li><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener" class="mob-cta"><i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp</a></li>
+    </ul>
+  </div>
 </header>
 
-<section class="seccion" id="servicios">
-<div class="marquee">
-  <div class="marquee-track">
-    <span>⚖️ Consultas legales con abogado</span><span>🖋️ Tatuajes personalizados</span><span>🌿 Masajes relajantes</span><span>🧺 Lavadero de ropa</span><span>🔧 Trabajos en general</span><span>🏗️ Construcción y pintura</span><span>🌱 Jardinería y mantenimiento</span><span>🎮 Juego Vascolet</span><span>Servicios profesionales 24 horas</span>
-    <span>⚖️ Consultas legales con abogado</span><span>🖋️ Tatuajes personalizados</span><span>🌿 Masajes relajantes</span><span>🧺 Lavadero de ropa</span><span>🔧 Trabajos en general</span><span>🏗️ Construcción y pintura</span><span>🌱 Jardinería y mantenimiento</span><span>🎮 Juego Vascolet</span><span>Servicios profesionales 24 horas</span> 
-  </div> 
-</div>
-
-<div class="widgets" id="inicio">
-  <div id="reloj-lluvia">
-    <canvas></canvas>
-    <div class="contenido">
-      <div id="hora">00:00:00</div>
-      <div id="fecha">Cargando fecha...</div>
+<section class="intro" id="inicio">
+  <img class="intro-bg" src="https://i.ibb.co/7JKCjvGs/Screenshot-20261027-224201-Instagram.png" alt="Fondo Lavadero Unión">
+  <div class="intro-overlay"></div>
+  <div class="intro-inner">
+    <div class="intro-content">
+      <div>
+        <span class="intro-tag"><i class="fa-solid fa-star"></i> Lavandería de Confianza en Montevideo</span>
+        <span class="estado-local" id="estadoLocal"><i class="fa-solid fa-clock"></i> Verificando horario...</span>
+      </div>
+      <h2>Lavadero Unión<small>¡Aprovechá y que tu tiempo valga!</small></h2>
+      <p class="intro-desc">Ropa limpia, fresca y como nueva. Cuidamos tus prendas y tejidos con la mejor atención.</p>
+      <div class="intro-features">
+        <div class="intro-feature"><i class="fa-solid fa-check"></i> Lavados y secados en el día</div>
+        <div class="intro-feature"><i class="fa-solid fa-check"></i> Acolchados y frazadas con limpieza profunda</div>
+        <div class="intro-feature"><i class="fa-solid fa-check"></i> Retiros y entregas a domicilio</div>
+      </div>
+      <div class="intro-cta">
+        <a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar%20por%20sus%20servicios%20de%20lavadero" target="_blank" rel="noopener" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp"></i> Consultar Ahora</a>
+        <a href="tel:+59897192247" class="btn-outline"><i class="fa-solid fa-phone"></i> Llamar</a>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="clima-container" id="climaWidget">
-    <div class="clima-screen"><span id="climaLoc">📍 Montevideo</span></div>
-    <div class="clima-temp" id="climaTemp">--°C</div>
-    <div class="clima-desc" id="climaDesc">Cargando clima...</div>
+<section class="marquee-section" aria-hidden="true">
+  <div class="marquee">
+    <div class="marquee-item"><i class="fa-solid fa-soap"></i> Lavado General</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-bed"></i> Acolchados</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-shirt"></i> Tintas</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-shoe-prints"></i> Calzado</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-truck-fast"></i> Retiro a Domicilio</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-wind"></i> Secado</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-spray-can-sparkles"></i> Frescura</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-box-open"></i> Embolsado</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <!-- Duplicado para animación -->
+    <div class="marquee-item"><i class="fa-solid fa-soap"></i> Lavado General</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-bed"></i> Acolchados</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-shirt"></i> Tintas</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-shoe-prints"></i> Calzado</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-truck-fast"></i> Retiro a Domicilio</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-wind"></i> Secado</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-spray-can-sparkles"></i> Frescura</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
+    <div class="marquee-item"><i class="fa-solid fa-box-open"></i> Embolsado</div>
+    <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
   </div>
-
-  <radio-player></radio-player>
-
-  <a href="https://tinmar.vercel.app/solicita" class="solicita-widget">
-    <h3>🚀 SOLICITA TU WEB</h3>
-    <p>Impulsa tu negocio hoy</p>
-    <div class="btn-solicita-mini">PEDIR AQUÍ</div>
-  </a>
-</div>
+</section>
 
 <section class="hero">
-  <div class="hero-text">
-    <h1><span>◎</span>TINMAR Portal de negocios</h1> 
-    <div class="titulo">
-      <h2>ALGUNAS WEB</h2>
-    </div> 
-  </div>
-  <div class="hero-icon">◎</div>
+  <span class="hero-badge"><i class="fa-solid fa-fire"></i> ¡Ofertas Destacadas!</span>
+  <h2>Promo Familia y Canasto Completo</h2>
+  <p>Llevá 4 lavados + secados por solo $960. El canasto de ropa de 12 kg por $520.</p>
+  <a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar%20por%20la%20promo%20familia" target="_blank" rel="noopener" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp"></i> Pedir Promo</a>
 </section>
+<div class="container">
+ <!-- PROMOS (Basado en la imagen) -->
+  <h3 class="section-title" id="promos">Promociones y Ofertas</h3>
+  <div class="promos-grid reveal">
+    <div class="promo-card highlight">
+      <div class="tag">TOP</div>
+      <div class="promo-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+      <h3>Promo Familia</h3>
+      <div class="price">$960</div>
+      <p><strong>4 lavados + secados.</strong> Ideal para la ropa de toda la familia en un solo servicio.</p>
+      <a href="https://wa.me/59897192247?text=Hola%2C%20me%20interesa%20la%20Promo%20Familia%20de%204%20lavados%20por%20%24960" target="_blank" rel="noopener" class="btn-outline">Pedir Promo <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="promo-card">
+      <div class="promo-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+      <h3>Canasto de Ropa</h3>
+      <div class="price">$520</div>
+      <p><strong>Canasto completo (12 kg):</strong> Lavado y secado de ropa en general.</p>
+      <a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20el%20canasto%20de%20ropa%20de%2012kg%20por%20%24520" target="_blank" rel="noopener" class="btn-outline">Consultar <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="promo-card">
+      <div class="promo-icon"><i class="fa-solid fa-shirt"></i></div>
+      <h3>Tintas (Día negro)</h3>
+      <div class="price">$400 <small>1 prenda</small></div>
+      <p>Jean o algodón para óptima toma de color. <strong>¡Hoy y mañana!</strong></p>
+      <a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20consultar%20por%20el%20servicio%20de%20tintas" target="_blank" rel="noopener" class="btn-outline">Ver Precio <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="promo-card">
+      <div class="promo-icon"><i class="fa-solid fa-shoe-prints"></i></div>
+      <h3>Championes</h3>
+      <div class="price">$200</div>
+      <p>Lavado de calzado. <strong>Lunes a sábados</strong> de 9:00 a 18:00 hs.</p>
+      <a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20lavar%20mis%20zapatillas%20por%20%24200" target="_blank" rel="noopener" class="btn-outline">Coordinar <i class="fa-solid fa-arrow-right"></i></a>
+    </div></div>
 
-<div class="grid" id="servicesGrid">
-    <article class="card" data-search="tienda tinmar productos variedad compras">
-      <span class="badge-status">🟢 Abierto</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800" alt="Tienda"></div>
-      <div class="contenido">
-        <h3>🛒 TINMAR</h3>
-        <p>Productos, variedad y la mejor atención.</p>
-        <div class="card-actions">
-          <a href="https://tinmar.vercel.app" class="btn">VER TIENDA →</a> 
-        </div> 
-      </div>
-    </article>
+  <!-- PRECIOS CON BOTÓN DE SELECCIÓN -->
+  <section class="precios-section reveal" id="precios">
+    <h3 class="section-title">Lista de Precios</h3>
+    <table class="tabla-precios">
+      <thead><tr><th>Servicio</th><th>Detalle</th><th>Precio</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Lavado + Secado</td><td>6 kg (1 lavadora chica)</td><td>$280</td><td style="text-align:center;"><button class="btn-select" data-servicio="Lavado + Secado 6 kg ($280)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Lavado + Secado</td><td>12 kg (canasto completo)</td><td>$520</td><td style="text-align:center;"><button class="btn-select" data-servicio="Lavado + Secado 12 kg ($520)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Promo Familia</td><td>4 lavados + secados</td><td>$960</td><td style="text-align:center;"><button class="btn-select" data-servicio="Promo Familia - 4 lavados ($960)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Secado Solo</td><td>6k o 7k</td><td>$170</td><td style="text-align:center;"><button class="btn-select" data-servicio="Secado Solo 6k/7k ($170)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Secado Solo</td><td>12k (2 secados)</td><td>$340</td><td style="text-align:center;"><button class="btn-select" data-servicio="Secado Solo 12k ($340)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Secado Solo</td><td>18k</td><td>$510</td><td style="text-align:center;"><button class="btn-select" data-servicio="Secado Solo 18k ($510)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Secado Solo</td><td>24k</td><td>$680</td><td style="text-align:center;"><button class="btn-select" data-servicio="Secado Solo 24k ($680)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Tintas (Día negro)</td><td>1 prenda (Jean o algodón)</td><td>$400</td><td style="text-align:center;"><button class="btn-select" data-servicio="Tintas 1 prenda ($400)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Tintas (Día negro)</td><td>2 prendas</td><td>$600</td><td style="text-align:center;"><button class="btn-select" data-servicio="Tintas 2 prendas ($600)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Acolchados o Frazadas</td><td>1 plaza</td><td>$350 o $400</td><td style="text-align:center;"><button class="btn-select" data-servicio="Acolchado 1 plaza ($350/$400)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Acolchados o Frazadas</td><td>2 plazas</td><td>$500 o $600</td><td style="text-align:center;"><button class="btn-select" data-servicio="Acolchado 2 plazas ($500/$600)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Almohadas</td><td>Lavado</td><td>$300</td><td style="text-align:center;"><button class="btn-select" data-servicio="Almohadas ($300)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Alfombras</td><td>Por metro</td><td>$250</td><td style="text-align:center;"><button class="btn-select" data-servicio="Alfombras por metro ($250)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+        <tr><td>Championes</td><td>Lavado de calzado</td><td>$200</td><td style="text-align:center;"><button class="btn-select" data-servicio="Championes ($200)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
+      </tbody>
+    </table>
+    <p class="nota-precios">* Limpieza profunda  Precios sujetos a cambios. Estar atentos .</p>
+  </section>
 
-    <article class="card" data-search="abogado asesoramiento jurídico consultas legales derecho">
-      <span class="badge-status">🟢 Disponible</span>
-      <div class="foto"><img src="https://i.ibb.co/5hCFkk3Z/Screenshot-20261030-171925-Chrome.jpg" alt="Abogado"></div>
-      <div class="contenido">
-        <h3>⚖️ ABOGADO</h3>
-        <p>Asesoramiento jurídico y consultas profesionales.</p>
-        <div class="card-actions">
-          <a href="https://pabloalesandre.vercel.app" class="btn">VER ABOGADO →</a> 
-        </div> 
-      </div>
-    </article>
+  <!-- ZONAS -->
+  <section class="zonas-section reveal" id="zonas">
+    <h3 class="section-title">Zonas de Retiro y Entrega</h3>
+    <div class="zonas-grid">
+      <span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Dentro de zona: $100</span>
+      <span class="zona-badge"><i class="fa-solid fa-location-dot"></i> Fuera de zona: $200</span>
+    </div>
+    <p class="zonas-nota">Consultá por tu barrio. <a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20saber%20si%20retiran%20en%20mi%20barrio" target="_blank" rel="noopener">Consultar WhatsApp</a></p>
+  </section>
 
-    <article class="card" data-search="tatuajes tatuaje diseños únicos estilo personalizado arte">
-      <span class="badge-status">🟢 Abierto</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=800" alt="Tatuajes"></div>
-      <div class="contenido">
-        <h3>🖋️ TATUAJES</h3>
-        <p>Diseños únicos y estilo personalizado.</p>
-        <div class="card-actions">
-          <a href="https://javiertato.vercel.app" class="btn">VER TATUAJES →</a>
-        </div> 
-      </div>  
-    </article>
-
-    <article class="card" data-search="lavadero unión lavado ropa prendas rápido secado">
-      <span class="badge-status">🟢 Disponible</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=800" alt="Lavadero"></div>
-      <div class="contenido">
-        <h3>🧺 LAVADERO</h3>
-        <p>Lavado de ropa y prendas. Rápido y confiable.</p>
-        <div class="card-actions">
-          <a href="https://lavaderounion.vercel.app" class="btn" target="_blank" rel="noopener">VER LAVADERO →</a> 
-        </div> 
-      </div>  
-    </article>
-
-    <article class="card" data-search="masajes relajación bienestar equilibrio cuerpo descontracturante">
-      <span class="badge-status">🟢 Disponible</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800" alt="Masajes"></div>
-      <div class="contenido">
-        <h3>🌿 MASAJES</h3>
-        <p>Relajación, bienestar y equilibrio corporal.</p>
-        <div class="card-actions">
-          <a href="masajes/index.html" class="btn">VER MASAJES →</a> 
-        </div> 
-      </div> 
-    </article>
-
-    <article class="card" data-search="trabajos en general mantenimiento construcción jardinería pintura hogar">
-      <span class="badge-status">🟢 Presupuesto</span>
-      <div class="foto"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800" alt="Trabajos en general"></div>
-      <div class="contenido">
-        <h3>🔧 TRABAJOS</h3>
-        <p>Mantenimiento, construcción, jardinería y pintura.</p>
-        <div class="card-actions">
-          <a href="trabajos/index.html" class="btn">VER TRABAJOS →</a> 
-        </div> 
-      </div>  
-    </article>
-
-    <article class="card" data-search="juego vascolet entretenimiento diversión online arcade">
-      <span class="badge-status">🎮 Online</span>
-      <div class="foto"><img src="" alt="Juego Vascolet"></div>
-      <div class="contenido">
-        <h3>🎮 VASCOLET</h3>
-        <p>Entretenimiento retro y diversión online.</p>
-        <div class="card-actions">
-          <a href="juegovascolet/index.html" class="btn">JUGAR AHORA →</a>
+  <!-- CARRUSEL INFINITO -->
+  <h3 class="section-title">Nuestro Trabajo</h3>
+  <section class="carousel-section reveal">
+    <div class="carousel-container">
+      <div class="carousel-slides" id="carouselSlides">
+        <div class="carousel-slide">
+          <img src="https://i.ibb.co/RpR6nnJf/file-000000005430820e84eefc99964e614b.png" alt="Nuestro lavadero" loading="eager">
+          <div class="carousel-caption"><h3>Nuestro lavadero</h3><p>Servicio profesional en la Unión</p></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=1000&q=80&auto=format" alt="Acolchados limpios y esponjosos" loading="lazy">
+          <div class="carousel-caption"><h3>Acolchados como nuevos</h3><p>Limpieza profunda y secado</p></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=1000&q=80&auto=format" alt="Lavado de prendas" loading="lazy">
+          <div class="carousel-caption"><h3>Lavado de prendas</h3><p>Cuidamos cada prenda con dedicación</p></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://i.ibb.co/BVgMj3vN/Screenshot-20261028-012111-Whats-App-Business.jpg" alt="Servicio de retiro y entrega" loading="lazy">
+          <div class="carousel-caption"><h3>Retiro y entrega a domicilio</h3><p>Cadetería económica en Montevideo</p></div>
+        </div>
+        <div class="carousel-slide">
+          <img src="https://i.ibb.co/NqkpWvn/Screenshot-20261028-012843-Instagram.jpg" alt="Frazadas y mantas limpias" loading="lazy">
+          <div class="carousel-caption"><h3>Frazadas y mantas</h3><p>Listas para guardar limpias y perfumadas</p></div>
         </div>
       </div>
-    </article>
+      <button class="carousel-btn prev" id="prevBtn" aria-label="Imagen anterior"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="carousel-btn next" id="nextBtn" aria-label="Imagen siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="workflow reveal" id="servicios">
+    <h3 class="section-title">¿Cómo Funciona?</h3>
+    <div class="workflow-steps">
+      <div class="step-item"><div class="step-icon"><i class="fa-brands fa-whatsapp"></i></div><h4>1. Nos Escribís</h4><p>Coordinamos rápido por WhatsApp.</p></div>
+      <div class="step-item"><div class="step-icon"><i class="fa-solid fa-truck-fast"></i></div><h4>2. Lo Buscamos</h4><p>Retiro en tu puerta (cadetería económica).</p></div>
+      <div class="step-item"><div class="step-icon"><i class="fa-solid fa-hands-bubbles"></i></div><h4>3. Lavado</h4><p>Limpieza profunda y secado.</p></div>
+      <div class="step-item"><div class="step-icon"><i class="fa-solid fa-box-open"></i></div><h4>4. Entrega Listo</h4><p>Limpio, embolsado y perfumado.</p></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <h3 class="section-title">Lo que Dicen Nuestros Clientes</h3>
+  <section class="testimonios-section reveal">
+    <div class="testimonios-carousel">
+      <div class="testimonios-track" id="testimoniosTrack">
+        <div class="testimonio">
+          <div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>Impecable el lavado de mi acolchado. Quedó como nuevo y sin olor a humedad. El retiro fue puntual y muy amable.</p>
+          <div class="testimonio-autor"><div class="testimonio-avatar">M</div><div><strong>María</strong><span>Cliente verificado · Google</span></div></div>
+        </div>
+        <div class="testimonio">
+          <div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>Usé el servicio de tintas y quedé encantada. El negro quedó perfecto y no me dañó la tela. ¡Súper recomendable!</p>
+          <div class="testimonio-autor"><div class="testimonio-avatar">J</div><div><strong>Jorge</strong><span>Cliente verificado · Google</span></div></div>
+        </div>
+        <div class="testimonio">
+          <div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p>Excelente atención y precio. Aproveché la promo familia y quedé encantada con el resultado. Gracias por el cuidado.</p>
+          <div class="testimonio-autor"><div class="testimonio-avatar">A</div><div><strong>Ana</strong><span>Cliente verificado · Google</span></div></div>
+        </div>
+      </div>
+      <button class="testimonios-btn prev" id="testimoniosPrev" aria-label="Testimonio anterior"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="testimonios-btn next" id="testimoniosNext" aria-label="Testimonio siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="testimonios-dots" id="testimoniosDots"></div>
+  </section>
+
+  <!-- FAQ -->
+  <h3 class="section-title">Preguntas Frecuentes</h3>
+  <section class="faq-section reveal">
+    <details class="faq-item"><summary>¿Cuánto tarda el servicio?</summary><div class="faq-answer">Entre 24 y 48 horas dependiendo de la carga. Te avisamos por WhatsApp cuando esté listo.</div></details>
+    <details class="faq-item"><summary>¿Retiran a domicilio?</summary><div class="faq-answer">Sí, contamos con cadetería económica. Dentro de zona $100 y fuera de zona $200. Coordinamos día y horario por WhatsApp.</div></details>
+    <details class="faq-item"><summary>¿Cómo se puede abonar?</summary><div class="faq-answer">Aceptamos efectivo, transferencia bancaria, Mercado Pago y giros. El pago se realiza al momento de la entrega.</div></details>
+    <details class="faq-item"><summary>¿En qué consiste el lavado de tintas?</summary><div class="faq-answer">Usamos un proceso para óptima toma de color con Jean o algodón. Se realiza en el día (hoy y mañana).</div></details>
+    <details class="faq-item"><summary>¿Qué pasa si llueve varios días?</summary><div class="faq-answer">Te mantenemos informado siempre y coordinamos la entrega cuando esté listo.</div></details>
+    <details class="faq-item"><summary>¿Atienden los domingos?</summary><div class="faq-answer">No, los domingos permanecemos cerrados. Podés escribirnos por WhatsApp y te respondemos el lunes a primera hora.</div></details>
+    <details class="faq-item"><summary>¿Qué zonas cubren para retiro?</summary><div class="faq-answer">Cubrimos Unión, Malvín, Pocitos, Buceo, Centro, Parque Rodó, Punta Carretas, Tres Cruces y Cordón. Consultá por tu barrio por WhatsApp.</div></details>
+    <details class="faq-item"><summary>¿Los precios incluyen retiro?</summary><div class="faq-answer">El retiro y entrega tiene un costo adicional: dentro de zona $100 y fuera de zona $200. Consultá por tu barrio al coordinar.</div></details>
+  </section>
+
+  <!-- FORMULARIO DE RESERVA (NUEVA HOJA) -->
+  <section class="form-section reveal" id="formulario">
+    <h3 class="section-title">Reservar Turno / Pedir Presupuesto</h3>
+    <p class="form-intro">Completá los datos y te contactamos por WhatsApp para confirmar.</p>
+    <form class="form-grid" id="formConsulta" novalidate>
+      <input type="text" name="nombre" placeholder="Tu nombre *" required autocomplete="name">
+      <input type="tel" name="telefono" placeholder="Tu teléfono *" required autocomplete="tel">
+      
+      <!-- Campo de Servicio Autocompletado -->
+      <div class="full">
+        <input type="text" name="servicio" id="inputServicio" placeholder="Servicio seleccionado (Elegí arriba) *" required readonly style="background-color: #eaf2fa; border-color: #0b4f8a; font-weight: 600; color: #0b4f8a; cursor: not-allowed;">
+      </div>
+
+      <!-- Nuevos campos: Día y Hora -->
+      <div>
+        <label for="dia" style="font-size:0.8rem; color:#5c6b77; margin-bottom:0.2rem; display:block;">Día preferido *</label>
+        <input type="date" name="dia" id="dia" required>
+      </div>
+      <div>
+        <label for="hora" style="font-size:0.8rem; color:#5c6b77; margin-bottom:0.2rem; display:block;">Hora preferida *</label>
+        <input type="time" name="hora" id="hora" required>
+      </div>
+
+      <!-- Nuevo campo: Local o Domicilio -->
+      <div class="full">
+        <label style="font-size:0.85rem; color:#1c2b36; margin-bottom:0.4rem; display:block; font-weight: 600;">¿Cómo querés el servicio? *</label>
+        <div style="display: flex; gap: 1.5rem; align-items: center;">
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer; font-weight: 500;">
+            <input type="radio" name="tipo_entrega" value="Local" required style="width: 18px; height: 18px; accent-color: #0b4f8a;"> Ir al Local
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer; font-weight: 500;">
+            <input type="radio" name="tipo_entrega" value="Domicilio" required style="width: 18px; height: 18px; accent-color: #0b4f8a;"> Retiro a Domicilio
+          </label>
+        </div>
+      </div>
+
+      <input type="text" name="barrio" placeholder="Tu barrio (si es a domicilio)" autocomplete="address-level3">
+      <textarea name="comentario" placeholder="Comentario adicional (opcional)" class="full"></textarea>
+      <button type="submit" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp"></i> Enviar Reserva por WhatsApp</button>
+    </form>
+    <p class="form-nota">Al enviar aceptás nuestra <a href="#" data-modal="privacidad">política de privacidad</a>. No compartimos tus datos con terceros.</p>
+  </section>
+
+  <!-- CONTACTO -->
+  <h3 class="section-title" id="contacto">Contacto</h3>
+  <div class="info-card reveal">
+    <div class="info-item"><i class="fa-solid fa-location-dot"></i><div><h5>Dirección</h5><p><a href="https://www.google.com/maps/search/?api=1&query=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay" target="_blank" rel="noopener">Juan Jacobo Rousseau 4483</a></p></div></div>
+    <div class="info-item"><i class="fa-brands fa-whatsapp"></i><div><h5>WhatsApp</h5><p><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener">097 192 247</a></p></div></div>
+    <div class="info-item"><i class="fa-solid fa-phone"></i><div><h5>Teléfono</h5><p><a href="tel:+59897192247">097 192 247</a></p></div></div>
+    <div class="info-item"><i class="fa-brands fa-instagram"></i><div><h5>Instagram</h5><p><a href="https://www.instagram.com/lavaderounion2024/" target="_blank" rel="noopener">@lavaderounion2024</a></p></div></div>
+    <div class="info-item"><i class="fa-solid fa-motorcycle"></i><div><h5>Cadetería</h5><p><a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20coordinar%20un%20retiro" target="_blank" rel="noopener">Retiros y entregas económicos</a></p></div></div>
+    <div class="info-item"><i class="fa-solid fa-clock"></i><div><h5>Horarios</h5><p><a href="https://wa.me/59897192247" target="_blank" rel="noopener">Lun a Sáb 9 a 18</a></p><p>Dom cerrado</p></div></div>
+    <div class="info-item"><i class="fa-solid fa-envelope"></i><div><h5>Email</h5><p><a href="mailto:burguenoalvaro1@gmail.com">burguenoalvaro1@gmail.com</a></p></div></div>
+  </div>
+  <div class="pagos">
+    <span>Pagos:</span>
+    <span class="pago-badge"><i class="fa-solid fa-money-bill-wave"></i> Efectivo</span>
+    <span class="pago-badge"><i class="fa-solid fa-building-columns"></i> Transferencia</span>
+    <span class="pago-badge"><i class="fa-solid fa-mobile-screen"></i> Mercado Pago</span>
+  </div>
+
+  <!-- MAPA -->
+  <h3 class="section-title" id="ubicacion">Ubicación</h3>
+  <div class="map-section reveal">
+    <div class="map-header">
+      <div class="map-header-left"><i class="fa-solid fa-map-location-dot"></i><div><h4>Juan Jacobo Rousseau 4483</h4><p>Montevideo, Uruguay</p></div></div>
+      <a href="https://www.google.com/maps/search/?api=1&query=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay" target="_blank" rel="noopener" class="btn-outline"><i class="fa-solid fa-diamond-turn-right"></i> Cómo llegar</a>
+    </div>
+    <iframe src="https://www.google.com/maps?q=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación Lavadero Unión"></iframe>
+  </div>
+
 </div>
-</section>
 
-<section class="solicita-seccion" id="solicita">
-  <div class="solicita-box">
-    <h2>🚀 ¿NECESITAS UNA PÁGINA WEB PROFESIONAL?</h2>
-    <p>Impulsa tu emprendimiento con un diseño moderno, ultrarrápido y 100% adaptado para móviles.</p>
-    <a href="https://tinmar.vercel.app/solicita" target="_blank" rel="noopener" class="btn-solicita">SOLICITA TU WEB AHORA</a>
+<footer>
+  <div class="footer-main">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <div class="brand-icon"><img src="https://i.ibb.co/7JKCjvGs/Screenshot-20261027-224201-Instagram.png" alt="Logo Lavadero Unión"></div>
+        <h4>Lavadero Unión</h4>
+      </div>
+      <p>Lavandería en Montevideo.</p>
+      <h4 class="footer-subtitle">Horarios</h4>
+      <p><i class="fa-solid fa-clock"></i> Lun a Sáb: 9 – 18 hs</p>
+      <p><i class="fa-solid fa-clock"></i> Domingos: cerrado</p>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#" data-modal="privacidad">Política de privacidad</a>
+      <a href="#" data-modal="terminos">Términos y condiciones</a>
+    </div>
   </div>
-</section>
-
-<section class="contacto" id="contacto">
-  <div class="titulo">
-    <h2>📌 CONTACTO</h2>
-    <p>Estamos disponibles las 24 horas para atender tus consultas</p>
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> <strong>Lavadero de Ropa Unión</strong> · Montevideo, Uruguay</p>
   </div>
-  <div class="contacto-box">
-    <p class="info-icon">📍 <strong>Ubicación:</strong> Montevideo, Uruguay</p>
-    <p class="info-icon">⏰ <strong>Horario:</strong> Todos los días - Atención 24 horas</p>
-    <p class="info-icon">📞 <strong>Teléfono:</strong> <a href="tel:+59899295848" class="tel">099 295 848</a></p>
-    <p class="info-icon">📱 <strong>WhatsApp Directo:</strong> <a href="https://wa.me/59899295848" target="_blank" rel="noopener" class="wa">Chat de WhatsApp</a></p>
-    <p class="info-icon">✉️ <strong>Correo Electrónico:</strong> <a href="mailto:martinsampayo9@gmail.com" class="mail">martinsampayo9@gmail.com</a></p>
-  </div>
-</section>
-
-<!-- Botón Flotante WhatsApp -->
-<a href="https://wa.me/59899295848" class="fab-whatsapp" target="_blank" aria-label="Chat WhatsApp" rel="noopener">📱</a>
-
-<footer> 
-  <div class="footer-top">
-    <div>◎ TINMAR</div>
-    <div class="footer-tagline"><p>CALIDAD · CONFIANZA · SERVICIOS INTEGRALES</p></div>
-  </div>
-  <div class="footer-legal">
-    <a href="#" id="btnTerminos">Términos y Condiciones</a> 
-  </div>
-  <br>
 </footer>
 
-<div class="modal-legal" id="modalTerminos" role="dialog" aria-modal="true" aria-labelledby="tituloTerminos">
-  <div class="modal-legal-box">
-    <button class="modal-cerrar" id="cerrarTerminos" aria-label="Cerrar">✕</button>
-    <h2 id="tituloTerminos">📄 Términos y Condiciones de Uso</h2>
-    <div class="modal-sub">Portal TINMAR · Montevideo, Uruguay</div>
+<a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener" class="wpp-flotante" aria-label="Consultar por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
-    <h3>1. Información General y Aceptación</h3>
-    <p>El portal <strong>TINMAR</strong> opera como un directorio y canal de conexión directa entre clientes y servicios profesionales independientes en Montevideo, Uruguay. Al acceder, navegar y utilizar este sitio web, el usuario acepta de manera expresa los presentes términos y condiciones en su totalidad.</p>
+<div class="modal-legal" id="modal-privacidad" role="dialog" aria-modal="true" aria-labelledby="titulo-priv">
+  <div class="modal-content">
+    <button class="modal-close" data-close-modal aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+    <h3 id="titulo-priv">Política de Privacidad</h3>
+    <p>En <strong>Lavadero Unión</strong> respetamos tu privacidad. Los datos que ingresás en el formulario se utilizan únicamente para responder tu consulta y coordinar el servicio.</p>
+    <p>No compartimos tu información con terceros. Los datos se conservan solo el tiempo necesario para gestionar el servicio solicitado.</p>
+    <p>Conforme a la <strong>Ley 18.331 de Protección de Datos Personales</strong> de Uruguay, podés solicitar el acceso, rectificación o eliminación de tus datos escribiéndonos a <a href="https://wa.me/59897192247" target="_blank" rel="noopener">nuestro WhatsApp</a>.</p>
+    <p>Al enviar el formulario, aceptás esta política.</p>
+  </div>
+</div>
 
-    <h3>2. Servicios Ofrecidos</h3>
-    <p>A través de la plataforma se facilita el acceso a diversos servicios profesionales y comerciales, tales como asesoramiento jurídico, diseño de tatuajes, servicios de lavadero, masajes, trabajos de mantenimiento general y entretenimiento digital. Cada servicio se rige por sus propias condiciones particulares acordadas de forma directa entre el proveedor y el cliente.</p>
-
-    <h3>3. Protección de Datos Personales</h3>
-    <p>Conforme a lo dispuesto por la Ley N.º 18.331 de Protección de Datos Personales y Acción de Habeas Data de la República Oriental del Uruguay, toda información de contacto o datos provistos voluntariamente por el usuario serán tratados con estricta confidencialidad y utilizados exclusivamente para coordinar la prestación de los servicios solicitados.</p>
-
-    <h3>4. Propiedad Intelectual</h3>
-    <p>Todos los contenidos visuales, textos, marcas, logotipos, códigos fuente, diseños y estructuras presentados en este portal son propiedad exclusiva de TINMAR o cuentan con las autorizaciones correspondientes para su difusión. Queda estrictamente prohibida su reproducción total o parcial sin autorización previa y por escrito.</p>
-
-    <h3>5. Limitación de Responsabilidad</h3>
-    <p>TINMAR actúa como un facilitador de enlaces y contacto directo. No se responsabiliza por inconvenientes, daños indirectos, disputas o incumplimientos derivados de las transacciones comerciales o acuerdos particulares realizados directamente entre los usuarios y los prestadores de cada servicio anunciado.</p>
-
-    <div style="margin-top:20px; font-size:11.5px; color:var(--subtexto);">Última actualización: <span id="fechaActualizacion">Octubre 2026</span></div>
+<div class="modal-legal" id="modal-terminos" role="dialog" aria-modal="true" aria-labelledby="titulo-term">
+  <div class="modal-content">
+    <button class="modal-close" data-close-modal aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+    <h3 id="titulo-term">Términos y Condiciones</h3>
+    <p><strong>1. Servicio:</strong> Lavadero Unión brinda servicios de lavado, secado y tratamiento de acolchados, frazadas y prendas en Montevideo, Uruguay.</p>
+    <p><strong>2. Plazos:</strong> El tiempo estimado de entrega es de 24 a 48 horas hábiles, pudiendo variar según la carga y las condiciones climáticas.</p>
+    <p><strong>3. Precios:</strong> Los precios publicados son orientativos. El valor final se confirma al momento de coordinar el servicio.</p>
+    <p><strong>4. Responsabilidad:</strong> No nos hacemos responsables por daños preexistentes en las prendas ni por objetos olvidados dentro de las mismas.</p>
+    <p><strong>5. Pagos:</strong> Se aceptan efectivo, transferencia bancaria, Mercado Pago y giros. El pago se realiza al momento de la entrega.</p>
+    <p><strong>6. Datos personales:</strong> El tratamiento de datos se rige por nuestra Política de Privacidad conforme a la Ley 18.331.</p>
+    <p>Para consultas escribinos a <a href="https://wa.me/59897192247" target="_blank" rel="noopener">nuestro WhatsApp</a>.</p>
   </div>
 </div>
 
 <script>
-const menuToggle=document.getElementById("menuToggle");
-const nav=document.getElementById("nav");
-menuToggle.addEventListener("click",()=>{
-  nav.classList.toggle("abierto");
-  menuToggle.textContent=nav.classList.contains("abierto")?"✕":"☰";
-});
-nav.querySelectorAll("a").forEach(a=>{
-  a.addEventListener("click",()=>{
-    nav.classList.remove("abierto");
-    menuToggle.textContent="☰";
-  });
-});
+const CONFIG = {
+  telefono: "59897192247",
+  telefonoMostrar: "097 192 247",
+  instagram: "lavaderounion2024",
+  direccion: "Juan Jacobo Rousseau 4483",
+  ciudad: "Montevideo, Uruguay",
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay",
+  horarios: { semana: "Lun a Sáb 9 a 18", domingo: "Cerrado" }
+};
 
-(function(){
-  const searchInput = document.getElementById("searchInput");
-  const cards = document.querySelectorAll("#servicesGrid .card");
-  if(!searchInput) return;
-  searchInput.addEventListener("input", e=>{
-    const term = e.target.value.toLowerCase().trim();
-    cards.forEach(card=>{
-      const text = card.getAttribute("data-search") || "";
-      const title = card.querySelector("h3").textContent.toLowerCase();
-      const desc = card.querySelector("p").textContent.toLowerCase();
-      if(text.includes(term) || title.includes(term) || desc.includes(term)){
-        card.style.display = "flex";
+document.addEventListener("DOMContentLoaded", function () {
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ============ ESTADO DEL LOCAL ============ */
+  function actualizarEstado() {
+    const el = document.getElementById('estadoLocal');
+    if (!el) return;
+    const ahora = new Date();
+    const dia = ahora.getDay();
+    const minutos = ahora.getHours()*60 + ahora.getMinutes();
+    const aperturas = {1:[9,0],2:[9,0],3:[9,0],4:[9,0],5:[9,0],6:[9,0]};
+    const cierres   = {1:[18,0],2:[18,0],3:[18,0],4:[18,0],5:[18,0],6:[18,0]};
+    const minAp = d => aperturas[d][0]*60 + aperturas[d][1];
+    const minCi = d => cierres[d][0]*60 + cierres[d][1];
+    const fmt = (h,m) => `${h}:${m.toString().padStart(2,'0')}`;
+    let abierto = false;
+    if (aperturas[dia] && minutos >= minAp(dia) && minutos < minCi(dia)) abierto = true;
+    if (abierto) {
+      el.innerHTML = `<i class="fa-solid fa-circle" style="color:#25d366;font-size:.6rem"></i> Abierto ahora · Cierra ${fmt(...cierres[dia])}`;
+    } else {
+      let dApertura = null, etiqueta = '';
+      for (let i = 0; i < 7; i++) {
+        const d = (dia + i) % 7;
+        if (!aperturas[d]) continue;
+        if (i === 0 && minutos >= minCi(d)) continue;
+        if (i === 0 && minutos < minAp(d)) { dApertura = d; etiqueta = 'hoy'; break; }
+        if (i > 0) { dApertura = d; etiqueta = (i === 1 ? 'mañana' : ['dom','lun','mar','mié','jue','vie','sáb'][d]); break; }
+      }
+      if (dApertura !== null) {
+        el.innerHTML = `<i class="fa-solid fa-circle" style="color:#c8102e;font-size:.6rem"></i> Cerrado · Abre ${etiqueta} ${fmt(...aperturas[dApertura])}`;
       } else {
-        card.style.display = "none";
+        el.innerHTML = `<i class="fa-solid fa-circle" style="color:#c8102e;font-size:.6rem"></i> Cerrado ahora`;
+      }
+    }
+  }
+  actualizarEstado();
+  setInterval(actualizarEstado, 60000);
+
+  /* ============ MENÚ MÓVIL ============ */
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuBackdrop = document.getElementById('menuBackdrop');
+
+  function closeMenu() {
+    menuToggle.classList.remove('active');
+    mobileMenu.classList.remove('open');
+    menuBackdrop.classList.remove('show');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  menuToggle.addEventListener('click', () => {
+    if (mobileMenu.classList.contains('open')) closeMenu();
+    else {
+      menuToggle.classList.add('active');
+      mobileMenu.classList.add('open');
+      menuBackdrop.classList.add('show');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      if (window.innerWidth <= 780) document.body.style.overflow = 'hidden';
+    }
+  });
+  menuBackdrop.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
+  window.addEventListener('scroll', () => {
+    if (mobileMenu.classList.contains('open')) closeMenu();
+  }, { passive: true });
+
+  /* ============ CARRUSEL INFINITO ============ */
+  function initCarruselInfinito({ slidesContainer, dotsContainer, prevBtn, nextBtn, interval }) {
+    const originales = Array.from(slidesContainer.children);
+    const total = originales.length;
+    if (total < 2) return;
+
+    const primerClon = originales[0].cloneNode(true);
+    const ultimoClon = originales[total - 1].cloneNode(true);
+    primerClon.setAttribute('aria-hidden', 'true');
+    ultimoClon.setAttribute('aria-hidden', 'true');
+    slidesContainer.appendChild(primerClon);
+    slidesContainer.insertBefore(ultimoClon, originales[0]);
+
+    let index = 1;
+    let isTransitioning = false;
+    let autoId = null;
+
+    const dots = [];
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('button');
+      d.classList.add('dot');
+      if (i === 0) d.classList.add('active');
+      d.setAttribute('aria-label', `Ir a la imagen ${i + 1}`);
+      d.addEventListener('click', () => {
+        if (isTransitioning) return;
+        irA(i + 1, true);
+      });
+      dotsContainer.appendChild(d);
+      dots.push(d);
+    }
+
+    function posicionar(sinTransicion = false) {
+      if (sinTransicion) slidesContainer.style.transition = 'none';
+      else slidesContainer.style.transition = '';
+      slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function actualizarDots() {
+      let real = index - 1;
+      if (real < 0) real = total - 1;
+      if (real >= total) real = 0;
+      dots.forEach((d, i) => d.classList.toggle('active', i === real));
+    }
+
+    posicionar(true);
+    void slidesContainer.offsetWidth;
+    posicionar(false);
+    actualizarDots();
+
+    function irA(nuevoIndex, conTransicion = true) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      index = nuevoIndex;
+      posicionar(!conTransicion);
+      if (!conTransicion) {
+        actualizarDots();
+        isTransitioning = false;
+      }
+    }
+
+    slidesContainer.addEventListener('transitionend', () => {
+      if (index === 0) {
+        index = total;
+        posicionar(true);
+        void slidesContainer.offsetWidth;
+        posicionar(false);
+      } else if (index === total + 1) {
+        index = 1;
+        posicionar(true);
+        void slidesContainer.offsetWidth;
+        posicionar(false);
+      }
+      actualizarDots();
+      isTransitioning = false;
+    });
+
+    function siguiente() {
+      if (isTransitioning) return;
+      index++;
+      posicionar(false);
+    }
+    function anterior() {
+      if (isTransitioning) return;
+      index--;
+      posicionar(false);
+    }
+
+    nextBtn.addEventListener('click', () => { siguiente(); resetAuto(); });
+    prevBtn.addEventListener('click', () => { anterior(); resetAuto(); });
+
+    function startAuto() { autoId = setInterval(siguiente, interval); }
+    function resetAuto() { clearInterval(autoId); startAuto(); }
+    startAuto();
+
+    const contenedor = slidesContainer.parentElement;
+    contenedor.addEventListener('mouseenter', () => clearInterval(autoId));
+    contenedor.addEventListener('mouseleave', startAuto);
+
+    let tStart = 0, tEnd = 0;
+    slidesContainer.addEventListener('touchstart', e => {
+      tStart = e.changedTouches[0].screenX;
+      clearInterval(autoId);
+    }, { passive: true });
+    slidesContainer.addEventListener('touchend', e => {
+      tEnd = e.changedTouches[0].screenX;
+      if (tStart - tEnd > 50) siguiente();
+      if (tEnd - tStart > 50) anterior();
+      startAuto();
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearInterval(autoId);
+      else startAuto();
+    });
+  }
+
+  initCarruselInfinito({
+    slidesContainer: document.getElementById('carouselSlides'),
+    dotsContainer: document.getElementById('carouselDots'),
+    prevBtn: document.getElementById('prevBtn'),
+    nextBtn: document.getElementById('nextBtn'),
+    interval: 5000
+  });
+
+  initCarruselInfinito({
+    slidesContainer: document.getElementById('testimoniosTrack'),
+    dotsContainer: document.getElementById('testimoniosDots'),
+    prevBtn: document.getElementById('testimoniosPrev'),
+    nextBtn: document.getElementById('testimoniosNext'),
+    interval: 6000
+  });
+
+  /* ============ SCROLL SUAVE ============ */
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#' || href.startsWith('#modal')) return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const offset = 70;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
       }
     });
   });
-})();
 
-(function(){
-  const reloj=document.getElementById("reloj-lluvia");
-  if(!reloj)return;
-  const horaEl=reloj.querySelector("#hora");
-  const fechaEl=reloj.querySelector("#fecha");
-  const canvas=reloj.querySelector("canvas");
-  const ctx=canvas.getContext("2d");
-  const dias=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
-  const meses=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
-  function actualizarHora(){
-    const a=new Date();
-    horaEl.textContent=String(a.getHours()).padStart(2,"0")+":"+String(a.getMinutes()).padStart(2,"0")+":"+String(a.getSeconds()).padStart(2,"0");
-    fechaEl.textContent=dias[a.getDay()]+", "+a.getDate()+" de "+meses[a.getMonth()]+" de "+a.getFullYear(); 
-  }
-  actualizarHora();
-  setInterval(actualizarHora,1000);
-  let gotas=[];
-  function ajustar(){
-    const r=canvas.getBoundingClientRect();
-    canvas.width=r.width;canvas.height=r.height;
-    gotas=[];
-    for(let i=0;i<25;i++) gotas.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, l:8+Math.random()*10, v:2+Math.random()*3});  
-  }
-  function animar(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.strokeStyle="#7eefff";
-    ctx.lineWidth=1;
-    for(const g of gotas){
-      ctx.beginPath();
-      ctx.moveTo(g.x,g.y);
-      ctx.lineTo(g.x,g.y+g.l);
-      ctx.stroke();
-      g.y+=g.v;
-      if(g.y>canvas.height){g.y=-10;g.x=Math.random()*canvas.width;} 
-    }
-    requestAnimationFrame(animar);  
-  }
-  ajustar();animar();
-  window.addEventListener("resize",ajustar); 
-})();
-
-(function(){
-  const tempEl = document.getElementById("climaTemp");
-  const descEl = document.getElementById("climaDesc");
-  async function cargarClima(){  
-    try {
-      const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=-34.9033&longitude=-56.1882&current=temperature_2m,weather_code");
-      const data = await res.json();
-      if(data && data.current){
-        tempEl.textContent = Math.round(data.current.temperature_2m) + "°C";
-        descEl.textContent = "🌤️ Clima en Montevideo";
+  /* ============ REVEAL ============ */
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
       }
-    } catch(e){
-      tempEl.textContent = "--°C";
-      descEl.textContent = "Clima no disponible"; 
-    }
-  }
-  cargarClima(); 
-})();
+    });
+  }, { threshold: 0.1 });
+  revealElements.forEach(el => revealObserver.observe(el));
 
-if(!customElements.get("radio-player")){
-  customElements.define("radio-player",class extends HTMLElement{
-    constructor(){super();this.attachShadow({mode:"open"});}
-    connectedCallback(){
-      this.shadowRoot.innerHTML=`
-      <style>
-      :host{display:block;width:100%;height:100%;}
-      *{box-sizing:border-box;}
-      .radio-container{width:100%;height:100%;min-height:130px;padding:12px;background:linear-gradient(180deg,#082530,#073b48);border:1px solid #197b8b;border-radius:20px;box-shadow:0 5px 20px rgba(0,0,0,.25),inset 0 -20px 35px rgba(0,190,220,.10);font-family:Arial,sans-serif;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;}
-      .radio-screen{width:100%;min-height:28px;display:flex;align-items:center;justify-content:center;padding:4px;background:rgba(255,255,255,.08);border:1px solid rgba(100,230,245,.35);border-radius:10px;color:#70efff;font-size:12.5px;font-weight:800;}
-      .radio-song{min-height:16px;display:flex;align-items:center;justify-content:center;color:#c6f8ff;font-size:11px;font-weight:700;margin:3px 0;}
-      .play-button{width:36px;height:36px;border:none;border-radius:50%;background:#c8f7fc;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 12px rgba(0,220,240,.35);transition:.2s;}
-      .play-button:hover{transform:scale(1.06);background:#fff;}
-      .play-icon{width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:10px solid #087f89;margin-left:2px;}
-      .pause-icon{display:none;width:12px;height:14px;border-left:3.5px solid #087f89;border-right:3.5px solid #087f89;}
-      .playing .play-icon{display:none;}
-      .playing .pause-icon{display:block;}
-      .live{margin-top:3px;color:#6df1ff;font-size:10.5px;font-weight:800;}
-      audio{display:none;}
-      @media(max-width:750px){
-        .radio-container{padding:8px;min-height:115px;border-radius:16px;}
-        .radio-screen{font-size:11.5px;min-height:24px;font-weight:800;}
-        .radio-song{font-size:10px;font-weight:700;}
-        .live{font-size:9.5px;font-weight:800;}
-        .play-button{width:32px;height:32px;}
+  /* ============ NAV ACTIVO ============ */
+  const secciones = document.querySelectorAll('section[id], h3[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.removeAttribute('aria-current'));
+        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (active) active.setAttribute('aria-current', 'page');
       }
-      </style>
-      <div class="radio-container">
-        <div class="radio-screen"><span id="status">📻 RADIO ONLINE</span></div>
-        <div class="radio-song" id="song">🎶 MÚSICA ACTIVA 24/7</div>
-        <button class="play-button" id="play" type="button">
-          <div class="play-icon"></div>
-          <div class="pause-icon"></div>
-        </button>
-        <div class="live" id="live">● PAUSADO</div>
-        <audio id="audio" preload="none" pplaysinline crossorigin="anonymous">
-          <source src="https://stream.zeno.fm/8wup8yd9dm0uv" type="audio/mpeg">  
-        </audio>  
-      </div>`;
-      this.iniciar();   
-    }
-    iniciar(){
-      const root=this.shadowRoot;
-      const cont=root.querySelector(".radio-container");
-      const btn=root.querySelector("#play");
-      const audio=root.querySelector("#audio");
-      const status=root.querySelector("#status");
-      const live=root.querySelector("#live");
-      const song=root.querySelector("#song");
-      const canciones=["🎶 Sonando: Remix Night 🔥","🎵 DJ Flow Session 😎","🔥 Música activa 24/7","🎧 Trap Latino Mix"];
-      let idx=0;
-      setInterval(()=>{idx=(idx+1)%canciones.length;song.textContent=canciones[idx];},4000);
-      btn.addEventListener("click",async()=>{
-        if(audio.paused){
-          try{
-            status.textContent="⏳ CONECTANDO...";
-            live.textContent="● CONECTANDO";
-            audio.load();
-            await audio.play();
-            cont.classList.add("playing");
-            status.textContent="⚡ EN VIVO";
-            live.textContent="● EN VIVO";
-          }catch(e){
-            cont.classList.remove("playing");
-            status.textContent="⚠️ ERROR";
-            live.textContent="● ERROR";
-          }
-        }else{
-          audio.pause();
-          cont.classList.remove("playing");
-          status.textContent="📻 PAUSADA";
-          live.textContent="● PAUSADO";
-        }
-      });
-      audio.addEventListener("playing",()=>{cont.classList.add("playing");status.textContent="⚡ EN VIVO";live.textContent="● EN VIVO";});
-      audio.addEventListener("pause",()=>{if(!audio.ended){cont.classList.remove("playing");status.textContent="📻 PAUSADA";live.textContent="● PAUSADO";}}); 
-    } 
-  }); 
-}
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  secciones.forEach(s => { if (s.id) navObserver.observe(s); });
 
-(function(){
-  const modalTerminos = document.getElementById("modalTerminos");
-  const btnTerminos = document.getElementById("btnTerminos");
-  const cerrarTerminos = document.getElementById("cerrarTerminos");
-  if(btnTerminos && modalTerminos){
-    btnTerminos.addEventListener("click", e=>{ e.preventDefault(); modalTerminos.classList.add("abierto"); });
-    cerrarTerminos.addEventListener("click", ()=>modalTerminos.classList.remove("abierto"));
-  }  })(); 
-</script> 
-</body> 
+  /* ============ SELECCIONAR SERVICIO DESDE TABLA ============ */
+  const botonesSelect = document.querySelectorAll('.btn-select');
+  const inputServicio = document.getElementById('inputServicio');
+  const formSection = document.getElementById('formulario');
+
+  botonesSelect.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // 1. Obtener el servicio del atributo data-servicio
+      const servicio = this.getAttribute('data-servicio');
+      
+      // 2. Asignarlo al input del formulario
+      if (inputServicio) {
+        inputServicio.value = servicio;
+      }
+      
+      // 3. Hacer scroll suave hacia el formulario
+      if (formSection) {
+        const offset = 80;
+        const top = formSection.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  /* ============ FORMULARIO ============ */
+  const form = document.getElementById('formConsulta');
+  if (form) {
+    // Establecer la fecha mínima del calendario a hoy
+    const today = new Date().toISOString().split('T')[0];
+    const inputDia = document.getElementById('dia');
+    if (inputDia) inputDia.setAttribute('min', today);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      const nombre = (data.get('nombre') || '').trim();
+      const tel = (data.get('telefono') || '').trim();
+      const servicio = (data.get('servicio') || '').trim();
+      const dia = (data.get('dia') || '').trim();
+      const hora = (data.get('hora') || '').trim();
+      const tipo_entrega = (data.get('tipo_entrega') || '').trim();
+      const barrio = (data.get('barrio') || '').trim();
+      const comentario = (data.get('comentario') || '').trim();
+
+      if (!nombre || !tel || !servicio || !dia || !hora || !tipo_entrega) {
+        alert('Por favor completá todos los campos obligatorios (*).');
+        return;
+      }
+
+      // Formatear fecha para que se vea linda (DD/MM/YYYY)
+      const [year, month, day] = dia.split('-');
+      const fechaFormateada = `${day}/${month}/${year}`;
+
+      let msg = `Hola! Quisiera reservar un turno.\n\n`;
+      msg += `*Nombre:* ${nombre}\n`;
+      msg += `*Teléfono:* ${tel}\n`;
+      msg += `*Servicio:* ${servicio}\n`;
+      msg += `*Día:* ${fechaFormateada}\n`;
+      msg += `*Hora:* ${hora} hs\n`;
+      msg += `*Modalidad:* ${tipo_entrega}\n`;
+      if (barrio) msg += `*Barrio:* ${barrio}\n`;
+      if (comentario) msg += `*Comentario:* ${comentario}\n`;
+      
+      const url = `https://wa.me/${CONFIG.telefono}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank', 'noopener');
+      form.reset();
+    });
+  }
+
+  /* ============ MODALES ============ */
+  document.querySelectorAll('[data-modal]').forEach(trigger => {
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      const modal = document.getElementById('modal-' + this.dataset.modal);
+      if (modal) {
+        modal.classList.add('show');
+document.body.style.overflow = 'hidden'; }
+    });  });
+document.querySelectorAll('[data-close-modal]').forEach(btn => {
+    btn.addEventListener('click', function () {
+      this.closest('.modal-legal').classList.remove('show');
+      document.body.style.overflow = '';
+    });
+  });
+  document.querySelectorAll('.modal-legal').forEach(modal => {
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-legal.show').forEach(m => m.classList.remove('show'));
+      document.body.style.overflow = '';
+    }
+  });
+});
+</script>
+</body>
 </html>
