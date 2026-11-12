@@ -203,12 +203,14 @@ header{background:var(--white);box-shadow:var(--shadow-sm);position:sticky;top:0
 .info-item div p{font-weight:600;font-size:.84rem}
 .info-item div p a{color:var(--primary);font-weight:600;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px;transition:var(--transition);cursor:pointer}
 .info-item div p a:hover,.info-item div p a:focus-visible{color:var(--secondary);text-decoration-color:var(--secondary)}
-.pagos{display:flex;align-items:center;gap:.5rem;flex-wrap:nowrap;margin-top:.6rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
-.pagos::-webkit-scrollbar{height:3px}
-.pagos::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-.pagos > span:first-child{font-size:.7rem;color:var(--text-muted);font-weight:600;white-space:nowrap;flex-shrink:0}
-.pago-badge{display:inline-flex;align-items:center;gap:4px;background:var(--white);border:1px solid var(--border);padding:.28rem .55rem;border-radius:6px;font-size:.68rem;color:var(--text-dark);font-weight:600;box-shadow:var(--shadow-sm);white-space:nowrap;flex-shrink:0}
-.pago-badge i{color:var(--primary);font-size:.68rem}
+
+/* PAGOS MÁS GRANDES Y DESTACADOS */
+.pagos{display:flex;align-items:center;justify-content:center;gap:.75rem;flex-wrap:wrap;margin-top:1rem;margin-bottom:2rem;padding:1rem;background:var(--white);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.pagos > span:first-child{font-size:.9rem;color:var(--primary-dark);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-right:.2rem}
+.pago-badge{display:inline-flex;align-items:center;gap:8px;background:var(--primary-light);border:1px solid #d0e2f2;padding:.5rem 1rem;border-radius:8px;font-size:.88rem;color:var(--primary-dark);font-weight:700;box-shadow:0 2px 6px rgba(11,79,138,.08);transition:var(--transition)}
+.pago-badge:hover{background:var(--primary);color:var(--white);transform:translateY(-2px)}
+.pago-badge i{color:var(--primary);font-size:1rem;transition:var(--transition)}
+.pago-badge:hover i{color:var(--white)}
 
 .form-section{background:var(--white);border-radius:var(--radius);padding:1.4rem 1.1rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);margin-bottom:1.8rem;scroll-margin-top: 80px;}
 .form-section .section-title{margin-bottom:.6rem}
@@ -588,10 +590,10 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
   .info-item i{width:32px;height:32px;font-size:.9rem}
   .info-item div h5{font-size:.6rem}
   .info-item div p{font-size:.72rem}
-  .pagos{gap:.35rem;margin-top:.4rem;margin-bottom:1rem}
-  .pago-badge{font-size:.6rem;padding:.22rem .45rem;gap:3px}
-  .pago-badge i{font-size:.6rem}
-  .pagos > span:first-child{font-size:.62rem}
+  .pagos{gap:.5rem;padding:.8rem .5rem}
+  .pagos > span:first-child{font-size:.82rem}
+  .pago-badge{font-size:.78rem;padding:.4rem .7rem;gap:6px}
+  .pago-badge i{font-size:.85rem}
   .form-section{padding:1rem .8rem}
   .form-grid{grid-template-columns:1fr}
   .form-grid textarea{min-height:60px}
@@ -834,10 +836,10 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
     <div class="carousel-dots" id="carouselDots"></div>
   </section>
 
-  <!-- SECCIÓN DE VIDEOS SIN CONTROLES NATIVOS, VARIOS A LA VEZ -->
+
   <section class="videos-seccion reveal" id="videos">
-    <h3 class="section-title">Videos</h3>
-    <p class="section-subtitle">martin</p>
+    <h3 class="section-title">VIDEOS</h3>
+    <p class="section-subtitle"></p>
     <div class="videos-grid-layout">
       
       <div class="video-card-item">
@@ -1048,14 +1050,18 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
     <div class="info-item"><i class="fa-solid fa-clock"></i><div><h5>Horarios</h5><p><a href="https://wa.me/59897192247" target="_blank" rel="noopener">Lun a Sáb 9 a 18</a></p><p>Dom cerrado</p></div></div>
     <div class="info-item"><i class="fa-solid fa-envelope"></i><div><h5>Email</h5><p><a href="mailto:burguenoalvaro1@gmail.com">burguenoalvaro1@gmail.com</a></p></div></div>
   </div>
+  
+
   <div class="pagos">
-    <span>Pagos:</span>
+    <span>Medios de Pago:</span>
     <span class="pago-badge"><i class="fa-solid fa-money-bill-wave"></i> Efectivo</span>
+    
+    <span class="pago-badge"><i class="fa-solid fa-money-bill-wave"></i> Todas las tarjetas</span>
+    
     <span class="pago-badge"><i class="fa-solid fa-building-columns"></i> Transferencia</span>
     <span class="pago-badge"><i class="fa-solid fa-mobile-screen"></i> Mercado Pago</span>
   </div>
 
-  <!-- MAPA -->
   <h3 class="section-title" id="ubicacion">Ubicación</h3>
   <div class="map-section reveal">
     <div class="map-header">
@@ -1063,10 +1069,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
       <a href="https://www.google.com/maps/search/?api=1&query=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay" target="_blank" rel="noopener" class="btn-outline"><i class="fa-solid fa-diamond-turn-right"></i> Cómo llegar</a>
     </div>
     <iframe src="https://www.google.com/maps?q=Juan+Jacobo+Rousseau+4483,+Montevideo,+Uruguay&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación Lavadero Unión"></iframe>
-  </div>
-
-</div>
-
+  </div></div>
 <footer>
   <div class="footer-main">
     <div class="footer-col">
@@ -1132,7 +1135,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ============ ESTADO DEL LOCAL ============ */
   function actualizarEstado() {
     const el = document.getElementById('estadoLocal');
     if (!el) return;
@@ -1167,7 +1169,6 @@ document.addEventListener("DOMContentLoaded", function () {
   actualizarEstado();
   setInterval(actualizarEstado, 60000);
 
-  /* ============ MENÚ MÓVIL ============ */
   const menuToggle = document.getElementById('menuToggle');
   const mobileMenu = document.getElementById('mobileMenu');
   const menuBackdrop = document.getElementById('menuBackdrop');
@@ -1195,7 +1196,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (mobileMenu.classList.contains('open')) closeMenu();
   }, { passive: true });
 
-  /* ============ CARRUSEL DE IMÁGENES ============ */
   function initCarruselInfinito({ slidesContainer, dotsContainer, prevBtn, nextBtn, interval }) {
     const originales = Array.from(slidesContainer.children);
     const total = originales.length;
@@ -1251,11 +1251,8 @@ document.addEventListener("DOMContentLoaded", function () {
       posicionar(!conTransicion);
       if (!conTransicion) {
         actualizarDots();
-        isTransitioning = false;
-      }
-    }
-
-    slidesContainer.addEventListener('transitionend', () => {
+        isTransitioning = false;  }  }
+slidesContainer.addEventListener('transitionend', () => {
       if (index === 0) {
         index = total;
         posicionar(true);
@@ -1316,10 +1313,8 @@ document.addEventListener("DOMContentLoaded", function () {
     dotsContainer: document.getElementById('carouselDots'),
     prevBtn: document.getElementById('prevBtn'),
     nextBtn: document.getElementById('nextBtn'),
-    interval: 5000
-  });
+    interval: 5000  });
 
-  /* ============ CARRUSEL DE TESTIMONIOS ============ */
   function initTestimoniosCarrusel() {
     const track = document.getElementById('testimoniosTrack');
     const dotsContainer = document.getElementById('testDots');
@@ -1383,12 +1378,9 @@ document.addEventListener("DOMContentLoaded", function () {
       else startAuto();
     });
 
-    actualizar();
-  }
-
+    actualizar();  }
   initTestimoniosCarrusel();
 
-  /* ============ LÓGICA DE REPRODUCCIÓN DE VIDEOS ============ */
   const videos = document.querySelectorAll('.video-card-item video');
   videos.forEach(video => {
     video.parentElement.addEventListener('click', () => {
@@ -1410,7 +1402,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* ============ SCROLL SUAVE ============ */
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
@@ -1425,7 +1416,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* ============ REVEAL ============ */
   const revealElements = document.querySelectorAll('.reveal');
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -1437,7 +1427,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }, { threshold: 0.1 });
   revealElements.forEach(el => revealObserver.observe(el));
 
-  /* ============ NAV ACTIVO ============ */
   const secciones = document.querySelectorAll('section[id], h3[id], div[id]');
   const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
   const navObserver = new IntersectionObserver(entries => {
@@ -1451,7 +1440,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }, { rootMargin: '-40% 0px -55% 0px' });
   secciones.forEach(s => { if (s.id) navObserver.observe(s); });
 
-  /* ============ SELECCIONAR SERVICIO DESDE TABLA ============ */
   const botonesSelect = document.querySelectorAll('.btn-select');
   const inputServicio = document.getElementById('inputServicio');
   const formSection = document.getElementById('formulario');
@@ -1470,7 +1458,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  /* ============ FORMULARIO ============ */
   const form = document.getElementById('formConsulta');
   if (form) {
     const today = new Date().toISOString().split('T')[0];
@@ -1512,9 +1499,7 @@ document.addEventListener("DOMContentLoaded", function () {
       form.reset();
     });
   }
-
-  /* ============ MODALES ============ */
-  document.querySelectorAll('[data-modal]').forEach(trigger => {
+ document.querySelectorAll('[data-modal]').forEach(trigger => {
     trigger.addEventListener('click', function (e) {
       e.preventDefault();
       const modal = document.getElementById('modal-' + this.dataset.modal);
