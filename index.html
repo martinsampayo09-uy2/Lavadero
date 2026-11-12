@@ -88,7 +88,7 @@ header{background:var(--white);box-shadow:var(--shadow-sm);position:sticky;top:0
 .menu-backdrop{display:none;position:fixed;inset:0;background:rgba(8,30,55,.5);z-index:150;opacity:0;transition:opacity .3s ease}
 .menu-backdrop.show{display:block;opacity:1}
 .mobile-menu{display:none;background:var(--white);border-top:1px solid var(--border);box-shadow:var(--shadow);max-height:0;overflow:hidden;transition:max-height .35s ease;position:relative;z-index:200}
-.mobile-menu.open{max-height:600px}
+.mobile-menu.open{max-height:700px}
 .mobile-menu ul{list-style:none;padding:.5rem .8rem .8rem}
 .mobile-menu ul li a{display:flex;align-items:center;gap:12px;padding:.75rem .9rem;border-radius:var(--radius-sm);font-size:.88rem;font-weight:500;color:var(--text-dark);transition:var(--transition);border-bottom:1px solid #f0f3f7}
 .mobile-menu ul li:last-child a{border-bottom:none;margin-top:.4rem}
@@ -195,35 +195,6 @@ header{background:var(--white);box-shadow:var(--shadow-sm);position:sticky;top:0
 .step-item h4{font-size:.85rem;margin-bottom:.15rem;color:var(--primary-dark);font-weight:600}
 .step-item p{font-size:.73rem;color:var(--text-muted);line-height:1.35}
 
-.testimonios-section{position:relative;margin-bottom:1.8rem}
-.testimonios-carousel{position:relative;overflow:hidden;border-radius:var(--radius)}
-.testimonios-track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1);will-change:transform}
-.testimonio{min-width:100%;flex-shrink:0;background:var(--white);border-radius:var(--radius);padding:1.4rem 1.2rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);position:relative;display:flex;flex-direction:column;justify-content:center;text-align:center}
-.testimonio::before{content:'\201C';position:absolute;top:8px;left:16px;font-size:3.5rem;font-family:Georgia,serif;color:var(--primary-light);line-height:1}
-.testimonio-stars{color:var(--gold);font-size:.9rem;margin-bottom:.7rem;position:relative}
-.testimonio p{font-size:.9rem;color:var(--text-muted);margin-bottom:1rem;position:relative;font-style:italic;line-height:1.6}
-.testimonio-autor{display:flex;align-items:center;justify-content:center;gap:10px;position:relative}
-.testimonio-avatar{width:40px;height:40px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
-.testimonio-autor div{text-align:left}
-.testimonio-autor div strong{font-size:.85rem;color:var(--primary-dark);display:block;line-height:1.2}
-.testimonio-autor div span{font-size:.7rem;color:var(--text-muted)}
-.testimonios-dots{display:flex;justify-content:center;gap:8px;margin-top:.9rem}
-.testimonios-dots .dot{width:10px;height:10px}
-.testimonios-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.95);color:var(--primary-dark);border:none;width:36px;height:36px;border-radius:50%;font-size:.9rem;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);transition:var(--transition);display:flex;align-items:center;justify-content:center;z-index:10}
-.testimonios-btn:hover{background:var(--white);transform:translateY(-50%) scale(1.1)}
-.testimonios-btn.prev{left:8px}
-.testimonios-btn.next{right:8px}
-
-.faq-section{margin-bottom:1.8rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;align-items:stretch}
-.faq-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:var(--transition);display:flex;flex-direction:column}
-.faq-item[open]{box-shadow:var(--shadow-sm);border-color:var(--primary)}
-.faq-item summary{padding:.85rem 1rem;cursor:pointer;font-weight:600;font-size:.85rem;color:var(--primary-dark);display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none;transition:var(--transition)}
-.faq-item summary::-webkit-details-marker{display:none}
-.faq-item summary::after{content:'\f067';font-family:'Font Awesome 6 Free';font-weight:900;font-size:.75rem;color:var(--primary);transition:var(--transition)}
-.faq-item[open] summary::after{content:'\f068'}
-.faq-item summary:hover{background:var(--primary-light)}
-.faq-item .faq-answer{padding:0 1rem 1rem;font-size:.8rem;color:var(--text-muted);line-height:1.5}
-
 .info-card{background:var(--white);border-radius:var(--radius);padding:1.1rem .9rem;box-shadow:var(--shadow-sm);border:1px solid var(--border);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin-bottom:1.5rem}
 .info-item{display:flex;align-items:center;gap:11px;padding:.55rem;border-radius:var(--radius-sm);transition:var(--transition)}
 .info-item:hover{background:var(--primary-light)}
@@ -296,9 +267,366 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
+/* ========== SECCIÓN DE VIDEOS SIN CONTROLES NATIVOS ========== */
+.videos-seccion{
+  margin-bottom:2rem;
+  padding:0 .8rem;
+}
+.videos-seccion .section-title{
+  color:var(--primary-dark);
+  margin-bottom:.2rem;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+.videos-seccion .section-title::after{
+  background:var(--secondary);
+  margin:6px auto .4rem;
+}
+.videos-seccion .section-subtitle{
+  text-align:center;
+  color:var(--text-muted);
+  font-size:.8rem;
+  margin-bottom:1.2rem;
+  font-style:italic;
+  letter-spacing:.5px;
+}
+.videos-grid-layout{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:.8rem;
+  max-width:1000px;
+  margin:0 auto;
+}
+.video-card-item{
+  position:relative;
+  background:#000;
+  border-radius:var(--radius-sm);
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+}
+.video-card-item video{
+  width:100%;
+  height:auto;
+  display:block;
+  aspect-ratio:1/1;
+  object-fit:cover;
+}
+.custom-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--primary-dark);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.video-card-item video.playing + .custom-play-btn {
+  opacity: 0;
+}
+
+@media(max-width:540px){
+  .videos-grid-layout{
+    grid-template-columns:repeat(2, 1fr);
+    gap:.5rem;
+  }
+  .custom-play-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+/* ====== FIN SECCIÓN VIDEOS ====== */
+
+/* ========== SECCIÓN NUESTROS CLIENTES (SIN MARCOS NI FONDO, COMPLETAMENTE VISIBLE Y CENTRADO) ========== */
+.clientes-section{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:1.6rem 1.2rem;
+  box-shadow:var(--shadow-sm);
+  border:1px solid var(--border);
+  margin-bottom:1.8rem;
+  scroll-margin-top:80px;
+}
+.clientes-section .section-title{margin-bottom:.4rem}
+.clientes-intro{
+  text-align:center;
+  color:var(--text-muted);
+  font-size:.85rem;
+  max-width:560px;
+  margin:0 auto 1.2rem;
+}
+.testimonios-carousel{
+  position:relative;
+  max-width:580px;
+  margin:0 auto;
+  padding:0 45px;
+}
+.testimonios-viewport{
+  overflow:hidden;
+  width:100%;
+}
+.testimonios-track{
+  display:flex;
+  transition:transform .55s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.testimonio-slide{
+  min-width:100%;
+  width:100%;
+  flex-shrink:0;
+  display:flex;
+  justify-content:center;
+  padding:0 10px;
+}
+.testimonio-card{
+  position:relative;
+  width:100%;
+  max-width:480px;
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:.5rem 0;
+  text-align:center;
+  margin:0 auto;
+}
+.testimonio-card::before{
+  display:none;
+}
+.testimonio-texto{
+  font-size:.95rem;
+  line-height:1.65;
+  color:var(--text-dark);
+  font-style:italic;
+  margin-bottom:1rem;
+  word-break: break-word;
+}
+.testimonio-autor{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:11px;
+  border-top:none;
+  padding-top:0;
+}
+.testimonio-avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--primary);
+  color:var(--white);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.95rem;
+  font-weight:700;
+  flex-shrink:0;
+  box-shadow:0 3px 10px rgba(11,79,138,.3);
+}
+.testimonio-datos{
+  text-align:left;
+}
+.testimonio-datos h5{
+  font-size:.85rem;
+  color:var(--primary-dark);
+  font-weight:700;
+  margin:0;
+  line-height:1.2;
+}
+.testimonio-datos p{
+  font-size:.7rem;
+  color:var(--text-muted);
+  margin:2px 0 0;
+  font-weight:500;
+}
+.testimonio-datos p i{
+  color:var(--primary);
+  font-size:.65rem;
+  margin-right:3px;
+}
+.testimonio-estrellas{
+  color:var(--gold);
+  font-size:.7rem;
+  margin-top:2px;
+  letter-spacing:1px;
+}
+
+/* Botones del carrusel de testimonios */
+.testimonios-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.95);
+  color:var(--primary-dark);
+  border:1px solid var(--border);
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  font-size:.9rem;
+  cursor:pointer;
+  box-shadow:0 2px 10px rgba(15,40,70,.15);
+  transition:var(--transition);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+.testimonios-btn:hover{background:var(--primary);color:var(--white);transform:translateY(-50%) scale(1.08)}
+.testimonios-btn.prev{left:0px}
+.testimonios-btn.next{right:0px}
+
+/* Dots del carrusel de testimonios */
+.testimonios-dots{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin-top:.9rem;
+}
+.testimonios-dots .dot{
+  width:9px;height:9px;border-radius:50%;
+  background:#c7d2dc;border:none;cursor:pointer;
+  transition:var(--transition);padding:0;
+}
+.testimonios-dots .dot.active{
+  background:var(--primary);transform:scale(1.3);
+}
+
+@media(max-width:640px){
+  .clientes-section{padding:1.1rem .8rem;margin-bottom:1.2rem}
+  .clientes-intro{font-size:.78rem;margin-bottom:1rem}
+  .testimonios-carousel{padding:0 32px;}
+  .testimonio-card{padding:.2rem 0}
+  .testimonio-texto{font-size:.82rem;line-height:1.55;margin-bottom:.8rem}
+  .testimonio-avatar{width:36px;height:36px;font-size:.85rem}
+  .testimonio-datos h5{font-size:.78rem}
+  .testimonio-datos p{font-size:.62rem}
+  .testimonios-btn{width:28px;height:28px;font-size:.75px}
+  .testimonios-btn.prev{left:-2px}
+  .testimonios-btn.next{right:-2px}
+}
+/* ====== FIN NUESTROS CLIENTES ====== */
+
 @media(max-width:780px){.nav-links{display:none}.menu-toggle{display:flex}.mobile-menu{display:block}.intro{height:420px}.intro h2{font-size:1.6rem}}
-@media(max-width:640px){.nav{padding:.6rem .7rem}.brand-icon{width:48px;height:48px;font-size:1.1rem}.brand-icon::after{width:13px;height:13px}.brand-text h1{font-size:1rem;letter-spacing:.8px}.brand-text p{font-size:.55rem}.menu-toggle{width:38px;height:38px}.intro{height:auto;min-height:420px;padding:2rem 0;align-items:flex-end}.intro-overlay{background:linear-gradient(180deg,rgba(8,30,55,.55) 0%,rgba(8,30,55,.85) 55%,rgba(8,30,55,.95) 100%)}.intro-inner{padding:1rem}.intro-tag{font-size:.6rem;padding:.28rem .65rem;margin-bottom:.5rem}.estado-local{font-size:.72rem;padding:.42rem .8rem;gap:6px;margin-left:0;margin-bottom:.6rem}.estado-local i{font-size:.65rem}.intro h2{font-size:1.3rem;margin-bottom:.5rem}.intro-desc{font-size:.78rem;margin-bottom:.9rem}.intro-features{gap:.35rem;margin-bottom:1rem}.intro-feature{font-size:.72rem}.intro-feature i{width:16px;height:16px;font-size:.6rem}.intro-cta{gap:.5rem}.intro-cta .btn-main{padding:.55rem 1rem;font-size:.75rem;flex:1;justify-content:center}.intro-cta .btn-outline{padding:.5rem .8rem;font-size:.72rem;flex:1}.marquee-section{padding:.6rem 0}.marquee-item{font-size:.75rem;padding:0 1rem;gap:6px}.marquee-item i{font-size:.7rem}.carousel-section{margin:.6rem auto;padding:0 .6rem}.carousel-slide{height:300px}.carousel-caption{padding:1.2rem .7rem .6rem}.carousel-caption h3{font-size:.9rem}.carousel-caption p{font-size:.7rem}.carousel-btn{width:28px;height:28px;font-size:.8rem}.carousel-btn.prev{left:6px}.carousel-btn.next{right:6px}.carousel-dots{margin-top:.5rem;gap:5px}.dot{width:7px;height:7px}.hero{padding:1rem .8rem}.hero::before{width:110px;height:110px}.hero-badge{font-size:.65rem;padding:.22rem .7rem;margin-bottom:.45rem}.hero h2{font-size:1.1rem}.hero p{font-size:.78rem;margin-bottom:.8rem}.hero .btn-main{padding:.6rem 1.2rem;font-size:.82rem}.container{padding:1rem .65rem}.section-title{font-size:1.05rem;margin-bottom:.85rem}.section-title::after{width:36px;height:2.5px;margin-top:6px}.promos-grid{grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:1.2rem}.promo-card{padding:.85rem .55rem}.promo-card .tag{font-size:.55rem;padding:2px 22px;top:8px;right:-22px}.promo-card .promo-icon{width:36px;height:36px;font-size:1rem;margin-bottom:.45rem}.promo-card h3{font-size:.82rem;margin-bottom:.2rem}.promo-card .price{font-size:1.5rem}.promo-card .price small{font-size:.7rem}.promo-card p{font-size:.68rem;margin-bottom:.6rem;line-height:1.35}.promo-card .btn-outline{padding:.4rem .5rem;font-size:.7rem}.precios-section{padding:.9rem .7rem;margin-bottom:1.2rem}.tabla-precios th,.tabla-precios td{padding:.5rem .3rem;font-size:.72rem}.tabla-precios th{font-size:.62rem}.btn-select{font-size:.6rem;padding:.25rem .4rem}.nota-precios{font-size:.62rem}.zonas-section{padding:1rem .7rem;margin-bottom:1.2rem}.zona-badge{font-size:.68rem;padding:.32rem .7rem}.zonas-nota{font-size:.68rem}.workflow{padding:.9rem .7rem;margin-bottom:1.2rem}.workflow-steps{grid-template-columns:repeat(2,1fr);gap:.5rem;margin-top:.7rem}.step-item{padding:.5rem .2rem}.step-icon{width:40px;height:40px;font-size:1rem;margin-bottom:.4rem}.step-item h4{font-size:.72rem}.step-item p{font-size:.62rem;line-height:1.3}.testimonio{padding:1rem .8rem}.testimonio p{font-size:.78rem}.testimonio-autor div strong{font-size:.78rem}.testimonio-autor div span{font-size:.65rem}.testimonios-btn{width:30px;height:30px;font-size:.75rem}.testimonios-btn.prev{left:4px}.testimonios-btn.next{right:4px}.testimonios-dots{margin-top:.7rem;gap:6px}.testimonios-dots .dot{width:8px;height:8px}.faq-section{grid-template-columns:repeat(2,1fr);gap:.45rem;margin-bottom:1.2rem}.faq-item summary{padding:.65rem .7rem;font-size:.72rem;gap:6px}.faq-item summary::after{font-size:.65rem}.faq-item .faq-answer{padding:0 .7rem .7rem;font-size:.68rem;line-height:1.45}.info-card{grid-template-columns:repeat(2,1fr);padding:.8rem .6rem;gap:.4rem}.info-item{padding:.4rem .3rem;gap:8px;flex-direction:column;text-align:center}.info-item i{width:32px;height:32px;font-size:.9rem}.info-item div h5{font-size:.6rem}.info-item div p{font-size:.72rem}.pagos{gap:.35rem;margin-top:.4rem;margin-bottom:1rem}.pago-badge{font-size:.6rem;padding:.22rem .45rem;gap:3px}.pago-badge i{font-size:.6rem}.pagos > span:first-child{font-size:.62rem}.form-section{padding:1rem .8rem}.form-grid{grid-template-columns:1fr}.form-grid textarea{min-height:60px}.map-header{padding:.6rem .7rem;flex-direction:column;align-items:flex-start;gap:8px}.map-header-left h4{font-size:.8rem}.map-header-left p{font-size:.68rem}.map-header .btn-outline{font-size:.72rem;padding:.4rem .8rem;width:100%}.map-section iframe{height:200px}.footer-main{grid-template-columns:1fr 1fr;padding:1.2rem .8rem .8rem;gap:.5rem}.footer-col h4{font-size:.75rem;margin-bottom:.4rem;padding-bottom:4px}.footer-col h4::after{width:18px}.footer-col p,.footer-col a{font-size:.65rem;line-height:1.45}.footer-col a i,.footer-col p i{font-size:.65rem;margin-right:2px}.footer-brand{gap:6px}.footer-brand h4{font-size:.8rem}.footer-brand .brand-icon{width:32px;height:32px;font-size:.65rem}.footer-bottom{padding:.6rem;font-size:.6rem}.wpp-flotante{width:50px;height:50px;font-size:1.5rem;bottom:14px;right:14px}}
-@media(max-width:380px){.brand-text h1{font-size:.9rem}.intro h2{font-size:1.15rem}.intro-desc{font-size:.72rem}.carousel-slide{height:240px}.promo-card .price{font-size:1.3rem}.promo-card h3{font-size:.75rem}.step-icon{width:36px;height:36px;font-size:.9rem}.step-item h4{font-size:.68rem}.step-item p{font-size:.58rem}.info-item div p{font-size:.68rem}.faq-item summary{padding:.55rem .6rem;font-size:.68rem}.faq-item .faq-answer{padding:0 .6rem .6rem;font-size:.62rem}.footer-main{padding:1rem .5rem .6rem;gap:.4rem}.footer-col h4{font-size:.7rem}.footer-col p,.footer-col a{font-size:.6rem;line-height:1.4}.footer-bottom{font-size:.58rem}}
+@media(max-width:640px){
+  .nav{padding:.6rem .7rem}
+  .brand-icon{width:48px;height:48px;font-size:1.1rem}
+  .brand-icon::after{width:13px;height:13px}
+  .brand-text h1{font-size:1rem;letter-spacing:.8px}
+  .brand-text p{font-size:.55rem}
+  .menu-toggle{width:38px;height:38px}
+  .intro{height:auto;min-height:420px;padding:2rem 0;align-items:flex-end}
+  .intro-overlay{background:linear-gradient(180deg,rgba(8,30,55,.55) 0%,rgba(8,30,55,.85) 55%,rgba(8,30,55,.95) 100%)}
+  .intro-inner{padding:1rem}
+  .intro-tag{font-size:.6rem;padding:.28rem .65rem;margin-bottom:.5rem}
+  .estado-local{font-size:.72rem;padding:.42rem .8rem;gap:6px;margin-left:0;margin-bottom:.6rem}
+  .estado-local i{font-size:.65rem}
+  .intro h2{font-size:1.3rem;margin-bottom:.5rem}
+  .intro-desc{font-size:.78rem;margin-bottom:.9rem}
+  .intro-features{gap:.35rem;margin-bottom:1rem}
+  .intro-feature{font-size:.72rem}
+  .intro-feature i{width:16px;height:16px;font-size:.6rem}
+  .intro-cta{gap:.5rem}
+  .intro-cta .btn-main{padding:.55rem 1rem;font-size:.75rem;flex:1;justify-content:center}
+  .intro-cta .btn-outline{padding:.5rem .8rem;font-size:.72rem;flex:1}
+  .marquee-section{padding:.6rem 0}
+  .marquee-item{font-size:.75rem;padding:0 1rem;gap:6px}
+  .marquee-item i{font-size:.7rem}
+  .carousel-section{margin:.6rem auto;padding:0 .6rem}
+  .carousel-slide{height:300px}
+  .carousel-caption{padding:1.2rem .7rem .6rem}
+  .carousel-caption h3{font-size:.9rem}
+  .carousel-caption p{font-size:.7rem}
+  .carousel-btn{width:28px;height:28px;font-size:.8rem}
+  .carousel-btn.prev{left:6px}
+  .carousel-btn.next{right:6px}
+  .carousel-dots{margin-top:.5rem;gap:5px}
+  .dot{width:7px;height:7px}
+  .hero{padding:1rem .8rem}
+  .hero::before{width:110px;height:110px}
+  .hero-badge{font-size:.65rem;padding:.22rem .7rem;margin-bottom:.45rem}
+  .hero h2{font-size:1.1rem}
+  .hero p{font-size:.78rem;margin-bottom:.8rem}
+  .hero .btn-main{padding:.6rem 1.2rem;font-size:.82rem}
+  .container{padding:1rem .65rem}
+  .section-title{font-size:1.05rem;margin-bottom:.85rem}
+  .section-title::after{width:36px;height:2.5px;margin-top:6px}
+  .promos-grid{grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:1.2rem}
+  .promo-card{padding:.85rem .55rem}
+  .promo-card .tag{font-size:.55rem;padding:2px 22px;top:8px;right:-22px}
+  .promo-card .promo-icon{width:36px;height:36px;font-size:1rem;margin-bottom:.45rem}
+  .promo-card h3{font-size:.82rem;margin-bottom:.2rem}
+  .promo-card .price{font-size:1.5rem}
+  .promo-card .price small{font-size:.7rem}
+  .promo-card p{font-size:.68rem;margin-bottom:.6rem;line-height:1.35}
+  .promo-card .btn-outline{padding:.4rem .5rem;font-size:.7rem}
+  .precios-section{padding:.9rem .7rem;margin-bottom:1.2rem}
+  .tabla-precios th,.tabla-precios td{padding:.5rem .3rem;font-size:.72rem}
+  .tabla-precios th{font-size:.62rem}
+  .btn-select{font-size:.6rem;padding:.25rem .4rem}
+  .nota-precios{font-size:.62rem}
+  .zonas-section{padding:1rem .7rem;margin-bottom:1.2rem}
+  .zona-badge{font-size:.68rem;padding:.32rem .7rem}
+  .zonas-nota{font-size:.68rem}
+  .workflow{padding:.9rem .7rem;margin-bottom:1.2rem}
+  .workflow-steps{grid-template-columns:repeat(2,1fr);gap:.5rem;margin-top:.7rem}
+  .step-item{padding:.5rem .2rem}
+  .step-icon{width:40px;height:40px;font-size:1rem;margin-bottom:.4rem}
+  .step-item h4{font-size:.72rem}
+  .step-item p{font-size:.62rem;line-height:1.3}
+
+  .info-card{grid-template-columns:repeat(2,1fr);padding:.8rem .6rem;gap:.4rem}
+  .info-item{padding:.4rem .3rem;gap:8px;flex-direction:column;text-align:center}
+  .info-item i{width:32px;height:32px;font-size:.9rem}
+  .info-item div h5{font-size:.6rem}
+  .info-item div p{font-size:.72rem}
+  .pagos{gap:.35rem;margin-top:.4rem;margin-bottom:1rem}
+  .pago-badge{font-size:.6rem;padding:.22rem .45rem;gap:3px}
+  .pago-badge i{font-size:.6rem}
+  .pagos > span:first-child{font-size:.62rem}
+  .form-section{padding:1rem .8rem}
+  .form-grid{grid-template-columns:1fr}
+  .form-grid textarea{min-height:60px}
+  .map-header{padding:.6rem .7rem;flex-direction:column;align-items:flex-start;gap:8px}
+  .map-header-left h4{font-size:.8rem}
+  .map-header-left p{font-size:.68rem}
+  .map-header .btn-outline{font-size:.72rem;padding:.4rem .8rem;width:100%}
+  .map-section iframe{height:200px}
+  .footer-main{grid-template-columns:1fr 1fr;padding:1.2rem .8rem .8rem;gap:.5rem}
+  .footer-col h4{font-size:.75rem;margin-bottom:.4rem;padding-bottom:4px}
+  .footer-col h4::after{width:18px}
+  .footer-col p,.footer-col a{font-size:.65rem;line-height:1.45}
+  .footer-col a i,.footer-col p i{font-size:.65rem;margin-right:2px}
+  .footer-brand{gap:6px}
+  .footer-brand h4{font-size:.8rem}
+  .footer-brand .brand-icon{width:32px;height:32px;font-size:.65rem}
+  .footer-bottom{padding:.6rem;font-size:.6rem}
+  .wpp-flotante{width:50px;height:50px;font-size:1.5rem;bottom:14px;right:14px}
+}
+@media(max-width:380px){
+  .brand-text h1{font-size:.9rem}
+  .intro h2{font-size:1.15rem}
+  .intro-desc{font-size:.72rem}
+  .carousel-slide{height:240px}
+  .promo-card .price{font-size:1.3rem}
+  .promo-card h3{font-size:.75rem}
+  .step-icon{width:36px;height:36px;font-size:.9rem}
+  .step-item h4{font-size:.68rem}
+  .step-item p{font-size:.58rem}
+  .info-item div p{font-size:.68rem}
+  .footer-main{padding:1rem .5rem .6rem;gap:.4rem}
+  .footer-col h4{font-size:.7rem}
+  .footer-col p,.footer-col a{font-size:.6rem;line-height:1.4}
+  .footer-bottom{font-size:.58rem}
+}
 </style>
 </head>
 <body>
@@ -307,13 +635,15 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
   <nav class="nav">
     <div class="brand">
       <div class="brand-icon"><img src="https://i.ibb.co/7JKCjvGs/Screenshot-20261027-224201-Instagram.png" alt="Logo Lavadero Unión"></div>
-<div class="brand-text"><h1>LAVADERO UNIÓN</h1><p>Tu ropa en buenas manos</p></div>
+      <div class="brand-text"><h1>LAVADERO UNIÓN</h1><p>Tu ropa en buenas manos</p></div>
     </div>
     <ul class="nav-links">
       <li><a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a></li>
       <li><a href="#promos"><i class="fa-solid fa-tags"></i> Promos</a></li>
       <li><a href="#precios"><i class="fa-solid fa-dollar-sign"></i> Precios</a></li>
       <li><a href="#servicios"><i class="fa-solid fa-list-check"></i> Servicios</a></li>
+      <li><a href="#clientes"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      <li><a href="#videos"><i class="fa-solid fa-video"></i> Videos</a></li>
       <li><a href="#contacto"><i class="fa-solid fa-address-book"></i> Contacto</a></li>
       <li><a href="#ubicacion"><i class="fa-solid fa-map-location-dot"></i> Ubicación</a></li>
       <li><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener" class="nav-cta"><i class="fa-brands fa-whatsapp"></i> Consultar</a></li>
@@ -327,6 +657,8 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
       <li><a href="#promos"><i class="fa-solid fa-tags"></i> Promociones</a></li>
       <li><a href="#precios"><i class="fa-solid fa-dollar-sign"></i> Precios</a></li>
       <li><a href="#servicios"><i class="fa-solid fa-list-check"></i> Servicios</a></li>
+      <li><a href="#clientes"><i class="fa-solid fa-users"></i> Clientes</a></li>
+      <li><a href="#videos"><i class="fa-solid fa-video"></i> Videos</a></li>
       <li><a href="#contacto"><i class="fa-solid fa-address-book"></i> Contacto</a></li>
       <li><a href="#ubicacion"><i class="fa-solid fa-map-location-dot"></i> Ubicación</a></li>
       <li><a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar" target="_blank" rel="noopener" class="mob-cta"><i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp</a></li>
@@ -376,7 +708,6 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
     <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
     <div class="marquee-item"><i class="fa-solid fa-box-open"></i> Embolsado</div>
     <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
-    <!-- Duplicado para animación -->
     <div class="marquee-item"><i class="fa-solid fa-soap"></i> Lavado General</div>
     <span class="marquee-separator"><i class="fa-solid fa-circle"></i></span>
     <div class="marquee-item"><i class="fa-solid fa-bed"></i> Acolchados</div>
@@ -403,7 +734,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
   <a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar%20por%20la%20promo%20familia" target="_blank" rel="noopener" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp"></i> Pedir Promo</a>
 </section>
 <div class="container">
- <!-- PROMOS (Basado en la imagen) -->
+ <!-- PROMOS -->
   <h3 class="section-title" id="promos">Promociones y Ofertas</h3>
   <div class="promos-grid reveal">
     <div class="promo-card highlight">
@@ -436,7 +767,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
       <a href="https://wa.me/59897192247?text=Hola%2C%20quiero%20lavar%20mis%20zapatillas%20por%20%24200" target="_blank" rel="noopener" class="btn-outline">Coordinar <i class="fa-solid fa-arrow-right"></i></a>
     </div></div>
 
-  <!-- PRECIOS CON BOTÓN DE SELECCIÓN -->
+  <!-- PRECIOS -->
   <section class="precios-section reveal" id="precios">
     <h3 class="section-title">Lista de Precios</h3>
     <table class="tabla-precios">
@@ -458,7 +789,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
         <tr><td>Championes</td><td>Lavado de calzado</td><td>$200</td><td style="text-align:center;"><button class="btn-select" data-servicio="Championes ($200)">Elegir <i class="fa-solid fa-check"></i></button></td></tr>
       </tbody>
     </table>
-    <p class="nota-precios">* Limpieza profunda  Precios sujetos a cambios. Estar atentos .</p>
+    <p class="nota-precios">* Limpieza profunda. Precios sujetos a cambios. Estar atentos.</p>
   </section>
 
   <!-- ZONAS -->
@@ -503,6 +834,47 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
     <div class="carousel-dots" id="carouselDots"></div>
   </section>
 
+  <!-- SECCIÓN DE VIDEOS SIN CONTROLES NATIVOS, VARIOS A LA VEZ -->
+  <section class="videos-seccion reveal" id="videos">
+    <h3 class="section-title">Videos</h3>
+    <p class="section-subtitle">martin</p>
+    <div class="videos-grid-layout">
+      
+      <div class="video-card-item">
+        <video preload="metadata" playsinline disablePictureInPicture controlslist="nodownload noplaybackrate noremoteplayback">
+          <source src="https://cdn.mp4tourl.com/video/free/33a31fa2-496f-49c5-9600-423a488efbc1.mp4" type="video/mp4">
+          Tu navegador no soporta video.
+        </video>
+        <div class="custom-play-btn"><i class="fa-solid fa-play"></i></div>
+      </div>
+
+      <div class="video-card-item">
+        <video preload="metadata" playsinline disablePictureInPicture controlslist="nodownload noplaybackrate noremoteplayback">
+          <source src="https://cdn.mp4tourl.com/video/free/d9e69080-42c2-438f-9b8f-4b03013d1000.mp4" type="video/mp4">
+          Tu navegador no soporta video.
+        </video>
+        <div class="custom-play-btn"><i class="fa-solid fa-play"></i></div>
+      </div>
+
+      <div class="video-card-item">
+        <video preload="metadata" playsinline disablePictureInPicture controlslist="nodownload noplaybackrate noremoteplayback">
+          <source src="https://cdn.mp4tourl.com/video/free/09b0ea46-de45-448c-9739-c6fd0c8463d3.mp4" type="video/mp4">
+          Tu navegador no soporta video.
+        </video>
+        <div class="custom-play-btn"><i class="fa-solid fa-play"></i></div>
+      </div>
+
+      <div class="video-card-item">
+        <video preload="metadata" playsinline disablePictureInPicture controlslist="nodownload noplaybackrate noremoteplayback">
+          <source src="https://cdn.mp4tourl.com/video/free/3c7c927e-9cb0-4a04-b908-bb7319802461.mp4" type="video/mp4">
+          Tu navegador no soporta video.
+        </video>
+        <div class="custom-play-btn"><i class="fa-solid fa-play"></i></div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- SERVICIOS -->
   <section class="workflow reveal" id="servicios">
     <h3 class="section-title">¿Cómo Funciona?</h3>
@@ -514,60 +886,131 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
     </div>
   </section>
 
-  <!-- TESTIMONIOS -->
-  <h3 class="section-title">Lo que Dicen Nuestros Clientes</h3>
-  <section class="testimonios-section reveal">
+  <!-- NUESTROS CLIENTES (CARRUSEL SIN MARCOS NI FONDO, CORREGIDO Y LIMPIO) -->
+  <section class="clientes-section reveal" id="clientes">
+    <h3 class="section-title">Nuestros Clientes</h3>
+    <p class="clientes-intro">La confianza de quienes ya nos eligieron es nuestro mejor respaldo.</p>
+
     <div class="testimonios-carousel">
-      <div class="testimonios-track" id="testimoniosTrack">
-        <div class="testimonio">
-          <div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          <p>Impecable el lavado de mi acolchado. Quedó como nuevo y sin olor a humedad. El retiro fue puntual y muy amable.</p>
-          <div class="testimonio-autor"><div class="testimonio-avatar">M</div><div><strong>María</strong><span>Cliente verificado · Google</span></div></div>
-        </div>
-        <div class="testimonio">
-          <div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          <p>Usé el servicio de tintas y quedé encantada. El negro quedó perfecto y no me dañó la tela. ¡Súper recomendable!</p>
-          <div class="testimonio-autor"><div class="testimonio-avatar">J</div><div><strong>Jorge</strong><span>Cliente verificado · Google</span></div></div>
-        </div>
-        <div class="testimonio">
-          <div class="testimonio-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          <p>Excelente atención y precio. Aproveché la promo familia y quedé encantada con el resultado. Gracias por el cuidado.</p>
-          <div class="testimonio-autor"><div class="testimonio-avatar">A</div><div><strong>Ana</strong><span>Cliente verificado · Google</span></div></div>
+      <div class="testimonios-viewport">
+        <div class="testimonios-track" id="testimoniosTrack">
+
+          <div class="testimonio-slide">
+            <article class="testimonio-card">
+              <p class="testimonio-texto">"Excelente atención y rapidez. Da gusto encontrar gente tan profesional y amable."</p>
+              <div class="testimonio-autor">
+                <div class="testimonio-avatar">C</div>
+                <div class="testimonio-datos">
+                  <h5>Carlos Méndez</h5>
+                  <p><i class="fa-solid fa-store"></i> Lavadero Carucel</p>
+                  <div class="testimonio-estrellas" aria-label="5 de 5 estrellas">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="testimonio-slide">
+            <article class="testimonio-card">
+              <p class="testimonio-texto">"Ropa impecable y en el día. La atención es súper amable. Ya somos clientes fijos de la familia."</p>
+              <div class="testimonio-autor">
+                <div class="testimonio-avatar">M</div>
+                <div class="testimonio-datos">
+                  <h5>María Fernández</h5>
+                  <p><i class="fa-solid fa-house"></i> Particular</p>
+                  <div class="testimonio-estrellas" aria-label="5 de 5 estrellas">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="testimonio-slide">
+            <article class="testimonio-card">
+              <p class="testimonio-texto">"Mandé los acolchados y quedaron como nuevos. El retiro a domicilio me salvó la semana."</p>
+              <div class="testimonio-autor">
+                <div class="testimonio-avatar">L</div>
+                <div class="testimonio-datos">
+                  <h5>Lucía Rodríguez</h5>
+                  <p><i class="fa-solid fa-house"></i> Particular</p>
+                  <div class="testimonio-estrellas" aria-label="5 de 5 estrellas">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="testimonio-slide">
+            <article class="testimonio-card">
+              <p class="testimonio-texto">"Excelente servicio, puntuales y muy prolijos. Los championes parecían recién comprados."</p>
+              <div class="testimonio-autor">
+                <div class="testimonio-avatar">D</div>
+                <div class="testimonio-datos">
+                  <h5>Diego Suárez</h5>
+                  <p><i class="fa-solid fa-house"></i> Particular</p>
+                  <div class="testimonio-estrellas" aria-label="5 de 5 estrellas">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="testimonio-slide">
+            <article class="testimonio-card">
+              <p class="testimonio-texto">"La tintorería es un lujo: colores vivos y parejos. Ya los recomendé a varias amigas."</p>
+              <div class="testimonio-autor">
+                <div class="testimonio-avatar">V</div>
+                <div class="testimonio-datos">
+                  <h5>Valeria Núñez</h5>
+                  <p><i class="fa-solid fa-house"></i> Particular</p>
+                  <div class="testimonio-estrellas" aria-label="5 de 5 estrellas">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="testimonio-slide">
+            <article class="testimonio-card">
+              <p class="testimonio-texto">"Atención de primera y precios justos. Nunca me fallaron, ni con lluvia ni con apuro."</p>
+              <div class="testimonio-autor">
+                <div class="testimonio-avatar">J</div>
+                <div class="testimonio-datos">
+                  <h5>Javier Pereira</h5>
+                  <p><i class="fa-solid fa-store"></i> Comercio local</p>
+                  <div class="testimonio-estrellas" aria-label="5 de 5 estrellas">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
         </div>
       </div>
-      <button class="testimonios-btn prev" id="testimoniosPrev" aria-label="Testimonio anterior"><i class="fa-solid fa-chevron-left"></i></button>
-      <button class="testimonios-btn next" id="testimoniosNext" aria-label="Testimonio siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+      <button class="testimonios-btn prev" id="testPrev" aria-label="Testimonio anterior"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="testimonios-btn next" id="testNext" aria-label="Testimonio siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+      <div class="testimonios-dots" id="testDots"></div>
     </div>
-    <div class="testimonios-dots" id="testimoniosDots"></div>
   </section>
 
-  <!-- FAQ -->
-  <h3 class="section-title">Preguntas Frecuentes</h3>
-  <section class="faq-section reveal">
-    <details class="faq-item"><summary>¿Cuánto tarda el servicio?</summary><div class="faq-answer">Entre 24 y 48 horas dependiendo de la carga. Te avisamos por WhatsApp cuando esté listo.</div></details>
-    <details class="faq-item"><summary>¿Retiran a domicilio?</summary><div class="faq-answer">Sí, contamos con cadetería económica. Dentro de zona $100 y fuera de zona $200. Coordinamos día y horario por WhatsApp.</div></details>
-    <details class="faq-item"><summary>¿Cómo se puede abonar?</summary><div class="faq-answer">Aceptamos efectivo, transferencia bancaria, Mercado Pago y giros. El pago se realiza al momento de la entrega.</div></details>
-    <details class="faq-item"><summary>¿En qué consiste el lavado de tintas?</summary><div class="faq-answer">Usamos un proceso para óptima toma de color con Jean o algodón. Se realiza en el día (hoy y mañana).</div></details>
-    <details class="faq-item"><summary>¿Qué pasa si llueve varios días?</summary><div class="faq-answer">Te mantenemos informado siempre y coordinamos la entrega cuando esté listo.</div></details>
-    <details class="faq-item"><summary>¿Atienden los domingos?</summary><div class="faq-answer">No, los domingos permanecemos cerrados. Podés escribirnos por WhatsApp y te respondemos el lunes a primera hora.</div></details>
-    <details class="faq-item"><summary>¿Qué zonas cubren para retiro?</summary><div class="faq-answer">Cubrimos Unión, Malvín, Pocitos, Buceo, Centro, Parque Rodó, Punta Carretas, Tres Cruces y Cordón. Consultá por tu barrio por WhatsApp.</div></details>
-    <details class="faq-item"><summary>¿Los precios incluyen retiro?</summary><div class="faq-answer">El retiro y entrega tiene un costo adicional: dentro de zona $100 y fuera de zona $200. Consultá por tu barrio al coordinar.</div></details>
-  </section>
-
-  <!-- FORMULARIO DE RESERVA (NUEVA HOJA) -->
+  <!-- FORMULARIO DE RESERVA -->
   <section class="form-section reveal" id="formulario">
     <h3 class="section-title">Reservar Turno / Pedir Presupuesto</h3>
-    <p class="form-intro">Completá los datos y te contactamos por WhatsApp para confirmar.</p>
+    
     <form class="form-grid" id="formConsulta" novalidate>
       <input type="text" name="nombre" placeholder="Tu nombre *" required autocomplete="name">
       <input type="tel" name="telefono" placeholder="Tu teléfono *" required autocomplete="tel">
       
-      <!-- Campo de Servicio Autocompletado -->
       <div class="full">
         <input type="text" name="servicio" id="inputServicio" placeholder="Servicio seleccionado (Elegí arriba) *" required readonly style="background-color: #eaf2fa; border-color: #0b4f8a; font-weight: 600; color: #0b4f8a; cursor: not-allowed;">
       </div>
 
-      <!-- Nuevos campos: Día y Hora -->
       <div>
         <label for="dia" style="font-size:0.8rem; color:#5c6b77; margin-bottom:0.2rem; display:block;">Día preferido *</label>
         <input type="date" name="dia" id="dia" required>
@@ -577,7 +1020,6 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
         <input type="time" name="hora" id="hora" required>
       </div>
 
-      <!-- Nuevo campo: Local o Domicilio -->
       <div class="full">
         <label style="font-size:0.85rem; color:#1c2b36; margin-bottom:0.4rem; display:block; font-weight: 600;">¿Cómo querés el servicio? *</label>
         <div style="display: flex; gap: 1.5rem; align-items: center;">
@@ -593,9 +1035,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
       <input type="text" name="barrio" placeholder="Tu barrio (si es a domicilio)" autocomplete="address-level3">
       <textarea name="comentario" placeholder="Comentario adicional (opcional)" class="full"></textarea>
       <button type="submit" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp"></i> Enviar Reserva por WhatsApp</button>
-    </form>
-    <p class="form-nota">Al enviar aceptás nuestra <a href="#" data-modal="privacidad">política de privacidad</a>. No compartimos tus datos con terceros.</p>
-  </section>
+    </form> </section>
 
   <!-- CONTACTO -->
   <h3 class="section-title" id="contacto">Contacto</h3>
@@ -755,7 +1195,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (mobileMenu.classList.contains('open')) closeMenu();
   }, { passive: true });
 
-  /* ============ CARRUSEL INFINITO ============ */
+  /* ============ CARRUSEL DE IMÁGENES ============ */
   function initCarruselInfinito({ slidesContainer, dotsContainer, prevBtn, nextBtn, interval }) {
     const originales = Array.from(slidesContainer.children);
     const total = originales.length;
@@ -879,12 +1319,95 @@ document.addEventListener("DOMContentLoaded", function () {
     interval: 5000
   });
 
-  initCarruselInfinito({
-    slidesContainer: document.getElementById('testimoniosTrack'),
-    dotsContainer: document.getElementById('testimoniosDots'),
-    prevBtn: document.getElementById('testimoniosPrev'),
-    nextBtn: document.getElementById('testimoniosNext'),
-    interval: 6000
+  /* ============ CARRUSEL DE TESTIMONIOS ============ */
+  function initTestimoniosCarrusel() {
+    const track = document.getElementById('testimoniosTrack');
+    const dotsContainer = document.getElementById('testDots');
+    const prevBtn = document.getElementById('testPrev');
+    const nextBtn = document.getElementById('testNext');
+    if (!track || !dotsContainer) return;
+
+    const total = track.children.length;
+    if (total < 2) return;
+
+    let index = 0;
+    let autoId = null;
+
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('button');
+      d.classList.add('dot');
+      if (i === 0) d.classList.add('active');
+      d.setAttribute('aria-label', `Ir al testimonio ${i + 1}`);
+      d.addEventListener('click', () => { irA(i); resetAuto(); });
+      dotsContainer.appendChild(d);
+    }
+    const dots = dotsContainer.querySelectorAll('.dot');
+
+    function actualizar() {
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+
+    function irA(nuevo) {
+      index = (nuevo + total) % total;
+      actualizar();
+    }
+    function siguiente() { irA(index + 1); }
+    function anterior() { irA(index - 1); }
+
+    nextBtn.addEventListener('click', () => { siguiente(); resetAuto(); });
+    prevBtn.addEventListener('click', () => { anterior(); resetAuto(); });
+
+    function startAuto() { autoId = setInterval(siguiente, 5500); }
+    function resetAuto() { clearInterval(autoId); startAuto(); }
+    startAuto();
+
+    const carrusel = track.closest('.testimonios-carousel');
+    carrusel.addEventListener('mouseenter', () => clearInterval(autoId));
+    carrusel.addEventListener('mouseleave', startAuto);
+
+    let tStart = 0, tEnd = 0;
+    track.addEventListener('touchstart', e => {
+      tStart = e.changedTouches[0].screenX;
+      clearInterval(autoId);
+    }, { passive: true });
+    track.addEventListener('touchend', e => {
+      tEnd = e.changedTouches[0].screenX;
+      if (tStart - tEnd > 50) siguiente();
+      if (tEnd - tStart > 50) anterior();
+      startAuto();
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearInterval(autoId);
+      else startAuto();
+    });
+
+    actualizar();
+  }
+
+  initTestimoniosCarrusel();
+
+  /* ============ LÓGICA DE REPRODUCCIÓN DE VIDEOS ============ */
+  const videos = document.querySelectorAll('.video-card-item video');
+  videos.forEach(video => {
+    video.parentElement.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+
+    video.addEventListener('play', () => {
+      video.classList.add('playing');
+    });
+    video.addEventListener('pause', () => {
+      video.classList.remove('playing');
+    });
+    video.addEventListener('ended', () => {
+      video.classList.remove('playing');
+    });
   });
 
   /* ============ SCROLL SUAVE ============ */
@@ -935,15 +1458,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   botonesSelect.forEach(btn => {
     btn.addEventListener('click', function() {
-      // 1. Obtener el servicio del atributo data-servicio
       const servicio = this.getAttribute('data-servicio');
-      
-      // 2. Asignarlo al input del formulario
       if (inputServicio) {
         inputServicio.value = servicio;
       }
-      
-      // 3. Hacer scroll suave hacia el formulario
       if (formSection) {
         const offset = 80;
         const top = formSection.getBoundingClientRect().top + window.scrollY - offset;
@@ -955,7 +1473,6 @@ document.addEventListener("DOMContentLoaded", function () {
   /* ============ FORMULARIO ============ */
   const form = document.getElementById('formConsulta');
   if (form) {
-    // Establecer la fecha mínima del calendario a hoy
     const today = new Date().toISOString().split('T')[0];
     const inputDia = document.getElementById('dia');
     if (inputDia) inputDia.setAttribute('min', today);
@@ -977,7 +1494,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // Formatear fecha para que se vea linda (DD/MM/YYYY)
       const [year, month, day] = dia.split('-');
       const fechaFormateada = `${day}/${month}/${year}`;
 
@@ -1004,9 +1520,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const modal = document.getElementById('modal-' + this.dataset.modal);
       if (modal) {
         modal.classList.add('show');
-document.body.style.overflow = 'hidden'; }
-    });  });
-document.querySelectorAll('[data-close-modal]').forEach(btn => {
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+  document.querySelectorAll('[data-close-modal]').forEach(btn => {
     btn.addEventListener('click', function () {
       this.closest('.modal-legal').classList.remove('show');
       document.body.style.overflow = '';
