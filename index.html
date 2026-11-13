@@ -104,8 +104,28 @@ header{background:var(--white);box-shadow:var(--shadow-sm);position:sticky;top:0
 .intro-content{max-width:560px;color:var(--white)}
 .intro-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);backdrop-filter:blur(6px);color:var(--white);font-size:.7rem;font-weight:600;padding:.35rem .85rem;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:.6rem;border:1px solid rgba(255,255,255,.25)}
 .intro-tag i{color:var(--gold)}
-.estado-local{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;padding:.5rem 1rem;border-radius:24px;margin-bottom:1rem;margin-left:6px;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);border:1.5px solid rgba(255,255,255,.4);color:var(--white);letter-spacing:.3px;line-height:1.2}
-.estado-local i{font-size:.8rem}
+
+/* ETIQUETA DE ESTADO CON FONDO CLARITO Y TEXTO OSCURO */
+.estado-local{
+  display:inline-flex;
+  align-items:center;
+  gap:10px; 
+  font-size:1.05rem; 
+  font-weight:800; 
+  padding:.8rem 1.4rem; 
+  border-radius:30px; 
+  margin-bottom:1.5rem;
+  margin-left:0;
+  background:rgba(245, 248, 250, 0.92); /* Fondo gris muy claro/blanco */
+  backdrop-filter:blur(6px); 
+  border:2px solid rgba(255, 255, 255, 0.6); 
+  color:var(--text-dark); /* Texto oscuro para que contraste */
+  letter-spacing:.3px;
+  line-height:1.2;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+}
+.estado-local i{font-size:.9rem}
+
 .intro h2{font-size:2.1rem;font-weight:800;line-height:1.15;margin-bottom:.8rem;color:var(--white);text-shadow:0 2px 12px rgba(0,0,0,.3)}
 .intro h2 small{display:block;font-size:.55em;font-weight:500;opacity:.9;margin-top:4px}
 .intro-desc{font-size:.95rem;color:rgba(255,255,255,.9);margin-bottom:1.3rem;max-width:480px;text-shadow:0 1px 6px rgba(0,0,0,.3)}
@@ -115,13 +135,74 @@ header{background:var(--white);box-shadow:var(--shadow-sm);position:sticky;top:0
 .intro-cta{display:flex;gap:.6rem;flex-wrap:wrap}
 .intro-cta .btn-outline{color:var(--white);border-color:rgba(255,255,255,.7)}
 .intro-cta .btn-outline:hover{background:var(--white);color:var(--primary-dark);border-color:var(--white)}
-.marquee-section{background:var(--primary-dark);color:var(--white);padding:.85rem 0;overflow:hidden;border-top:3px solid var(--secondary);border-bottom:3px solid var(--secondary)}
-.marquee{display:flex;width:max-content;animation:scroll-left 30s linear infinite}
+
+/* ========================================= */
+/* MARQUEE CON BORDES EN DEGRADADO AZUL */
+/* ========================================= */
+.marquee-section{
+  background:linear-gradient(180deg, #083a66 0%, #0b4f8a 50%, #083a66 100%);
+  color:var(--white);
+  padding:1.4rem 0;
+  overflow:hidden;
+  /* Bordes con degradado azul (más claro a más oscuro) */
+  border-top:5px solid;
+  border-image:linear-gradient(90deg, #4a9de0 0%, #1e6fbd 30%, #0b4f8a 60%, #06305a 100%) 1;
+  border-bottom:5px solid;
+  border-image:linear-gradient(90deg, #06305a 0%, #0b4f8a 40%, #1e6fbd 70%, #4a9de0 100%) 1;
+  /* Brillo interior sutil para dar profundidad */
+  box-shadow: inset 0 6px 12px rgba(0,0,0,0.35), inset 0 -6px 12px rgba(0,0,0,0.35);
+  position:relative;
+}
+/* Línea decorativa extra de gradiente brillante */
+.marquee-section::before,
+.marquee-section::after{
+  content:'';
+  position:absolute;
+  left:0; right:0;
+  height:2px;
+  background:linear-gradient(90deg, transparent, rgba(120,180,255,0.5), transparent);
+  z-index:2;
+}
+.marquee-section::before{ top:5px; }
+.marquee-section::after{ bottom:5px; }
+
+.marquee{display:flex;width:max-content;animation:scroll-left 35s linear infinite}
 .marquee:hover{animation-play-state:paused}
-.marquee-item{display:inline-flex;align-items:center;gap:10px;padding:0 1.6rem;font-weight:600;font-size:.95rem;letter-spacing:.5px;white-space:nowrap;text-transform:uppercase}
-.marquee-item i{color:var(--secondary);font-size:.85rem}
-.marquee-separator{color:var(--secondary);font-size:1.1rem;display:flex;align-items:center;opacity:.6}
+.marquee-item{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:0 2.4rem;
+  font-weight:700;
+  font-size:1.15rem;
+  letter-spacing:1px;
+  white-space:nowrap;
+  text-transform:uppercase;
+  text-shadow:0 2px 6px rgba(0,0,0,.5);
+}
+/* Iconos en distintos tonos de azul */
+.marquee-item i{
+  font-size:1rem;
+  color:#5ab0f0;
+  filter:drop-shadow(0 0 4px rgba(90,176,240,.6));
+}
+.marquee-item:nth-child(4n+1) i{ color:#5ab0f0; } /* azul claro */
+.marquee-item:nth-child(4n+2) i{ color:#3d8fd6; } /* azul medio */
+.marquee-item:nth-child(4n+3) i{ color:#8fc9f5; } /* celeste */
+.marquee-item:nth-child(4n+4) i{ color:#2b7bc4; } /* azul profundo */
+
+/* Puntos separadores azules */
+.marquee-separator{
+  color:#5ab0f0;
+  font-size:1rem;
+  display:flex;
+  align-items:center;
+  opacity:.85;
+  filter:drop-shadow(0 0 4px rgba(90,176,240,.6));
+}
 @keyframes scroll-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* ========================================= */
+
 .hero{background:var(--white);padding:1.4rem 1rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-50%;left:-20%;width:160px;height:160px;background:var(--primary-light);border-radius:50%;opacity:.7;pointer-events:none}
 .hero-badge{background-color:var(--secondary);color:var(--white);padding:.3rem .95rem;border-radius:4px;font-weight:600;font-size:.75rem;display:inline-block;margin-bottom:.7rem;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 2px 8px rgba(200,16,46,.25)}
@@ -347,9 +428,6 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
     font-size: 16px;
   }
 }
-/* ====== FIN SECCIÓN VIDEOS ====== */
-
-/* ========== SECCIÓN NUESTROS CLIENTES (SIN MARCOS NI FONDO, COMPLETAMENTE VISIBLE Y CENTRADO) ========== */
 .clientes-section{
   background:var(--white);
   border-radius:var(--radius);
@@ -513,9 +591,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
   .testimonio-datos p{font-size:.62rem}
   .testimonios-btn{width:28px;height:28px;font-size:.75px}
   .testimonios-btn.prev{left:-2px}
-  .testimonios-btn.next{right:-2px}
-}
-/* ====== FIN NUESTROS CLIENTES ====== */
+  .testimonios-btn.next{right:-2px}}
 
 @media(max-width:780px){.nav-links{display:none}.menu-toggle{display:flex}.mobile-menu{display:block}.intro{height:420px}.intro h2{font-size:1.6rem}}
 @media(max-width:640px){
@@ -529,8 +605,8 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
   .intro-overlay{background:linear-gradient(180deg,rgba(8,30,55,.55) 0%,rgba(8,30,55,.85) 55%,rgba(8,30,55,.95) 100%)}
   .intro-inner{padding:1rem}
   .intro-tag{font-size:.6rem;padding:.28rem .65rem;margin-bottom:.5rem}
-  .estado-local{font-size:.72rem;padding:.42rem .8rem;gap:6px;margin-left:0;margin-bottom:.6rem}
-  .estado-local i{font-size:.65rem}
+  .estado-local{font-size:1rem;padding:.7rem 1.1rem;gap:8px;margin-left:0;margin-bottom:.8rem;border-width:1.5px}
+
   .intro h2{font-size:1.3rem;margin-bottom:.5rem}
   .intro-desc{font-size:.78rem;margin-bottom:.9rem}
   .intro-features{gap:.35rem;margin-bottom:1rem}
@@ -539,9 +615,10 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
   .intro-cta{gap:.5rem}
   .intro-cta .btn-main{padding:.55rem 1rem;font-size:.75rem;flex:1;justify-content:center}
   .intro-cta .btn-outline{padding:.5rem .8rem;font-size:.72rem;flex:1}
-  .marquee-section{padding:.6rem 0}
-  .marquee-item{font-size:.75rem;padding:0 1rem;gap:6px}
-  .marquee-item i{font-size:.7rem}
+  .marquee-section{padding:1rem 0;border-top:4px solid;border-bottom:4px solid}
+  .marquee-item{font-size:.95rem;padding:0 1.5rem;gap:10px}
+  .marquee-item i{font-size:.85rem}
+  .marquee-separator{font-size:.85rem}
   .carousel-section{margin:.6rem auto;padding:0 .6rem}
   .carousel-slide{height:300px}
   .carousel-caption{padding:1.2rem .7rem .6rem}
@@ -674,11 +751,11 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
   <div class="intro-inner">
     <div class="intro-content">
       <div>
-        <span class="intro-tag"><i class="fa-solid fa-star"></i> Lavandería de Confianza en Montevideo</span>
+        
         <span class="estado-local" id="estadoLocal"><i class="fa-solid fa-clock"></i> Verificando horario...</span>
       </div>
-      <h2>Lavadero Unión<small>¡Aprovechá y que tu tiempo valga!</small></h2>
-      <p class="intro-desc">Ropa limpia, fresca y como nueva. Cuidamos tus prendas y tejidos con la mejor atención.</p>
+      <h2>Lavadero Unión</h2>
+      <p class="intro-desc">Ropa limpia y perfumada. </p>
       <div class="intro-features">
         <div class="intro-feature"><i class="fa-solid fa-check"></i> Lavados y secados en el día</div>
         <div class="intro-feature"><i class="fa-solid fa-check"></i> Acolchados y frazadas con limpieza profunda</div>
@@ -730,7 +807,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
 </section>
 
 <section class="hero">
-  <span class="hero-badge"><i class="fa-solid fa-fire"></i> ¡Ofertas Destacadas!</span>
+  
   <h2>Promo Familia y Canasto Completo</h2>
   <p>Llevá 4 lavados + secados por solo $960. El canasto de ropa de 12 kg por $520.</p>
   <a href="https://wa.me/59897192247?text=Hola%2C%20quisiera%20consultar%20por%20la%20promo%20familia" target="_blank" rel="noopener" class="btn-main btn-wpp"><i class="fa-brands fa-whatsapp"></i> Pedir Promo</a>
@@ -923,7 +1000,7 @@ footer{background:var(--primary-dark);color:#b8c8d6;font-size:.78rem;width:100%;
     </div>
   </section>
 
-  <!-- NUESTROS CLIENTES (CARRUSEL SIN MARCOS NI FONDO, CORREGIDO Y LIMPIO) -->
+  <!-- NUESTROS CLIENTES -->
   <section class="clientes-section reveal" id="clientes">
     <h3 class="section-title">Nuestros Clientes</h3>
     <p class="clientes-intro">La confianza de quienes ya nos eligieron es nuestro mejor respaldo.</p>
@@ -1183,9 +1260,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const fmt = (h,m) => `${h}:${m.toString().padStart(2,'0')}`;
     let abierto = false;
     if (aperturas[dia] && minutos >= minAp(dia) && minutos < minCi(dia)) abierto = true;
+    
     if (abierto) {
-      el.innerHTML = `<i class="fa-solid fa-circle" style="color:#25d366;font-size:.6rem"></i> Abierto ahora · Cierra ${fmt(...cierres[dia])}`;
+      el.style.background = 'rgba(37, 211, 102, 0.9)'; /* Fondo verde para abierto */
+      el.innerHTML = `<i class="fa-solid fa-circle" style="color:#fff;font-size:.9rem"></i> Abierto ahora · Cierra ${fmt(...cierres[dia])} hs`;
     } else {
+      el.style.background = 'rgba(245, 248, 250, 0.92)'; /* Fondo clarito para cerrado */
       let dApertura = null, etiqueta = '';
       for (let i = 0; i < 7; i++) {
         const d = (dia + i) % 7;
@@ -1195,9 +1275,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (i > 0) { dApertura = d; etiqueta = (i === 1 ? 'mañana' : ['dom','lun','mar','mié','jue','vie','sáb'][d]); break; }
       }
       if (dApertura !== null) {
-        el.innerHTML = `<i class="fa-solid fa-circle" style="color:#c8102e;font-size:.6rem"></i> Cerrado · Abre ${etiqueta} ${fmt(...aperturas[dApertura])}`;
+        el.innerHTML = `<i class="fa-solid fa-circle" style="color:#c8102e;font-size:.9rem"></i> Cerrado · Abre ${etiqueta} ${fmt(...aperturas[dApertura])} hs`;
       } else {
-        el.innerHTML = `<i class="fa-solid fa-circle" style="color:#c8102e;font-size:.6rem"></i> Cerrado ahora`;
+        el.innerHTML = `<i class="fa-solid fa-circle" style="color:#c8102e;font-size:.9rem"></i> Cerrado ahora`;
       }
     }
   }
@@ -1497,12 +1577,11 @@ slidesContainer.addEventListener('transitionend', () => {
   if (form) {
     const today = new Date().toISOString().split('T')[0];
     const inputDia = document.getElementById('dia');
-    if (inputDia) inputDia.setAttribute('min', today);
-
-    form.addEventListener('submit', function (e) {
+if (inputDia) inputDia.setAttribute('min', today);
+form.addEventListener('submit', function (e) {
       e.preventDefault();
       const data = new FormData(form);
-      const nombre = (data.get('nombre') || '').trim();
+const nombre = (data.get('nombre')|| '').trim();
       const tel = (data.get('telefono') || '').trim();
       const servicio = (data.get('servicio') || '').trim();
       const dia = (data.get('dia') || '').trim();
@@ -1510,41 +1589,30 @@ slidesContainer.addEventListener('transitionend', () => {
       const tipo_entrega = (data.get('tipo_entrega') || '').trim();
       const barrio = (data.get('barrio') || '').trim();
       const comentario = (data.get('comentario') || '').trim();
-
-      if (!nombre || !tel || !servicio || !dia || !hora || !tipo_entrega) {
-        alert('Por favor completá todos los campos obligatorios (*).');
-        return;
-      }
-
-      const [year, month, day] = dia.split('-');
-      const fechaFormateada = `${day}/${month}/${year}`;
-
-      let msg = `Hola! Quisiera reservar un turno.\n\n`;
+if (!nombre || !tel || !servicio || !dia || !hora || !tipo_entrega) {
+alert('Por favor completá todos los campos obligatorios (*).'); return; }
+const [year, month, day] = dia.split('-');
+const fechaFormateada = `${day}/${month}/${year}`;
+let msg = `Hola! Quisiera reservar un turno.\n\n`;
       msg += `*Nombre:* ${nombre}\n`;
       msg += `*Teléfono:* ${tel}\n`;
       msg += `*Servicio:* ${servicio}\n`;
       msg += `*Día:* ${fechaFormateada}\n`;
       msg += `*Hora:* ${hora} hs\n`;
       msg += `*Modalidad:* ${tipo_entrega}\n`;
-      if (barrio) msg += `*Barrio:* ${barrio}\n`;
+   if (barrio) msg += `*Barrio:* ${barrio}\n`;
       if (comentario) msg += `*Comentario:* ${comentario}\n`;
-      
       const url = `https://wa.me/${CONFIG.telefono}?text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank', 'noopener');
-      form.reset();
-    });
-  }
- document.querySelectorAll('[data-modal]').forEach(trigger => {
+      form.reset(); });}
+document.querySelectorAll('[data-modal]').forEach(trigger => {
     trigger.addEventListener('click', function (e) {
       e.preventDefault();
       const modal = document.getElementById('modal-' + this.dataset.modal);
       if (modal) {
         modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-      }
-    });
-  });
-  document.querySelectorAll('[data-close-modal]').forEach(btn => {
+document.body.style.overflow = 'hidden';}});});
+document.querySelectorAll('[data-close-modal]').forEach(btn => {
     btn.addEventListener('click', function () {
       this.closest('.modal-legal').classList.remove('show');
       document.body.style.overflow = '';
@@ -1560,11 +1628,6 @@ slidesContainer.addEventListener('transitionend', () => {
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      document.querySelectorAll('.modal-legal.show').forEach(m => m.classList.remove('show'));
-      document.body.style.overflow = '';
-    }
-  });
-});
-</script>
-</body>
-</html>
+document.querySelectorAll('.modal-legal.show').forEach(m => m.classList.remove('show'));
+document.body.style.overflow = '';} });});
+</script></body></html>
